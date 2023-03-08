@@ -1,0 +1,13 @@
+spring:
+  #Database settings
+  datasource:
+    url: jdbc:postgresql://localhost:5432/EzJob
+    username: postgres
+    password: Mymein2003
+    driver-class-name: org.postgresql.Driver
+  #LiquidBase settings
+  liquibase:
+    change-log: db.changelog/db.changelog-master.xml
+
+server:
+  port: 8082

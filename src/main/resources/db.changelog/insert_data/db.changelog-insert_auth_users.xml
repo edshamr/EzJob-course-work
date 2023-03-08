@@ -1,0 +1,43 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<databaseChangeLog
+        xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+        xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-3.4.xsd">
+
+    <changeSet id="1.0.5" author="eduard_shamray">
+        <insert tableName="auth_users">
+            <column name="username" value="testUser"/>
+            <column name="password" value="$2a$12$TH2uBr6DQYagoyUDJndfK.zQHe4/yOcO7M7vLwpCPFPoANzhM52I."/>
+            <column name="email" value="testUser@gmail.com"/>
+            <column name="created" value="now()"/>
+            <column name="updated" value="now()"/>
+        </insert>
+        <insert tableName="auth_users">
+            <column name="username" value="testAdmin"/>
+            <column name="password" value="$2a$12$GKXvtC4QvXnmi2h4bIxl.ePR6ij2khfb8kSPV1YLTCtA9FeMC0uMS"/>
+            <column name="email" value="testAdmin@gmail.com"/>
+            <column name="created" value="now()"/>
+            <column name="updated" value="now()"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="auth_users"/>
+        </rollback>
+    </changeSet>
+
+    <changeSet id="1.0.6" author="eduard_shamray">
+        <insert tableName="user_roles">
+            <column name="user_id" value="1"/>
+            <column name="user_role" value="USER"/>
+        </insert>
+        <insert tableName="user_roles">
+            <column name="user_id" value="2"/>
+            <column name="user_role" value="ADMIN"/>
+        </insert>
+
+        <rollback>
+            <delete tableName="user_roles"/>
+        </rollback>
+    </changeSet>
+</databaseChangeLog>
