@@ -5,9 +5,7 @@ spring:
     username: postgres
     password: Mymein2003
     driver-class-name: org.postgresql.Driver
-  #LiquidBase settings
-  liquibase:
-    change-log: db.changelog/db.changelog-master.xml
+
   #Jpa settings
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
