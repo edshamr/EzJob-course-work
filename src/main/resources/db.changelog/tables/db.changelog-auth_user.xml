@@ -33,7 +33,7 @@
         </createTable>
 
         <rollback>
-            <dropTable tableName="auth_users"/>
+            DROP TABLE auth_users
         </rollback>
     </changeSet>
 </databaseChangeLog>

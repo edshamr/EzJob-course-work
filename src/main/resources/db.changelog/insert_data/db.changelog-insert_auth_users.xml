@@ -22,7 +22,7 @@
         </insert>
 
         <rollback>
-            <delete tableName="auth_users"/>
+            Delete from auth_users;
         </rollback>
     </changeSet>
 
@@ -37,7 +37,7 @@
         </insert>
 
         <rollback>
-            <delete tableName="user_roles"/>
+            Delete from user_roles;
         </rollback>
     </changeSet>
 </databaseChangeLog>

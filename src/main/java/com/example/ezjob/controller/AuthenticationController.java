@@ -1,9 +1,10 @@
 package com.example.ezjob.controller;
 
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
+import com.example.ezjob.model.dto.RegistrationRequestDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.repository.AuthUserRepository;
-import com.example.ezjob.service.RegistrationAuthenticationUserService;
+import com.example.ezjob.service.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -22,7 +23,7 @@ import java.util.Map;
 @Slf4j
 public class AuthenticationController {
   private final AuthenticationManager authenticationManager;
-  private final RegistrationAuthenticationUserService registrationAuthenticationUserService;
+  private final UserRegistrationService registrationAuthenticationUserService;
 
   private final AuthUserRepository repository;
 
@@ -42,15 +43,18 @@ public class AuthenticationController {
 
     authenticationManager.authenticate(
             new UsernamePasswordAuthenticationToken(username, password));
-    return new ResponseEntity<>("User signed-in successfully!.", HttpStatus.OK);
+    return ResponseEntity.ok().build();
   }
 
   @PostMapping(value = "/registration")
   public ResponseEntity<String> register(
-          @Valid @RequestBody final AuthenticationUser requestDto) {
+          @Valid @RequestBody final RegistrationRequestDto requestDto) {
+    final var username = requestDto.getUsername();
+    final var password = requestDto.getPassword();
+    final var email = requestDto.getEmail();
 
-    registrationAuthenticationUserService.createUser(requestDto);
+    registrationAuthenticationUserService.createUser(username, password, email);
 
-    return new ResponseEntity<>("User registered successfully!", HttpStatus.OK);
+    return ResponseEntity.ok().build();
   }
 }
