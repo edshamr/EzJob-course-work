@@ -7,15 +7,13 @@ import org.springframework.boot.test.web.client.TestRestTemplate;
 import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 import org.springframework.test.context.ContextConfiguration;
-
 import java.util.Map;
-
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
 @SpringBootTest(webEnvironment = SpringBootTest.WebEnvironment.RANDOM_PORT)
 @ContextConfiguration(classes = {EzJobApplication.class})
 @ActiveProfiles("test")
-public class RegistrationTests{
+class RegistrationTests{
   @Autowired
   private TestRestTemplate restTemplate;
 
@@ -27,7 +25,7 @@ public class RegistrationTests{
             "email", "test@gmail.com");
 
     final var response =
-            restTemplate.postForEntity("/auth/registration", userCredentials, Map.class);
+            restTemplate.postForEntity("/auth/user", userCredentials, Map.class);
 
     assertEquals(HttpStatus.BAD_REQUEST, response.getStatusCode());
   }
@@ -40,7 +38,7 @@ public class RegistrationTests{
             "email", "registrationUser@gmail.com");
 
     final var response =
-            restTemplate.postForEntity("/auth/registration", userCredentials, Map.class);
+            restTemplate.postForEntity("/auth/user", userCredentials, Map.class);
 
     assertEquals(HttpStatus.OK, response.getStatusCode());
   }

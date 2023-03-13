@@ -1,9 +1,11 @@
 package com.example.ezjob.controller;
 
+import com.example.ezjob.common.validation.AuthUserValidator;
+import com.example.ezjob.exception.UserAlreadyExistException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
+import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
-import com.example.ezjob.persistense.entity.AuthenticationUser;
-import com.example.ezjob.persistense.repository.AuthUserRepository;
+import com.example.ezjob.service.UserMapperService;
 import com.example.ezjob.service.UserRegistrationService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -23,9 +25,9 @@ import java.util.Map;
 @Slf4j
 public class AuthenticationController {
   private final AuthenticationManager authenticationManager;
-  private final UserRegistrationService registrationAuthenticationUserService;
-
-  private final AuthUserRepository repository;
+  private final UserRegistrationService userRegistrationService;
+  private final AuthUserValidator userValidator;
+  private final UserMapperService userProviderService;
 
   @GetMapping()
   public Map<String, String>  defaultMethod() {
@@ -46,15 +48,26 @@ public class AuthenticationController {
     return ResponseEntity.ok().build();
   }
 
-  @PostMapping(value = "/registration")
-  public ResponseEntity<String> register(
-          @Valid @RequestBody final RegistrationRequestDto requestDto) {
-    final var username = requestDto.getUsername();
-    final var password = requestDto.getPassword();
-    final var email = requestDto.getEmail();
+  @PostMapping(value = "/user")
+  @ResponseStatus(HttpStatus.OK)
+  public AuthenticationResponseDto register(
+          @Valid @NotNull @RequestBody final RegistrationRequestDto registrationRequest) {
+    final var username = registrationRequest.getUsername();
+    final var email = registrationRequest.getEmail();
 
-    registrationAuthenticationUserService.createUser(username, password, email);
+    if (userValidator.isEmailExistInDb(email) || userValidator.isUsernameExistInDb(username)) {
+      throw new UserAlreadyExistException("User already exist.");
+    }
 
-    return ResponseEntity.ok().build();
+    final var authUser =
+            userProviderService.registrationDtoToAuthenticationUser(registrationRequest);
+
+    final var newUser =
+            userRegistrationService.registerUser(authUser);
+
+
+    return AuthenticationResponseDto.builder()
+            .username(newUser.getUsername())
+            .build();
   }
 }
