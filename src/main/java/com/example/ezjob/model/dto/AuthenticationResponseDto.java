@@ -10,4 +10,7 @@ import javax.validation.constraints.NotBlank;
 public class AuthenticationResponseDto {
   @NotBlank
   String username;
+
+  @NotBlank
+  String email;
 }
