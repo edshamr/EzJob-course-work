@@ -31,7 +31,7 @@ class RegistrationTests{
   }
 
   @Test
-  void shouldReturnOkStatusWhenProvidedValidUniqueUserCredentials() {
+  void shouldReturnCreatedStatusWhenProvidedValidUniqueUserCredentials() {
     final var userCredentials = Map.of(
             "username", "registrationUser",
             "password", "12345678",
@@ -40,7 +40,7 @@ class RegistrationTests{
     final var response =
             restTemplate.postForEntity("/auth/user", userCredentials, Map.class);
 
-    assertEquals(HttpStatus.OK, response.getStatusCode());
+    assertEquals(HttpStatus.CREATED, response.getStatusCode());
   }
 }
 
