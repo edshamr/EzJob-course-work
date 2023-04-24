@@ -43,7 +43,6 @@ public class SecurityConfig {
             .requestMatchers("/auth/**").permitAll()
             .anyRequest().authenticated()
             .and()
-//            .addFilterBefore(jwtRequestFilter, UsernamePasswordAuthenticationFilter.class)
             .apply(new JwtConfigurer(jwtTokenUtil))
             .and()
             // make sure we use stateless session, session will not be used to store user's state
