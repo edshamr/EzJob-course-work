@@ -8,7 +8,7 @@ import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
-import com.example.ezjob.persistense.repository.AuthUserRepository;
+import com.example.ezjob.persistense.repository.AuthenticationUserRepository;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import lombok.RequiredArgsConstructor;
@@ -32,7 +32,7 @@ public class AuthenticationController {
   private final RegistrationService userRegistrationService;
   private final AuthUserValidator userValidator;
   private final AuthenticationUserMapper userMapper;
-  private final AuthUserRepository repository;
+  private final AuthenticationUserRepository repository;
   private final AuthenticationUserService userService;
   private final ResumeMapper resumeMapper;
   @PostMapping("/login")

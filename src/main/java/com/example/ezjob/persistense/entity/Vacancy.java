@@ -32,6 +32,5 @@ public class Vacancy {
   @Column(name = "additional_info")
   String additionalInfo;
   @ManyToOne(fetch = FetchType.LAZY)
-  @Column(name = "company")
   Company company;
 }

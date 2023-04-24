@@ -5,7 +5,7 @@ import org.springframework.data.jpa.repository.JpaRepository;
 
 import java.util.Optional;
 
-public interface AuthUserRepository extends JpaRepository<AuthenticationUser, Long> {
+public interface AuthenticationUserRepository extends JpaRepository<AuthenticationUser, Long> {
 
   AuthenticationUser findByUsername(String username);
 
