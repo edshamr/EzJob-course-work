@@ -33,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Slf4j
+//TODO Fix registration
 public class AuthenticationController {
   private final AuthenticationManager authenticationManager;
   private final RegistrationService userRegistrationService;
