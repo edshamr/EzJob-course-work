@@ -8,5 +8,5 @@ import org.mapstruct.Mapper;
 @Mapper(componentModel = "spring")
 public interface AuthenticationUserMapper {
   AuthenticationUser toAuthenticationUser(RegistrationRequestDto registrationRequest);
-  AuthenticationResponseDto toAuthenticationResponseDto(AuthenticationUser user);
+  AuthenticationResponseDto toAuthenticationResponseDto(AuthenticationUser user, String token);
 }

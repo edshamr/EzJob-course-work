@@ -8,11 +8,17 @@ import java.util.List;
 
 @UtilityClass
 public class TestConstants {
+
+  @UtilityClass
+  public class Path {
+    public String LOGIN_PATH = "/auth/login";
+  }
   @UtilityClass
   public class UserAttributes {
     public Long ID = 33L;
     public String USERNAME = "testUsername";
     public String PASSWORD = "$2a$12$HFmth1tRCCVAzCjMu7rTJOB2UjbdcNJkkOahFdJhTAvzbiINUdt8C";
+    public String EMAIL = "testUser@gmail.com";
     public Set<RoleName> ROLES = Set.of(RoleName.USER);
   }
   @UtilityClass
@@ -43,6 +49,7 @@ public class TestConstants {
   }
   @UtilityClass
   public class JwtTokenAttributes {
+    public final String TOKEN_PREFIX = "Bearer ";
     public String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInRpbWVab25lSW" +
             "QiOiJBc2lhL0JlaXJ1dCIsInN1YiI6InRlc3RVc2VybmFtZSIsImlhdCI6MTY4MjI5MDg3NiwiZXhwIjoxNjgyMzI2ODc2fQ.FGKrsLrGSL0WR26Uqg2HjVAahUb3OE5oOZM7R0FBZ1k";
     public String HEADER = "Authorization";

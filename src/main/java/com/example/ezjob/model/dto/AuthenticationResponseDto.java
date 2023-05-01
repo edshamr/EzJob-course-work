@@ -12,5 +12,5 @@ public class AuthenticationResponseDto {
   String username;
 
   @NotBlank
-  String email;
+  String token;
 }
