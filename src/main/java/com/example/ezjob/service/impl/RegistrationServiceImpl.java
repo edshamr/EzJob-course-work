@@ -1,5 +1,6 @@
 package com.example.ezjob.service.impl;
 
+import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.Resume;
 import com.example.ezjob.service.AuthenticationUserService;
@@ -21,8 +22,8 @@ public class RegistrationServiceImpl
   @Transactional
   @Nullable
   public AuthenticationUser registerUser(@Nonnull final AuthenticationUser user,
-                                         @Nonnull final Resume resume) {
-    resumeService.saveResume(resume);
+                                         @Nonnull final ResumeRequestDto resumeRequest) {
+    resumeService.saveResume(resumeRequest);
     return userService.saveUser(user);
   }
 }

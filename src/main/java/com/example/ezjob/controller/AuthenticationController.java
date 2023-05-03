@@ -8,6 +8,7 @@ import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
+import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import com.example.ezjob.service.TokenProviderService;
@@ -81,8 +82,10 @@ public class AuthenticationController {
     final var authUser =
             userMapper.toAuthenticationUser(registrationRequest);
 
+//    final var resume =
+//            resumeMapper.toResume(registrationRequest);
     final var resume =
-            resumeMapper.toResume(registrationRequest);
+            ResumeRequestDto.builder().build();
 
     final var newUser =
             userRegistrationService.registerUser(authUser, resume);

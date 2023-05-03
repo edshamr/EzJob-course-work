@@ -32,10 +32,13 @@ public class Company {
 
   @Column(name = "stuff_count")
   int stuffCount;
+
   @Column(name = "description")
   String description;
+
   @Column(name = "country")
   String country;
+
   @Column(name = "additional_info")
   String additionalInfo;
 
