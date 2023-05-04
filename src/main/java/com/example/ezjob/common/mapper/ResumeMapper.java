@@ -12,5 +12,6 @@ public interface ResumeMapper {
   Resume toResume(ResumeRequestDto resumeRequest);
   Resume toResume(RegistrationRequestDto registrationRequest);
   ResumeResponseDto toResumeResponseDto(Resume resume);
+  ResumeRequestDto toResumeRequestDto(RegistrationRequestDto registrationRequest);
   void updateResume(@MappingTarget Resume resumeToUpdate, Resume resume);
 }

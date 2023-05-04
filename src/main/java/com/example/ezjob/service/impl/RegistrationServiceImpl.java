@@ -1,5 +1,8 @@
 package com.example.ezjob.service.impl;
 
+import com.example.ezjob.common.mapper.AuthenticationUserMapper;
+import com.example.ezjob.common.mapper.ResumeMapper;
+import com.example.ezjob.model.dto.RegistrationRequestDto;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.Resume;
@@ -18,12 +21,15 @@ public class RegistrationServiceImpl
         implements RegistrationService {
   private final AuthenticationUserService userService;
   private final ResumeService resumeService;
+  private final AuthenticationUserMapper userMapper;
+  private final ResumeMapper resumeMapper;
   @Override
   @Transactional
   @Nullable
-  public AuthenticationUser registerUser(@Nonnull final AuthenticationUser user,
-                                         @Nonnull final ResumeRequestDto resumeRequest) {
-    resumeService.saveResume(resumeRequest);
-    return userService.saveUser(user);
+  public AuthenticationUser registerUser(@Nonnull RegistrationRequestDto registrationRequest) {
+    final var authUser = userMapper.toAuthenticationUser(registrationRequest);
+    final var resume = resumeMapper.toResumeRequestDto(registrationRequest);
+    resumeService.saveResume(resume);
+    return userService.saveUser(authUser.getUsername(), authUser.getPassword(), authUser.getEmail());
   }
 }

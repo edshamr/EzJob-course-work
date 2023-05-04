@@ -7,5 +7,7 @@ public interface AuthenticationUserService {
     AuthenticationUser getUserByUsername(@Nonnull String username);
     AuthenticationUser getUserByEmail(@Nonnull String email);
     AuthenticationUser getUserById(@Nonnull Long id);
-    AuthenticationUser saveUser(@Nonnull AuthenticationUser user);
+    AuthenticationUser saveUser(@Nonnull final String username,
+                                @Nonnull final String password,
+                                @Nonnull final String email);
 }

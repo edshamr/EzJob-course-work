@@ -1,5 +1,6 @@
 package com.example.ezjob.service.impl;
 
+import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.RoleName;
 import com.example.ezjob.persistense.repository.AuthenticationUserRepository;
@@ -32,8 +33,16 @@ public class AuthenticationUserServiceImpl implements AuthenticationUserService 
 
   @Override
   @Transactional
-  public AuthenticationUser saveUser(AuthenticationUser user) {
-    user.setRoles(Set.of(RoleName.USER));
+  public AuthenticationUser saveUser(@Nonnull final String username,
+                                     @Nonnull final String password,
+                                     @Nonnull final String email) {
+    final var user = AuthenticationUser.builder()
+            .username(username)
+            .password(password)
+            .email(email)
+            .roles(Set.of(RoleName.USER))
+            .build();
+
     return authenticationUserRepository.save(user);
   }
 }

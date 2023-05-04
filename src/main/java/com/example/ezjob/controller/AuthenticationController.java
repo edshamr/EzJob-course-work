@@ -88,7 +88,7 @@ public class AuthenticationController {
             ResumeRequestDto.builder().build();
 
     final var newUser =
-            userRegistrationService.registerUser(authUser, resume);
+            userRegistrationService.registerUser(registrationRequest);
 
     final var token = tokenProviderService.createToken(newUser.getUsername(), newUser.getRoles());
 
