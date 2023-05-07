@@ -8,7 +8,7 @@ import static org.junit.jupiter.api.Assertions.assertEquals;
 
 class ResumeMapperTest {
 
-  ResumeRequestDto RESUME_REQUEST = ResumeRequestDto.builder()
+  private static final ResumeRequestDto RESUME_REQUEST = ResumeRequestDto.builder()
           .email(ResumeAttributes.EMAIL)
           .firstname(ResumeAttributes.FIRSTNAME)
           .lastname(ResumeAttributes.LASTNAME)
@@ -23,7 +23,7 @@ class ResumeMapperTest {
           .additionalInfo(ResumeAttributes.ADDITIONAL_INFO)
           .build();
 
-  Resume RESUME = Resume.builder()
+  private static final Resume RESUME = Resume.builder()
           .email(ResumeAttributes.EMAIL)
           .firstname(ResumeAttributes.FIRSTNAME)
           .lastname(ResumeAttributes.LASTNAME)

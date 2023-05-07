@@ -12,6 +12,7 @@ public class TestConstants {
   @UtilityClass
   public class Path {
     public String LOGIN_PATH = "/auth/login";
+    public String REGISTRATION_PATH = "/auth/register";
   }
   @UtilityClass
   public class UserAttributes {
@@ -50,8 +51,8 @@ public class TestConstants {
   @UtilityClass
   public class JwtTokenAttributes {
     public final String TOKEN_PREFIX = "Bearer ";
-    public String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInRpbWVab25lSW" +
-            "QiOiJBc2lhL0JlaXJ1dCIsInN1YiI6InRlc3RVc2VybmFtZSIsImlhdCI6MTY4MjI5MDg3NiwiZXhwIjoxNjgyMzI2ODc2fQ.FGKrsLrGSL0WR26Uqg2HjVAahUb3OE5oOZM7R0FBZ1k";
+    public String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInRpbWVab25lSWQiOiJBc2lhL0JlaXJ1dCIsInN" +
+            "1YiI6InRlc3RVc2VybmFtZSIsImlhdCI6MTY4MzMxNjIwMiwiZXhwIjoxNjgzMzUyMjAyfQ.Uen6diE3qSsKXFu-cwHP94FN_oV1GHFcf5h0Fz_235I";
     public String HEADER = "Authorization";
   }
 

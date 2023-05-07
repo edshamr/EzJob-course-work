@@ -29,12 +29,12 @@ public class ApplicationExceptionHandler {
           @Nonnull final Exception exception) {
     log.error("Exception was thrown cause user already exists:", exception);
     final var message = ErrorMessage.builder()
-            .status(HttpStatus.BAD_REQUEST.value())
+            .status(HttpStatus.CONFLICT.value())
             .date(new Date())
             .description(exceptionMessage.getUserAlreadyExistException())
             .url(request.getRequestURL().toString())
             .build();
-    return ResponseEntity.status(HttpStatus.BAD_REQUEST).body(message);
+    return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
   }
 
   @ExceptionHandler({AuthenticationException.class, JwtException.class})
