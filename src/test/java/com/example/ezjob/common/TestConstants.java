@@ -51,8 +51,7 @@ public class TestConstants {
   @UtilityClass
   public class JwtTokenAttributes {
     public final String TOKEN_PREFIX = "Bearer ";
-    public String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInRpbWVab25lSWQiOiJBc2lhL0JlaXJ1dCIsInN" +
-            "1YiI6InRlc3RVc2VybmFtZSIsImlhdCI6MTY4MzMxNjIwMiwiZXhwIjoxNjgzMzUyMjAyfQ.Uen6diE3qSsKXFu-cwHP94FN_oV1GHFcf5h0Fz_235I";
+    public String VALID_TOKEN = "eyJhbGciOiJIUzI1NiJ9.eyJyb2xlcyI6WyJVU0VSIl0sInRpbWVab25lSWQiOiJBc2lhL0JlaXJ1dCIsInN1YiI6InRlc3RVc2VybmFtZSIsImlhdCI6MTY4MzMxNjIwMiwiZXhwIjoxNjgzMzUyMjAyfQ.Uen6diE3qSsKXFu-cwHP94FN_oV1GHFcf5h0Fz_235I";
     public String HEADER = "Authorization";
   }
 
