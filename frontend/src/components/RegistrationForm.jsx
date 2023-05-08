@@ -6,6 +6,7 @@ function RegistrationForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
   const [email, setEmail] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,13 +16,19 @@ function RegistrationForm() {
         // Handle successful login
       })
       .catch(error => {
-        // Handle login error
+        // Handle registration error
+        if (error.response && error.response.data) {
+          setError(error.response.data.description);
+        } else {
+          setError('An error occurred. Please try again.');
+        }
       });
 
     // Reset the form
     setUsername('');
     setPassword('');
     setEmail('');
+    setError('');
   };
 
   return (
@@ -59,6 +66,7 @@ function RegistrationForm() {
             onChange={(e) => setEmail(e.target.value)}
           />
         </label>
+          {error && <p className={styles.error_message}>{error}</p>}
         </div>
         <button type="submit" className={styles.button_sub}>Sign up</button>
         <p className={styles.signup_link}>Уже есть аккаунт?<a href="./login" className={styles.signup_link_a}>Войти</a></p>

@@ -32,5 +32,7 @@ build/
 ### VS Code ###
 .vscode/
 
-/fronted/node_modules/*
-/fronted/package.json
+/frontend/node_modules/*
+/frontend/package.json
+
+/frontend/node_modules/

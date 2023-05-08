@@ -5,6 +5,7 @@ import axios from 'axios'
 function LoginForm() {
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
+  const [error, setError] = useState('');
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -15,11 +16,17 @@ function LoginForm() {
       })
       .catch(error => {
         // Handle login error
+        if (error.response && error.response.data) {
+          setError(error.response.data.description);
+        } else {
+          setError('An error occurred. Please try again.');
+        }
       });
 
     // Reset the form
     setUsername('');
     setPassword('');
+    setError('');
   };
 
   return (
@@ -47,6 +54,7 @@ function LoginForm() {
             onChange={(e) => setPassword(e.target.value)}
           />
         </label>
+          {error && <p className={styles.error_message}>{error}</p>}
         </div>
         <button type="submit" className={styles.button_sub}>Log in</button>
         <p className={styles.signup_link}>Нет аккаунта? <a href="./registration" className={styles.signup_link_a}>Зарегистрироваться</a></p>

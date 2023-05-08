@@ -81,3 +81,7 @@ background-color: #4a00e0;
 .signup_link_a:hover {
   color: #4a00e0;
 }
+
+.error_message {
+  color: red;
+}

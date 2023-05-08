@@ -20,6 +20,7 @@ import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -32,6 +33,7 @@ import org.springframework.web.bind.annotation.RestController;
 @RequiredArgsConstructor
 @RequestMapping("/auth")
 @Slf4j
+@Validated
 public class AuthenticationController {
   private final AuthenticationManager authenticationManager;
   private final RegistrationService userRegistrationService;
@@ -42,7 +44,7 @@ public class AuthenticationController {
   @PostMapping("/login")
   @ResponseStatus(HttpStatus.OK)
   public AuthenticationResponseDto login(
-          @Valid @NotNull @RequestBody final AuthenticationRequestDto requestDto) {
+          @NotNull @Valid @RequestBody final AuthenticationRequestDto requestDto) {
     final var username = requestDto.getUsername();
     final var password = requestDto.getPassword();
 
