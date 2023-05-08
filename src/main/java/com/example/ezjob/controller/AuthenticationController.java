@@ -66,7 +66,7 @@ public class AuthenticationController {
     }
   }
 
-  @PostMapping(value = "/register")
+  @PostMapping(value = "/registration")
   @ResponseStatus(HttpStatus.CREATED)
   public AuthenticationResponseDto register(
           @Valid @NotNull @RequestBody final RegistrationRequestDto registrationRequest) {

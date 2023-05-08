@@ -1,6 +1,7 @@
 import { Routes, Route} from "react-router-dom";
 
 import { LoginForm } from './components/LoginForm';
+import { RegistrationForm } from './components/RegistrationForm';
 import { HomePage } from './components/HomePage';
 import { NotFound } from "./components/NotFound";
 
@@ -14,6 +15,7 @@ export default function App() {
         <Route path="/" element={<Layout />}>
           <Route index element={<HomePage />} />
           <Route path="login" element={<LoginForm />} />
+          <Route path="registration" element={<RegistrationForm />} />
           <Route path="*" element={<NotFound />} />
         </Route>
       </Routes>

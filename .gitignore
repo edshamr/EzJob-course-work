@@ -33,3 +33,4 @@ build/
 .vscode/
 
 /fronted/node_modules/*
+/fronted/package.json

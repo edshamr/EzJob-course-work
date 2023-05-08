@@ -11,11 +11,13 @@ import com.example.ezjob.service.TokenProviderService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-@RequiredArgsConstructor
 @Service
+@RequiredArgsConstructor
 public class RegistrationServiceImpl
         implements RegistrationService {
   private final AuthenticationUserService userService;
@@ -23,6 +25,7 @@ public class RegistrationServiceImpl
   private final AuthenticationUserMapper userMapper;
   private final ResumeMapper resumeMapper;
   private final TokenProviderService tokenProviderService;
+  private final PasswordEncoder passwordEncoder;
   @Override
   @Transactional
   @Nullable
@@ -32,7 +35,7 @@ public class RegistrationServiceImpl
 
     resumeService.saveResume(resumeRequest);
     final var savedUser = userService.saveUser(authUser.getUsername(),
-            authUser.getPassword(),
+            passwordEncoder.encode(authUser.getPassword()),
             authUser.getEmail());
 
     final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getRoles());

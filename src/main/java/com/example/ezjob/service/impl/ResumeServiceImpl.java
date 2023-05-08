@@ -7,13 +7,15 @@ import com.example.ezjob.persistense.entity.Resume;
 import com.example.ezjob.persistense.repository.ResumeRepository;
 import com.example.ezjob.service.ResumeService;
 import jakarta.annotation.Nonnull;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 @Service
+@RequiredArgsConstructor
 public class ResumeServiceImpl implements ResumeService {
-  private ResumeRepository repository;
-  private ResumeMapper resumeMapper;
+  private final ResumeRepository repository;
+  private final ResumeMapper resumeMapper;
 
   @Override
   @Transactional
