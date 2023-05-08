@@ -1,19 +1,21 @@
 package com.example.ezjob.service.impl;
 
-import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.RoleName;
 import com.example.ezjob.persistense.repository.AuthenticationUserRepository;
 import com.example.ezjob.service.AuthenticationUserService;
 import jakarta.annotation.Nonnull;
-import java.util.Optional;
-import java.util.Set;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
+import java.util.Optional;
+import java.util.Set;
+
 @Service
+@RequiredArgsConstructor
 public class AuthenticationUserServiceImpl implements AuthenticationUserService {
-  AuthenticationUserRepository authenticationUserRepository;
+  private final AuthenticationUserRepository authenticationUserRepository;
 
   @Override
   public AuthenticationUser getUserByUsername(@Nonnull final String username) {
