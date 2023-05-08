@@ -1,0 +1,36 @@
+.title{
+    font-size: 48px;
+    text-align: center;
+    margin-top: 100px;
+}
+  
+  .form_home {
+    display: flex;
+    justify-content: center;
+    margin-top: 30px;
+  }
+  
+ .input_home {
+    border: none;
+    border-bottom: 2px solid #ccc;
+    font-size: 24px;
+    padding: 10px;
+    margin-right: 20px;
+  }
+  
+  .input_home:last-child {
+    margin-right: 0;
+  }
+  
+  .button_home {
+    background-color: #2d9cdb;
+    color: #fff;
+    font-size: 24px;
+    border: none;
+    padding: 10px 20px;
+    cursor: pointer;
+  }
+  
+  .button_home:hover {
+    background-color: #1a86c8;
+  }
