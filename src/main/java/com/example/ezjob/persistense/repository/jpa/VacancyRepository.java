@@ -1,4 +1,4 @@
-package com.example.ezjob.persistense.repository;
+package com.example.ezjob.persistense.repository.jpa;
 
 import com.example.ezjob.persistense.entity.Vacancy;
 import jakarta.annotation.Nonnull;

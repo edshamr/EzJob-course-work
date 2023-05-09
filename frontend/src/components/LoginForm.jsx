@@ -2,7 +2,6 @@ import React, { useState} from 'react';
 import styles from '../styles/Login.module.css';
 import axios from 'axios';
 
-// Add an Axios interceptor to include the "Authorization" header
 axios.interceptors.request.use((config) => {
   const token = localStorage.getItem('token');
   if (token) {

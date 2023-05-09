@@ -2,7 +2,7 @@ package com.example.ezjob.service.impl;
 
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.RoleName;
-import com.example.ezjob.persistense.repository.AuthenticationUserRepository;
+import com.example.ezjob.persistense.repository.jpa.AuthenticationUserRepository;
 import com.example.ezjob.service.AuthenticationUserService;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;

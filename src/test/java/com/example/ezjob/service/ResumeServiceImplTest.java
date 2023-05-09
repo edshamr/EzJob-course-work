@@ -12,7 +12,7 @@ import com.example.ezjob.common.TestConstants.ResumeAttributes;
 import com.example.ezjob.common.mapper.ResumeMapper;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.persistense.entity.Resume;
-import com.example.ezjob.persistense.repository.ResumeRepository;
+import com.example.ezjob.persistense.repository.jpa.ResumeRepository;
 import com.example.ezjob.service.impl.ResumeServiceImpl;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;

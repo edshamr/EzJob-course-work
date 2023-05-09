@@ -1,4 +1,4 @@
-package com.example.ezjob.persistense.repository;
+package com.example.ezjob.persistense.repository.jpa;
 
 import com.example.ezjob.persistense.entity.Resume;
 import org.springframework.data.jpa.repository.JpaRepository;

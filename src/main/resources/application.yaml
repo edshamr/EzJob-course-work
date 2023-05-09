@@ -6,6 +6,12 @@ spring:
     password: Mymein2003
     driver-class-name: org.postgresql.Driver
 
+  cache:
+    type: redis
+  data:
+    redis:
+      host: localhost
+      port: 6380
   #Jpa settings
   jpa:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
@@ -14,7 +20,7 @@ spring:
 #      ddl-auto: create
 
   security:
-    # Secret used for signing JWT token.
+    #Secret used for signing JWT token.
     secret: gms
     #Validity time of JWT token in milliseconds.
     expirationTime: 36000000

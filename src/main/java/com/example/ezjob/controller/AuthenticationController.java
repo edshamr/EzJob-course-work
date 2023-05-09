@@ -7,6 +7,7 @@ import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
+import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import com.example.ezjob.service.TokenProviderService;
@@ -15,6 +16,7 @@ import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
+import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -86,15 +88,16 @@ public class AuthenticationController {
 
   @GetMapping(value = "/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public AuthenticationResponseDto getUserById(@PathVariable @NotNull @Min(1) final Long id) {
+  @Cacheable(value = "users", key = "#id", unless = "#result.email == 'test2'")
+  public AuthenticationUser getUserById(@PathVariable @NotNull @Min(1) final Long id) {
     final var user = userService.getUserById(id);
 
     if (user == null) {
       throw new UserNotFoundException("There isn`t such user");
     }
-
+    log.info("Getting user with ID {}.", id);
     final var token = tokenProviderService.createToken(user.getUsername(), user.getRoles());
 
-    return userMapper.toAuthenticationResponseDto(user, token);
+    return user;
   }
 }

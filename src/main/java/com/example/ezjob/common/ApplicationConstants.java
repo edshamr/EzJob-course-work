@@ -20,6 +20,7 @@ public class ApplicationConstants {
       public static final String SERVER_TIMEZONE_ID =
               Calendar.getInstance().getTimeZone().toZoneId().toString();
       public static final String TOKEN_PREFIX = "Bearer ";
+      public static final String BLACKLIST_CACHE_NAME = "jwt-black-list";
       public static final String TOKEN_HEADER_NAME = "Authorization";
     }
   }

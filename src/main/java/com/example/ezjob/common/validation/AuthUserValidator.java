@@ -1,6 +1,6 @@
 package com.example.ezjob.common.validation;
 
-import com.example.ezjob.persistense.repository.AuthenticationUserRepository;
+import com.example.ezjob.persistense.repository.jpa.AuthenticationUserRepository;
 import lombok.NonNull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Component;

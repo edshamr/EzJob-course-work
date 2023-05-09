@@ -1,7 +1,7 @@
 package com.example.ezjob.service.impl;
 
 import com.example.ezjob.persistense.entity.Vacancy;
-import com.example.ezjob.persistense.repository.VacancyRepository;
+import com.example.ezjob.persistense.repository.jpa.VacancyRepository;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;

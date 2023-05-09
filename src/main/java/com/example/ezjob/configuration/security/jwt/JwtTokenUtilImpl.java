@@ -4,8 +4,10 @@ import com.example.ezjob.common.ApplicationConstants.JwtClaims;
 import com.example.ezjob.common.ApplicationConstants.Web.Security;
 import com.example.ezjob.configuration.security.SecretProvider;
 import com.example.ezjob.exception.JwtAuthenticationException;
+import com.example.ezjob.exception.JwtTokenBlackListedException;
 import com.example.ezjob.exception.JwtTokenIllegalArgumentException;
 import com.example.ezjob.persistense.entity.RoleName;
+import com.example.ezjob.service.BlackListingService;
 import io.jsonwebtoken.JwtException;
 import io.jsonwebtoken.Jwts;
 import io.jsonwebtoken.SignatureAlgorithm;
@@ -19,7 +21,6 @@ import java.util.Date;
 import java.util.HashSet;
 import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
@@ -35,6 +36,8 @@ import org.springframework.util.StringUtils;
 public class JwtTokenUtilImpl implements JwtTokenUtil {
   private final SecretProvider secretProvider;
   private final UserDetailsService userDetailsService;
+  private final BlackListingService blackListingService;
+
   @Value("${spring.security.expirationTime}")
   private long validityInMilliseconds;
 
@@ -98,6 +101,12 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
   @Override
   @Nonnull
   public Boolean isTokenValid(@Nonnull final String token) {
+    final var blackListedToken = blackListingService.getBlackListedJwt(token);
+    if (blackListedToken != null) {
+      throw new JwtTokenBlackListedException(
+              "The JWT token is blacklisted");
+    }
+
     try {
       Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token);
       return !isTokenExpired(token);

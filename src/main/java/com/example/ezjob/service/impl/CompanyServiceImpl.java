@@ -1,7 +1,7 @@
 package com.example.ezjob.service.impl;
 
 import com.example.ezjob.persistense.entity.Company;
-import com.example.ezjob.persistense.repository.CompanyRepository;
+import com.example.ezjob.persistense.repository.jpa.CompanyRepository;
 import com.example.ezjob.service.CompanyService;
 import jakarta.annotation.Nonnull;
 import org.springframework.stereotype.Service;
