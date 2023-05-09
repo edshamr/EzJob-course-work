@@ -23,13 +23,10 @@ import lombok.NoArgsConstructor;
 import lombok.ToString;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedDate;
-import org.springframework.data.redis.core.RedisHash;
 
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.NotEmpty;
 import javax.validation.constraints.Size;
-import java.io.Serial;
-import java.io.Serializable;
 import java.time.ZonedDateTime;
 import java.util.Set;
 
@@ -40,10 +37,7 @@ import java.util.Set;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-@RedisHash("AuthenticationUser")
-public class AuthenticationUser implements Serializable {
-  @Serial
-  private static final long serialVersionUID = 5351684144827955888L;
+public class AuthenticationUser {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   private Long id;

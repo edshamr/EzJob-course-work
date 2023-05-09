@@ -1,0 +1,68 @@
+.form_resume{
+    max-width: 600px;
+    margin: 0 auto;
+    padding: 30px;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    background-color: #fff;
+  }
+  
+ .title_resume{
+    text-align: center;
+    margin-bottom: 20px;
+    font-size: 24px;
+    font-weight: bold;
+    color: #555;
+    text-transform: uppercase;
+  }
+  
+  .form_group {
+    margin-bottom: 20px;
+  }
+  
+  .label_form{
+    display: block;
+    margin-bottom: 5px;
+    font-weight: bold;
+    color: #555;
+  }
+  
+  .input_form {
+    width: 100%;
+    padding: 10px;
+    margin-bottom: 10px;
+    border: 1px solid #ccc;
+    border-radius: 3px;
+    font-size: 16px;
+    color: #555;
+  }
+  
+  .input_form:focus {
+    outline: none;
+    border-color: #4CAF50;
+  }
+  
+  .inpt_submit {
+    background-color: #4CAF50;
+    color: white;
+    padding: 10px 20px;
+    border: none;
+    border-radius: 3px;
+    font-size: 16px;
+    text-transform: uppercase;
+    cursor: pointer;
+    transition: all 0.3s ease-in-out;
+  }
+  
+  .inpt_submit:hover {
+    background-color: #3e8e41;
+  }
+  
+  @media screen and (max-width: 480px) {
+    form {
+      padding: 20px;
+    }
+    h2 {
+      font-size: 20px;
+    }
+  }
