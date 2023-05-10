@@ -11,7 +11,6 @@ import com.example.ezjob.service.TokenProviderService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;

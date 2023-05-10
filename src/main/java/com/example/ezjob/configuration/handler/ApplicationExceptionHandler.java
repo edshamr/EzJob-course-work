@@ -4,10 +4,8 @@ import com.example.ezjob.common.ExceptionMessage;
 import com.example.ezjob.exception.NotFoundException;
 import com.example.ezjob.exception.UserAlreadyExistException;
 import com.example.ezjob.persistense.entity.ErrorMessage;
-import io.jsonwebtoken.JwtException;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.Date;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -15,6 +13,8 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.RestControllerAdvice;
+
+import java.util.Date;
 
 @RestControllerAdvice
 @RequiredArgsConstructor
@@ -37,7 +37,7 @@ public class ApplicationExceptionHandler {
     return ResponseEntity.status(HttpStatus.CONFLICT).body(message);
   }
 
-  @ExceptionHandler({AuthenticationException.class, JwtException.class})
+  @ExceptionHandler(AuthenticationException.class)
   public ResponseEntity<ErrorMessage> handleAuthenticationException(
           @Nonnull final HttpServletRequest request,
           @Nonnull final Exception exception) {

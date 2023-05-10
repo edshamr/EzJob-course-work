@@ -11,9 +11,6 @@ import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import com.example.ezjob.service.TokenProviderService;
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
-import javax.validation.constraints.NotNull;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.cache.annotation.Cacheable;
@@ -23,13 +20,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseStatus;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
+
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
 
 @RestController
 @RequiredArgsConstructor

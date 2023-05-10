@@ -4,7 +4,7 @@ import io.jsonwebtoken.JwtException;
 
 import java.io.Serial;
 
-public class JwtTokenBlackListedException extends JwtException {
+public class JwtTokenBlackListedException extends RuntimeException {
     @Serial
     private static final long serialVersionUID = 3455268360349415944L;
 

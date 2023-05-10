@@ -106,10 +106,12 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
       throw new JwtTokenBlackListedException(
               "The JWT token is blacklisted");
     }
-
     try {
       Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token);
       return !isTokenExpired(token);
+    } catch (JwtAuthenticationException e) {
+      throw new JwtAuthenticationException(
+              "The provided JWT token is expired or invalid and cannot be used for authentication", e);
     } catch (JwtException e) {
       throw new JwtAuthenticationException(
               "The provided JWT token is expired or invalid and cannot be used for authentication", e);
