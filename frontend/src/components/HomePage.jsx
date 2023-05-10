@@ -10,7 +10,6 @@ function HomePage() {
                 console.log("You were logged out");
             })
             .catch(error => {
-                // Handle logout error
                 console.log(error);
             });
     }

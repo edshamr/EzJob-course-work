@@ -30,6 +30,7 @@ public class ResumeServiceImpl implements ResumeService {
   }
 
   @Override
+  @Transactional
   public Resume updateResume(@Nonnull Long id, @Nonnull @Valid ResumeRequestDto resumeDto) {
     final var resume = resumeMapper.toResume(resumeDto);
     final var resumeToUpdate = repository.findResumeById(id);
