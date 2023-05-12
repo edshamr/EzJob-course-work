@@ -47,24 +47,24 @@ const LoginForm = () => {
     if (validateForm()) {
       console.log("Form is valid");
 
-    axios.post('/auth/login', { username: formData.name, password: formData.password })
-        .then(response => {
-          // Handle successful login
-          const token = response.data.token;
-          // Store the token in local storage
-          localStorage.setItem('token', token);
-        })
-        .catch(error => {
-          // Handle login error
-          console.log(error)
-          if (error.response && error.response.data) {
-            setError(<span style={{color: "red"}}>{error.response.data.description}</span>);
-          } else {
-            setError(<span style={{color: "red"}}>{'An error occurred. Please try again.'}</span>);
-          }
-        });
+      axios.post('/auth/login', { username: formData.name, password: formData.password })
+          .then(response => {
+            // Handle successful login
+            const token = response.data.token;
+            // Store the token in local storage
+            localStorage.setItem('token', token);
+          })
+          .catch(error => {
+            // Handle login error
+            console.log(error)
+            if (error.response && error.response.data) {
+              setError(<span style={{color: "red"}}>{error.response.data.description}</span>);
+            } else {
+              setError(<span style={{color: "red"}}>{'An error occurred. Please try again.'}</span>);
+            }
+          });
 
-        setFormData(initialState);
+      setFormData(initialState);
     } else {
       console.log("Form is invalid");
     }

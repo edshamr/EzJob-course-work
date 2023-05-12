@@ -30,7 +30,7 @@ public class ApplicationConstants {
    */
   @UtilityClass
   public class JwtClaims {
-    public static final String ROLES = "roles";
+    public static final String ROLE = "role";
     public static final String TIME_ZONE_ID = "timeZoneId";
   }
 }

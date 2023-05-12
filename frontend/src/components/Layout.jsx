@@ -17,7 +17,7 @@ function Layout() {
               <li><CustomLink to="/login">Login</CustomLink></li>
               <li><CustomLink to="#">Поиск вакансий</CustomLink></li>
               <li><CustomLink to="/resume">Резюме</CustomLink></li>
-              <li><CustomLink to="#">Компании</CustomLink></li>
+              <li><CustomLink to="/company">Компания</CustomLink></li>
               <li><CustomLink to="#">Контакты</CustomLink></li>
               <li><CustomLink to="/profile">Профиль</CustomLink></li>
               </ul>

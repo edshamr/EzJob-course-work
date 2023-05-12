@@ -1,19 +1,20 @@
 import styles from '../styles/HomePage.module.css'
 import axios from 'axios';
+import useRoles from "../hooks/useRoles";
 
 function HomePage() {
+    const role = useRoles();
     function logout() {
-        console.log(localStorage.getItem('token'))
         axios.post('/api/logout', {})
             .then(() => {
+                console.log("Trying to logout user");
                 localStorage.removeItem('token');
-                console.log("You were logged out");
+                console.log("User was logged out");
             })
             .catch(error => {
                 console.log(error);
             });
     }
-
 
     return (
         <main>
@@ -24,10 +25,11 @@ function HomePage() {
                 <button className={styles.button_home} type="submit">Найти вакансии</button>
             </form>
 
+            {role === 'USER' && (
             <form onSubmit={logout} className={styles.form_home}>
-
                 <button className={styles.button_home} type="submit">Выйти</button>
             </form>
+            )}
         </main>
     );
 }

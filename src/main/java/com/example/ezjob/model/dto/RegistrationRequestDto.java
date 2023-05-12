@@ -39,4 +39,6 @@ public class RegistrationRequestDto {
   int experience;
 
   String additionalInfo;
+
+  String role;
 }

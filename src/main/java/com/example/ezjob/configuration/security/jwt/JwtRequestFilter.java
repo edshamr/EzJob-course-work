@@ -33,11 +33,11 @@ public class JwtRequestFilter extends OncePerRequestFilter {
             }
             filterChain.doFilter(request, response);
         } catch (RuntimeException e) {
-            handleException(request, response, e);
+            handleException(response, e);
         }
     }
 
-    private void handleException(HttpServletRequest request, HttpServletResponse response, RuntimeException e) throws IOException {
+    private void handleException(HttpServletResponse response, RuntimeException e) throws IOException {
         if (e instanceof JwtException) {
             response.setStatus(HttpStatus.UNAUTHORIZED.value());
             response.getWriter().write("The provided JWT token is expired or invalid and cannot be used");

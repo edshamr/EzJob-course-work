@@ -20,6 +20,7 @@ export default function App() {
               <Route path="registration" element={<RegistrationForm />} />
               <Route path="profile" element={<UserProfile />} />
               <Route path="resume" element={<ResumeForm />} />
+              {/*<Route path="company/home" element={<CompanyPage />} />*/}
               <Route path="*" element={<NotFound />} />
             </Route>
           </Routes>

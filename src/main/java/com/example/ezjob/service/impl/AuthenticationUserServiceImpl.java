@@ -37,12 +37,13 @@ public class AuthenticationUserServiceImpl implements AuthenticationUserService 
   @Transactional
   public AuthenticationUser saveUser(@Nonnull final String username,
                                      @Nonnull final String password,
-                                     @Nonnull final String email) {
+                                     @Nonnull final String email,
+                                     @Nonnull final RoleName role) {
     final var user = AuthenticationUser.builder()
             .username(username)
             .password(password)
             .email(email)
-            .roles(Set.of(RoleName.USER))
+            .role(role)
             .build();
 
     return authenticationUserRepository.save(user);

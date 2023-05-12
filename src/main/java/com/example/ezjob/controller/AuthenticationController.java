@@ -7,13 +7,11 @@ import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
-import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import com.example.ezjob.service.TokenProviderService;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
-import org.springframework.cache.annotation.Cacheable;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.BadCredentialsException;
@@ -23,7 +21,6 @@ import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import javax.validation.constraints.NotNull;
 
 @RestController
@@ -55,7 +52,7 @@ public class AuthenticationController {
         throw new UserNotFoundException("User was not found");
       }
 
-      final var token = tokenProviderService.createToken(user.getUsername(), user.getRoles());
+      final var token = tokenProviderService.createToken(user.getUsername(), user.getRole());
 
       final var response = userMapper.toAuthenticationResponseDto(user, token);
       return response;
@@ -79,20 +76,5 @@ public class AuthenticationController {
     final var response = userRegistrationService.registerUser(registrationRequest);
 
     return response;
-  }
-
-  @GetMapping(value = "/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  @Cacheable(value = "users", key = "#id", unless = "#result.email == 'test2'")
-  public AuthenticationUser getUserById(@PathVariable @NotNull @Min(1) final Long id) {
-    final var user = userService.getUserById(id);
-
-    if (user == null) {
-      throw new UserNotFoundException("There isn`t such user");
-    }
-    log.info("Getting user with ID {}.", id);
-    final var token = tokenProviderService.createToken(user.getUsername(), user.getRoles());
-
-    return user;
   }
 }

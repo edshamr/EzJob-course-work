@@ -41,7 +41,7 @@ public class SecurityConfig {
     http
             .csrf().disable()
             .authorizeRequests()
-            .requestMatchers("/auth/**").permitAll()
+            .requestMatchers("/auth/**", "/roles/allRoles").permitAll()
             .anyRequest().authenticated()
             .and()
             .apply(new JwtConfigurer(jwtTokenUtil))

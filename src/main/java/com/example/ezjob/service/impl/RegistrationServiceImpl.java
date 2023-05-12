@@ -19,26 +19,29 @@ import org.springframework.transaction.annotation.Transactional;
 @RequiredArgsConstructor
 public class RegistrationServiceImpl
         implements RegistrationService {
-  private final AuthenticationUserService userService;
-  private final ResumeService resumeService;
-  private final AuthenticationUserMapper userMapper;
-  private final ResumeMapper resumeMapper;
-  private final TokenProviderService tokenProviderService;
-  private final PasswordEncoder passwordEncoder;
-  @Override
-  @Transactional
-  @Nullable
-  public AuthenticationResponseDto registerUser(@Nonnull RegistrationRequestDto registrationRequest) {
-    final var authUser = userMapper.toAuthenticationUser(registrationRequest);
-    final var resumeRequest = resumeMapper.toResumeRequestDto(registrationRequest);
+    private final AuthenticationUserService userService;
+    private final ResumeService resumeService;
+    private final AuthenticationUserMapper userMapper;
+    private final ResumeMapper resumeMapper;
+    private final TokenProviderService tokenProviderService;
+    private final PasswordEncoder passwordEncoder;
 
-    resumeService.saveResume(resumeRequest);
-    final var savedUser = userService.saveUser(authUser.getUsername(),
-            passwordEncoder.encode(authUser.getPassword()),
-            authUser.getEmail());
+    @Override
+    @Transactional
+    @Nullable
+    public AuthenticationResponseDto registerUser(@Nonnull RegistrationRequestDto registrationRequest) {
+        final var authUser = userMapper.toAuthenticationUser(registrationRequest);
+        final var resumeRequest = resumeMapper.toResumeRequestDto(registrationRequest);
 
-    final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getRoles());
+        resumeService.saveResume(resumeRequest);
+        final var savedUser = userService.saveUser(
+                authUser.getUsername(),
+                passwordEncoder.encode(authUser.getPassword()),
+                authUser.getEmail(),
+                authUser.getRole());
 
-    return userMapper.toAuthenticationResponseDto(savedUser, token);
-  }
+        final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getRole());
+
+        return userMapper.toAuthenticationResponseDto(savedUser, token);
+    }
 }

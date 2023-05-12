@@ -63,11 +63,9 @@ public class AuthenticationUser {
   @Column(name = "email")
   private String email;
 
-  @ElementCollection(targetClass = RoleName.class, fetch = FetchType.EAGER)
-  @JoinTable(name = "user_roles", joinColumns = @JoinColumn(name = "user_id"))
   @Column(name = "user_role", nullable = false)
   @Enumerated(EnumType.STRING)
-  Set<RoleName> roles;
+  RoleName role;
 
   @CreatedDate
   @Column(name = "created")

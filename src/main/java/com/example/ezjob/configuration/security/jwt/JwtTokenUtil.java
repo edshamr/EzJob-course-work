@@ -4,9 +4,9 @@ import com.example.ezjob.persistense.entity.RoleName;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
-import java.util.Date;
-import java.util.Set;
 import org.springframework.security.core.Authentication;
+
+import java.util.Date;
 
 /**
  * Interface to provide methods for creating, validating, etc. JWT token
@@ -20,6 +20,14 @@ public interface JwtTokenUtil {
    */
   @Nonnull
   String getUsername(@Nonnull String token);
+  /**
+   * Retrieve roles from the JWT token.
+   *
+   * @param token a JWT token with needed information
+   * @return user roles from passed token
+   */
+  @Nonnull
+  String getRoles(@Nonnull final String token);
 
   /**
    * Retrieve expiration date from the JWT token.
@@ -43,11 +51,11 @@ public interface JwtTokenUtil {
    * Creates a new JWT token based on give data.
    *
    * @param username a username to include in token
-   * @param roles    set of roles to include in token
+   * @param role    user role to include in token
    * @return the created JWT token
    */
   @Nonnull
-  String createToken(@Nonnull String username, @Nonnull Set<RoleName> roles);
+  String createToken(@Nonnull String username, @Nonnull RoleName role);
 
   /**
    * Validates the JWT token.

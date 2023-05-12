@@ -20,14 +20,14 @@ public class TokenProviderServiceImpl implements TokenProviderService {
    * Create a new jwt token and concatenate it with the token prefix.
    *
    * @param username a user username.
-   * @param roles user roles.
+   * @param role user role.
    * @return a new jwt token with the token prefix.
    */
   @Override
   @Nullable
   public String createToken(@Nonnull final String username,
-                            @Nonnull final Set<RoleName> roles) {
+                            @Nonnull final RoleName role) {
     return ApplicationConstants.Web.Security.TOKEN_PREFIX
-            + jwtTokenUtil.createToken(username, roles);
+            + jwtTokenUtil.createToken(username, role);
   }
 }

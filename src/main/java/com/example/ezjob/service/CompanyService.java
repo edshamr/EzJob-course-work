@@ -1,7 +1,6 @@
 package com.example.ezjob.service;
 
 import com.example.ezjob.model.dto.CompanyRequestDto;
-import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.persistense.entity.Company;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;

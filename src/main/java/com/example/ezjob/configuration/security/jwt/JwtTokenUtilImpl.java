@@ -48,6 +48,13 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
             .getBody().getSubject();
   }
 
+  @Nonnull
+  public String getRoles(@Nonnull final String token) {
+    final var role = Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token)
+            .getBody().get(JwtClaims.ROLE).toString();
+    return role;
+  }
+
   @Override
   @Nonnull
   public Date getExpirationDate(@Nonnull final String token) {
@@ -78,9 +85,9 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
 
   @Override
   @Nonnull
-  public String createToken(@Nonnull final String username, @Nonnull final Set<RoleName> roles) {
+  public String createToken(@Nonnull final String username, @Nonnull final RoleName role) {
     final var claims = Jwts.claims();
-    claims.put(JwtClaims.ROLES, getRoleNames(roles));
+    claims.put(JwtClaims.ROLE, role);
 
     claims.put(JwtClaims.TIME_ZONE_ID,
             Security.SERVER_TIMEZONE_ID);
@@ -142,19 +149,5 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
   private Date getCurrentZonedDateTime(@Nonnull final String timeZoneId) {
     return Date.from(ZonedDateTime.of(LocalDateTime.now(),
             ZoneId.of(timeZoneId)).toInstant());
-  }
-
-  /**
-   * Converts a set of roles to a set of strings.
-   *
-   * @param roles the set of roles that need to be converted
-   * @return set of string representation of roles
-   */
-  @Nonnull
-  private Set<String> getRoleNames(@Nonnull final Set<RoleName> roles) {
-    final var roleNames = new HashSet<String>();
-
-    roles.forEach(role -> roleNames.add(role.toString()));
-    return roleNames;
   }
 }

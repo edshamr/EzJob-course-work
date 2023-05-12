@@ -6,11 +6,7 @@ public enum RoleName {
      */
     USER,
     /**
-     * Privilege role.
+     * Company role.
      */
-    ADMIN,
-    /**
-     * Developer role.
-     */
-    DEVELOPER
+    COMPANY
 }
