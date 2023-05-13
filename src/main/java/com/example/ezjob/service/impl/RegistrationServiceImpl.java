@@ -31,14 +31,14 @@ public class RegistrationServiceImpl
     @Nullable
     public AuthenticationResponseDto registerUser(@Nonnull RegistrationRequestDto registrationRequest) {
         final var authUser = userMapper.toAuthenticationUser(registrationRequest);
+        authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
+
         final var resumeRequest = resumeMapper.toResumeRequestDto(registrationRequest);
 
-        resumeService.saveResume(resumeRequest);
-        final var savedUser = userService.saveUser(
-                authUser.getUsername(),
-                passwordEncoder.encode(authUser.getPassword()),
-                authUser.getEmail(),
-                authUser.getRole());
+        final var savedResume = resumeService.saveResume(resumeRequest);
+        authUser.setResume(savedResume);
+
+        final var savedUser = userService.saveUser(authUser);
 
         final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getRole());
 

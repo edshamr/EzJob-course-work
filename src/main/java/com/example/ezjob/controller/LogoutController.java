@@ -12,13 +12,13 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/api")
+@RequestMapping("/logout")
 @RequiredArgsConstructor
 @Slf4j
 public class LogoutController {
     private final JwtTokenService jwtTokenService;
 
-    @PostMapping("/logout")
+    @PostMapping("/expire")
     public ResponseEntity<Void> logout(@Nonnull final HttpServletRequest request) {
         jwtTokenService.expireToken(request);
         log.info("Token successfully expired");

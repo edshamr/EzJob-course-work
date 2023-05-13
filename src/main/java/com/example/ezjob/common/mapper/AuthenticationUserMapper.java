@@ -8,12 +8,13 @@ import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
 
-import java.util.Set;
-
 @Mapper(componentModel = "spring")
 public interface AuthenticationUserMapper {
+
   @Mapping(source = "role", target = "role", qualifiedByName = "toRoleNameEnum")
   AuthenticationUser toAuthenticationUser(RegistrationRequestDto registrationRequest);
+
+  @Mapping(source = "user.resume.id", target = "resumeId")
   AuthenticationResponseDto toAuthenticationResponseDto(AuthenticationUser user, String token);
 
   @Named("toRoleNameEnum")

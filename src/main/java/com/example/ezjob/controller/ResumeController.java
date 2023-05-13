@@ -1,7 +1,5 @@
 package com.example.ezjob.controller;
 
-import javax.validation.Valid;
-import javax.validation.constraints.Min;
 import com.example.ezjob.common.mapper.ResumeMapper;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.model.dto.ResumeResponseDto;
@@ -12,6 +10,9 @@ import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
+import javax.validation.constraints.Min;
+
 @RequestMapping("/resume")
 @RestController
 @RequiredArgsConstructor
@@ -19,6 +20,7 @@ import org.springframework.web.bind.annotation.*;
 public class ResumeController {
   private final ResumeService resumeService;
   private final ResumeMapper resumeMapper;
+
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
   public ResumeResponseDto createResume(ResumeRequestDto resumeRequest) {

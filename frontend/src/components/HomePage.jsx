@@ -1,11 +1,10 @@
 import styles from '../styles/HomePage.module.css'
 import axios from 'axios';
-import useRoles from "../hooks/useRoles";
 
 function HomePage() {
-    const role = useRoles();
+    console.log(localStorage.getItem('token'))
     function logout() {
-        axios.post('/api/logout', {})
+        axios.post('/api/logout/expire', {})
             .then(() => {
                 console.log("Trying to logout user");
                 localStorage.removeItem('token');
@@ -25,7 +24,7 @@ function HomePage() {
                 <button className={styles.button_home} type="submit">Найти вакансии</button>
             </form>
 
-            {role === 'USER' && (
+            {localStorage.getItem('token') && (
             <form onSubmit={logout} className={styles.form_home}>
                 <button className={styles.button_home} type="submit">Выйти</button>
             </form>

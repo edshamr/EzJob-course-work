@@ -1,7 +1,6 @@
 package com.example.ezjob.service.impl;
 
 import com.example.ezjob.persistense.entity.AuthenticationUser;
-import com.example.ezjob.persistense.entity.RoleName;
 import com.example.ezjob.persistense.repository.jpa.AuthenticationUserRepository;
 import com.example.ezjob.service.AuthenticationUserService;
 import jakarta.annotation.Nonnull;
@@ -10,7 +9,6 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Optional;
-import java.util.Set;
 
 @Service
 @RequiredArgsConstructor
@@ -35,17 +33,7 @@ public class AuthenticationUserServiceImpl implements AuthenticationUserService 
 
   @Override
   @Transactional
-  public AuthenticationUser saveUser(@Nonnull final String username,
-                                     @Nonnull final String password,
-                                     @Nonnull final String email,
-                                     @Nonnull final RoleName role) {
-    final var user = AuthenticationUser.builder()
-            .username(username)
-            .password(password)
-            .email(email)
-            .role(role)
-            .build();
-
+  public AuthenticationUser saveUser(@Nonnull final AuthenticationUser user) {
     return authenticationUserRepository.save(user);
   }
 }

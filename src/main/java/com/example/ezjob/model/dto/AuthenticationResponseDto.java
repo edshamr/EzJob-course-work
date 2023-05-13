@@ -7,5 +7,6 @@ import lombok.Value;
 @Builder
 public class AuthenticationResponseDto {
   String username;
+  Long resumeId;
   String token;
 }

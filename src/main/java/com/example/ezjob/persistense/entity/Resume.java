@@ -1,5 +1,6 @@
 package com.example.ezjob.persistense.entity;
 
+import com.example.ezjob.common.mapper.AuthenticationUserMapper;
 import jakarta.persistence.*;
 
 import java.util.List;
@@ -63,7 +64,7 @@ public class Resume {
   @Column(name = "additionalInfo")
   String additionalInfo;
 
-  @OneToOne
-  @JoinColumn(name = "auth_user_id")
+  @OneToOne(mappedBy = "resume")
   private AuthenticationUser authUser;
+
 }

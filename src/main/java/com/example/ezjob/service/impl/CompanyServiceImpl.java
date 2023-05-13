@@ -33,7 +33,7 @@ public class CompanyServiceImpl implements CompanyService {
     @Override
     public Company getCompanyById(@Nonnull Long id) {
         return companyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(
-                format("Message with id = %d not found.", id)));
+                format("Company with id = %d not found.", id)));
     }
 
     @Nonnull

@@ -8,7 +8,7 @@ const useRoles = () => {
         const token = localStorage.getItem('token');
 
         if (token) {
-            axios.get('roles/resolve', {})
+            axios.get('/api/roles/resolve', {})
                 .then((response) => {
                     const roleData = response.data;
                     setRole(roleData);

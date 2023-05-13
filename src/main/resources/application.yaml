@@ -26,4 +26,6 @@ spring:
     expirationTime: 36000000
 
 server:
+  servlet:
+      context-path: /api
   port: 8080

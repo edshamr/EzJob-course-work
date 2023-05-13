@@ -17,7 +17,7 @@ const RegistrationForm = () => {
     const [selectedRole, setSelectedRole] = useState("");
 
     useEffect(() => {
-        axios.get("roles/allRoles",{})
+        axios.get("/api/roles/allRoles",{})
             .then(response => {
                 setRoles(response.data)
             })
@@ -59,7 +59,7 @@ const RegistrationForm = () => {
         if (validateForm()) {
             console.log("Form is valid");
 
-            axios.post('/auth/registration', {
+            axios.post('/api/auth/registration', {
                 username: formData.name,
                 password: formData.password,
                 email: formData.email,
