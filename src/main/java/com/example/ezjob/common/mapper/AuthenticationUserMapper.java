@@ -4,6 +4,7 @@ import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.RoleName;
+import jakarta.annotation.Nonnull;
 import org.mapstruct.Mapper;
 import org.mapstruct.Mapping;
 import org.mapstruct.Named;
@@ -12,13 +13,13 @@ import org.mapstruct.Named;
 public interface AuthenticationUserMapper {
 
   @Mapping(source = "role", target = "role", qualifiedByName = "toRoleNameEnum")
-  AuthenticationUser toAuthenticationUser(RegistrationRequestDto registrationRequest);
+  AuthenticationUser toAuthenticationUser(@Nonnull RegistrationRequestDto registrationRequest);
 
   @Mapping(source = "user.resume.id", target = "resumeId")
-  AuthenticationResponseDto toAuthenticationResponseDto(AuthenticationUser user, String token);
+  AuthenticationResponseDto toAuthenticationResponseDto(@Nonnull AuthenticationUser user, @Nonnull String token);
 
   @Named("toRoleNameEnum")
-  default RoleName toRoleNameEnum(String role) {
+  default RoleName toRoleNameEnum(@Nonnull String role) {
     try {
       return RoleName.valueOf(role);
     } catch (IllegalArgumentException e) {

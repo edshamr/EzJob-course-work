@@ -62,6 +62,7 @@ public class AuthenticationUser {
 
   @OneToOne
   @JoinColumn(name = "resume_id")
+  @ToString.Exclude
   private Resume resume;
 
   @PrePersist
