@@ -1,6 +1,7 @@
-import styles from '../styles/ResumeForm.module.css'
+import styles from '../../styles/ResumeForm.module.css'
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 
 const initialState = {
@@ -14,11 +15,13 @@ const initialState = {
     position: "",
     university: "",
     experience: 0,
+    skills: "",
     additionalInfo: ""
 };
 
 function ResumeForm() {
     const [formData, setFormData] = useState(initialState);
+    const navigate = useNavigate();
 
     useEffect(() => {
         const resumeId = localStorage.getItem("resumeId");
@@ -32,6 +35,10 @@ function ResumeForm() {
                 }));
             })
             .catch((error) => {
+                if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
+                    localStorage.removeItem('token');
+                    navigate('/login')
+                }
                 console.log(error.response.data.description);
             });
     }, []);
@@ -50,6 +57,7 @@ function ResumeForm() {
             position: formData.position,
             university: formData.university,
             experience: formData.experience,
+            skills: formData.skills,
             additionalInfo: formData.additionalInfo
         }
 
@@ -72,7 +80,7 @@ function ResumeForm() {
         <form onSubmit={handleSubmit} className={styles.form_resume}>
             <h2 className={styles.title_resume}>Створення резюме</h2>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="firstname">Ім'я</label>
+                <label className={styles.label_form} htmlFor="firstname">Ім'я</label>
                 <input className={styles.input_form}
                        type="text"
                        id="firstname"
@@ -82,7 +90,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="lastname">Прізвище</label>
+                <label className={styles.label_form} htmlFor="lastname">Прізвище</label>
                 <input className={styles.input_form}
                        type="text" id="lastname"
                        name="lastname"
@@ -91,7 +99,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="patronymic">По-батькові</label>
+                <label className={styles.label_form} htmlFor="patronymic">По-батькові</label>
                 <input className={styles.input_form}
                        type="text" id="patronymic"
                        name="patronymic"
@@ -100,7 +108,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="email">Email</label>
+                <label className={styles.label_form} htmlFor="email">Email</label>
                 <input className={styles.input_form}
                        type="text" id="email"
                        name="email"
@@ -109,7 +117,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="city">Місто</label>
+                <label className={styles.label_form} htmlFor="city">Місто</label>
                 <input className={styles.input_form}
                        type="text" id="city"
                        name="city"
@@ -118,7 +126,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="country">Країна</label>
+                <label className={styles.label_form} htmlFor="country">Країна</label>
                 <input className={styles.input_form}
                        type="text"
                        id="country"
@@ -128,7 +136,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="phone">Телефон</label>
+                <label className={styles.label_form} htmlFor="phone">Телефон</label>
                 <input className={styles.input_form}
                        type="tel"
                        id="phone"
@@ -139,7 +147,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="position">Посада</label>
+                <label className={styles.label_form} htmlFor="position">Посада</label>
                 <input className={styles.input_form}
                        type="text"
                        id="position"
@@ -149,7 +157,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="university">Освіта</label>
+                <label className={styles.label_form} htmlFor="university">Освіта</label>
                 <input className={styles.input_form}
                        type="text"
                        id="university"
@@ -159,7 +167,7 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="experience">Досвід роботи(рік)</label>
+                <label className={styles.label_form} htmlFor="experience">Досвід роботи(рік)</label>
                 <input className={styles.input_form}
                        type="number"
                        id="experience"
@@ -169,7 +177,17 @@ function ResumeForm() {
                 />
             </div>
             <div className={styles.form_group}>
-                <label className={styles.label_form} for="additionalInfo">Додаткова інформація</label>
+                <label className={styles.label_form} htmlFor="skills">Здібності і досвід</label>
+                <textarea className={styles.input_form}
+                          id="skills"
+                          name="skills"
+                          defaultValue={formData.skills}
+                          onChange={handleChange}
+                >
+                </textarea>
+            </div>
+            <div className={styles.form_group}>
+                <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
                 <textarea className={styles.input_form}
                           id="additionalInfo"
                           name="additionalInfo"

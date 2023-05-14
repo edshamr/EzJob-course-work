@@ -21,6 +21,12 @@ const RegistrationForm = () => {
             .then(response => {
                 setRoles(response.data)
             })
+            .catch((error) => {
+                if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
+                    localStorage.removeItem('token');
+                }
+                console.log(error.response.data.description);
+            });
     },[])
 
     const validateForm = () => {

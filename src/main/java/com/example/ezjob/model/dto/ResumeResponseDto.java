@@ -24,7 +24,7 @@ public class ResumeResponseDto {
 
   String university;
 
-  List<String> skillsList;
+  String skills;
 
   int experience;
 

@@ -4,8 +4,8 @@ import { LoginForm } from './components/LoginForm';
 import { RegistrationForm } from './components/RegistrationForm';
 import { HomePage } from './components/HomePage';
 import { NotFound } from "./components/NotFound";
-import { UserProfile } from "./components/UserProfile";
-import { ResumeForm } from "./components/ResumeForm";
+import { UserProfile } from "./components/user/UserProfile";
+import { ResumeForm } from "./components/user/ResumeForm";
 
 import { Layout } from "./components/Layout";
 

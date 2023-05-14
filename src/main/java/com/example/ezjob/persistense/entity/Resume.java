@@ -54,14 +54,13 @@ public class Resume {
   @Column(name = "university")
   String university;
 
-  @ElementCollection
-  @Column(name = "skillsList")
-  List<String> skillsList;
+  @Column(name = "skills", columnDefinition = "TEXT")
+  String skills;
 
   @Column(name = "experience")
   int experience;
 
-  @Column(name = "additionalInfo")
+  @Column(name = "additionalInfo", columnDefinition = "TEXT")
   String additionalInfo;
 
   @OneToOne(mappedBy = "resume")
