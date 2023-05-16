@@ -1,10 +1,13 @@
 package com.example.ezjob.model.dto;
 
-import lombok.Builder;
-import lombok.Value;
+import lombok.AccessLevel;
+import lombok.Data;
+import lombok.experimental.FieldDefaults;
+import lombok.experimental.SuperBuilder;
 
-@Value
-@Builder
+@Data
+@FieldDefaults(level = AccessLevel.PRIVATE)
+@SuperBuilder
 public class AuthenticationResponseDto {
   String username;
   String token;

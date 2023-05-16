@@ -51,8 +51,16 @@ const LoginForm = () => {
           .then(response => {
             // Handle successful login
             const token = response.data.token;
+            const resumeId = response.data.resumeId;
+            const companyId = response.data.companyId;
             // Store the token in local storage
             localStorage.setItem('token', token);
+            if (response.data.resumeId) { 
+              localStorage.setItem('resumeId', resumeId)
+            }
+            if (response.data.companyId) {
+              localStorage.setItem('resumeId', companyId)
+            }
           })
           .catch(error => {
             // Handle login error

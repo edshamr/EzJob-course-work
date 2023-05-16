@@ -1,7 +1,9 @@
 package com.example.ezjob.common.mapper;
 
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
+import com.example.ezjob.model.dto.CompanyAuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
+import com.example.ezjob.model.dto.ResumeAuthenticationResponseDto;
 import com.example.ezjob.persistense.entity.AuthenticationUser;
 import com.example.ezjob.persistense.entity.RoleName;
 import jakarta.annotation.Nonnull;
@@ -16,6 +18,14 @@ public interface AuthenticationUserMapper {
   AuthenticationUser toAuthenticationUser(@Nonnull RegistrationRequestDto registrationRequest);
 
   AuthenticationResponseDto toAuthenticationResponseDto(@Nonnull AuthenticationUser user, @Nonnull String token);
+
+  @Mapping(source = "user.resume.id", target = "resumeId")
+  ResumeAuthenticationResponseDto toResumeAuthenticationResponseDto(@Nonnull AuthenticationUser user,
+                                                                    @Nonnull String token);
+
+  @Mapping(source = "user.company.id", target = "companyId")
+  CompanyAuthenticationResponseDto toCompanyAuthenticationResponseDto(@Nonnull AuthenticationUser user,
+                                                                      @Nonnull String token);
 
   @Named("toRoleNameEnum")
   default RoleName toRoleNameEnum(@Nonnull String role) {

@@ -5,7 +5,7 @@ import lombok.Value;
 
 @Value
 @Builder
-public class ProfileResponseDto {
+public class UserProfileResponseDto {
     String username;
     String email;
     String phone;

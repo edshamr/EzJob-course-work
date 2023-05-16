@@ -7,6 +7,7 @@ import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.model.dto.AuthenticationRequestDto;
 import com.example.ezjob.model.dto.AuthenticationResponseDto;
 import com.example.ezjob.model.dto.RegistrationRequestDto;
+import com.example.ezjob.persistense.entity.RoleName;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.RegistrationService;
 import com.example.ezjob.service.TokenProviderService;
@@ -59,7 +60,15 @@ public class AuthenticationController {
 
             final var token = tokenProviderService.createToken(user.getUsername(), user.getRole());
 
-            final var response = userMapper.toAuthenticationResponseDto(user, token);
+            AuthenticationResponseDto response = AuthenticationResponseDto.builder().build();
+
+            if (user.getRole().equals(RoleName.USER)) {
+                response = userMapper.toResumeAuthenticationResponseDto(user, token);
+            }
+            else if (user.getRole().equals(RoleName.COMPANY)) {
+                response = userMapper.toCompanyAuthenticationResponseDto(user, token);
+            }
+
             return response;
 
         } catch (AuthenticationException e) {

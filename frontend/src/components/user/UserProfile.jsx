@@ -15,21 +15,42 @@ function UserProfile() {
 
     useEffect(() => {
         const resumeId = localStorage.getItem("resumeId")
-        axios.get("/api/profile", {
-            params: {
-                resume: resumeId
-            }
-        })
-            .then(response => {
-                setProfileData((prevProfileData) => ({
-                    ...prevProfileData,
-                    ...response.data
-                }));
-                console.log(response.data)
+        const companyId = localStorage.getItem("companyId")
+        if (resumeId) {
+            axios.get("/api/user/profile", {
+                params: {
+                    resume: resumeId
+                }
             })
-            .catch(error => {
-                console.log(error.data.description)
-            });
+                .then(response => {
+                    setProfileData((prevProfileData) => ({
+                        ...prevProfileData,
+                        ...response.data
+                    }));
+                    console.log(response.data)
+                })
+                .catch(error => {
+                    console.log(error.data.description)
+                });
+        } else {
+            if (companyId) {
+                axios.get("/api/company/profile", {
+                    params: {
+                        resume: resumeId
+                    }
+                })
+                    .then(response => {
+                        setProfileData((prevProfileData) => ({
+                            ...prevProfileData,
+                            ...response.data
+                        }));
+                        console.log(response.data)
+                    })
+                    .catch(error => {
+                        console.log(error.data.description)
+                    });
+            }
+        }
     }, [])
 
     return (
