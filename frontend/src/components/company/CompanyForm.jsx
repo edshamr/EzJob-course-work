@@ -73,7 +73,7 @@ function CompanyForm() {
 
     return (
         <form onSubmit={handleSubmit} className={styles.form_resume}>
-            <h2 className={styles.title_resume}>Створення резюме</h2>
+            <h2 className={styles.title_resume}>Створення компанії</h2>
             <div className={styles.form_group}>
                 <label className={styles.label_form} htmlFor="name">Ім'я</label>
                 <input className={styles.input_form}

@@ -9,7 +9,7 @@ import javax.validation.Valid;
 
 public interface CompanyService {
   @Nullable
-  Company saveCompany(@Nonnull @Valid CompanyRequestDto requestDto);
+  Company saveCompany(@Nonnull @Valid Company company);
   @Nullable
   Company getCompanyById(@Nonnull Long id);
   @Nonnull

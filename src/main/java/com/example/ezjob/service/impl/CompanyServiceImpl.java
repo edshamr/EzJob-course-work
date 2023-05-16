@@ -24,8 +24,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     @Transactional
-    public Company saveCompany(@Nonnull @Valid CompanyRequestDto requestDto) {
-        final var company = companyMapper.toCompany(requestDto);
+    public Company saveCompany(@Nonnull @Valid Company company) {
         return companyRepository.save(company);
     }
 

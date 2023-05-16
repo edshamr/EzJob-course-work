@@ -37,7 +37,7 @@ public class CompanyController {
         final var company = companyMapper.toCompany(companyRequest);
         company.setAuthUser(authUser);
 
-        final var response = companyService.saveCompany(companyRequest);
+        final var response = companyService.saveCompany(company);
         return companyMapper.toCompanyResponseDto(response);
     }
 

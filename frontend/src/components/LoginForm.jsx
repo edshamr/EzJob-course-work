@@ -55,7 +55,7 @@ const LoginForm = () => {
             const companyId = response.data.companyId;
             // Store the token in local storage
             localStorage.setItem('token', token);
-            if (response.data.resumeId) { 
+            if (response.data.resumeId) {
               localStorage.setItem('resumeId', resumeId)
             }
             if (response.data.companyId) {
