@@ -1,10 +1,13 @@
 package com.example.ezjob.controller;
 
 import com.example.ezjob.common.mapper.CompanyMapper;
+import com.example.ezjob.configuration.security.jwt.JwtTokenUtil;
 import com.example.ezjob.model.dto.CompanyRequestDto;
 import com.example.ezjob.model.dto.CompanyResponseDto;
+import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.CompanyService;
 import jakarta.annotation.Nonnull;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -20,24 +23,34 @@ import javax.validation.constraints.Min;
 public class CompanyController {
     private final CompanyService companyService;
     private final CompanyMapper companyMapper;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AuthenticationUserService userService;
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public CompanyResponseDto createCompany(@Nonnull @Valid final CompanyRequestDto companyRequest) {
+    public CompanyResponseDto createCompany(final HttpServletRequest request,
+                                            @RequestBody @Nonnull @Valid final CompanyRequestDto companyRequest) {
+        final var token = jwtTokenUtil.parseJwt(request);
+        final var username = jwtTokenUtil.getUsername(token);
+        final var authUser = userService.getUserByUsername(username);
+
+        final var company = companyMapper.toCompany(companyRequest);
+        company.setAuthUser(authUser);
+
         final var response = companyService.saveCompany(companyRequest);
         return companyMapper.toCompanyResponseDto(response);
     }
 
     @GetMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompanyResponseDto getResumeById(@PathVariable @Nonnull @Min(1) final Long id) {
+    public CompanyResponseDto getCompanyById(@PathVariable @Nonnull @Min(1) final Long id) {
         final var response = companyService.getCompanyById(id);
         return companyMapper.toCompanyResponseDto(response);
     }
 
     @PutMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public CompanyResponseDto updateResume(@PathVariable @Nonnull @Min(1) final Long id,
+    public CompanyResponseDto updateCompany(@PathVariable @Nonnull @Min(1) final Long id,
                                           @RequestBody @Nonnull @Valid final CompanyRequestDto companyRequest) {
         final var response = companyService.updateCompany(id, companyRequest);
         return companyMapper.toCompanyResponseDto(response);
@@ -45,7 +58,7 @@ public class CompanyController {
 
     @DeleteMapping("/{id}")
     @ResponseStatus(HttpStatus.OK)
-    public void deleteResume(@PathVariable @Nonnull @Min(1) final Long id) {
+    public void deleteCompany(@PathVariable @Nonnull @Min(1) final Long id) {
         companyService.deleteCompany(id);
     }
 }

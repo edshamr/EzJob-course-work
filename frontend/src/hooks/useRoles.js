@@ -14,10 +14,9 @@ const useRoles = () => {
                     setRole(roleData);
                 })
                 .catch((error) => {
-                    if (error.response.status === 401) {
+                    if (error.response.status === 401 || error.response.status === 403) {
                         localStorage.removeItem('token');
                     }
-                    console.log(error.response.data.description);
                 });
         } else {
             console.log('Token does not exist');

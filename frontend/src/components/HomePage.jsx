@@ -6,12 +6,12 @@ function HomePage() {
     function logout() {
         axios.post('/api/logout/expire', {})
             .then(() => {
-                console.log("Trying to logout user");
                 localStorage.removeItem('token');
-                console.log("User was logged out");
             })
             .catch(error => {
-                console.log(error);
+                if (error.status === 403) {
+                    localStorage.removeItem('token');
+                }
             });
     }
 

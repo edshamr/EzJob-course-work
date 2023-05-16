@@ -23,8 +23,7 @@ public class ResumeServiceImpl implements ResumeService {
 
   @Override
   @Transactional
-  public Resume saveResume(@Nonnull @Valid ResumeRequestDto resumeDto) {
-    final var resume = resumeMapper.toResume(resumeDto);
+  public Resume saveResume(@Nonnull @Valid Resume resume) {
     return repository.save(resume);
   }
 

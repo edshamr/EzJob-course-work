@@ -15,7 +15,7 @@ import org.springframework.web.bind.annotation.ResponseStatus;
 import org.springframework.web.bind.annotation.RestController;
 
 @RestController
-@RequestMapping("/profile")
+@RequestMapping("/user/profile")
 @RequiredArgsConstructor
 public class ProfileController {
     private final ProfileMapper profileMapper;

@@ -15,7 +15,6 @@ public interface AuthenticationUserMapper {
   @Mapping(source = "role", target = "role", qualifiedByName = "toRoleNameEnum")
   AuthenticationUser toAuthenticationUser(@Nonnull RegistrationRequestDto registrationRequest);
 
-  @Mapping(source = "user.resume.id", target = "resumeId")
   AuthenticationResponseDto toAuthenticationResponseDto(@Nonnull AuthenticationUser user, @Nonnull String token);
 
   @Named("toRoleNameEnum")

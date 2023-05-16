@@ -2,7 +2,6 @@ package com.example.ezjob.model.dto;
 
 import lombok.Builder;
 import lombok.Value;
-import java.util.List;
 @Value
 @Builder
 public class ResumeResponseDto {
@@ -29,4 +28,6 @@ public class ResumeResponseDto {
   int experience;
 
   String additionalInfo;
+
+  Long resumeId;
 }

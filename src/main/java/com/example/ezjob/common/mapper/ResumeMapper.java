@@ -6,11 +6,14 @@ import com.example.ezjob.model.dto.ResumeResponseDto;
 import com.example.ezjob.persistense.entity.Resume;
 import jakarta.annotation.Nonnull;
 import org.mapstruct.Mapper;
+import org.mapstruct.Mapping;
 import org.mapstruct.MappingTarget;
 
 @Mapper(componentModel = "spring")
 public interface ResumeMapper {
   Resume toResume(@Nonnull ResumeRequestDto resumeRequest);
+  Resume toResume(@Nonnull RegistrationRequestDto registrationRequest);
+  @Mapping(source = "id", target = "resumeId")
   ResumeResponseDto toResumeResponseDto(@Nonnull Resume resume);
   ResumeRequestDto toResumeRequestDto(@Nonnull RegistrationRequestDto registrationRequest);
   void updateResume(@MappingTarget @Nonnull Resume destination, @Nonnull Resume source);

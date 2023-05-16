@@ -24,6 +24,9 @@ function Layout() {
                                 {role === "COMPANY" && (
                                     <li><CustomLink to="/vacancy">Вакансії</CustomLink></li>
                                 )}
+                                {role === "COMPANY" && (
+                                    <li><CustomLink to="/company">Компанія</CustomLink></li>
+                                )}
                                 <li><CustomLink to="/profile">Профиль</CustomLink></li>
                             </ul>
                         </div>

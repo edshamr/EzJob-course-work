@@ -1,5 +1,6 @@
 package com.example.ezjob.configuration.security.jwt;
 
+import com.example.ezjob.exception.UserNotFoundException;
 import com.example.ezjob.service.AuthenticationUserService;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
@@ -17,7 +18,7 @@ public class UserDetailsServiceImpl implements UserDetailsService {
   public UserDetails loadUserByUsername(@Nonnull final String username) throws UsernameNotFoundException {
     final var user = userService.getUserByUsername(username);
     if (user == null) {
-      throw new UsernameNotFoundException("User Not Found with username:" + username);
+        throw new UserNotFoundException("User Not Found with username:" + username);
     }
 
     return JwtUser.build(user);

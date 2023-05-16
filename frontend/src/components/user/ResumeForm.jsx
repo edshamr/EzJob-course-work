@@ -25,22 +25,25 @@ function ResumeForm() {
 
     useEffect(() => {
         const resumeId = localStorage.getItem("resumeId");
-
-        axios.get('api/resume/' + resumeId, {})
-            .then((response) => {
-                console.log(response.data);
-                setFormData((prevFormData) => ({
-                    ...prevFormData,
-                    ...response.data
-                }));
-            })
-            .catch((error) => {
-                if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
-                    localStorage.removeItem('token');
-                    navigate('/login')
-                }
-                console.log(error.response.data.description);
-            });
+        console.log(resumeId)
+        if (resumeId) {
+            console.log(resumeId)
+            axios.get('api/resume/' + resumeId, {})
+                .then((response) => {
+                    console.log(response.data);
+                    setFormData((prevFormData) => ({
+                        ...prevFormData,
+                        ...response.data
+                    }));
+                })
+                .catch((error) => {
+                    if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
+                        localStorage.removeItem('token');
+                        navigate('/login')
+                    }
+                    console.log(error.response.data.description);
+                });
+        }
     }, []);
 
     const handleSubmit = (event) => {
@@ -60,14 +63,23 @@ function ResumeForm() {
             skills: formData.skills,
             additionalInfo: formData.additionalInfo
         }
-
-        axios.put('api/resume/' + resumeId, requestDto)
-            .then((response) => {
-                console.log("OK")
-            })
-            .catch(error => {
-                console.log("Error")
-            })
+        if (resumeId) {
+            axios.put('api/resume/' + resumeId, requestDto)
+                .then((response) => {
+                    console.log("OK")
+                })
+                .catch(error => {
+                    console.log("Error")
+                })
+        } else {
+            axios.post('api/resume', requestDto)
+                .then((response) => {
+                    localStorage.setItem("resumeId", response.data.resumeId);
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
     }
 
     const handleChange = (event) => {

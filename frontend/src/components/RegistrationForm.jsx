@@ -74,10 +74,8 @@ const RegistrationForm = () => {
                 .then(response => {
                     // Handle successful login
                     const token = response.data.token;
-
                     // Store the token in local storage
                     localStorage.setItem('token', token);
-
                 })
                 .catch(error => {
                     // Handle login error

@@ -9,6 +9,7 @@ import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.ToString;
 import lombok.experimental.FieldDefaults;
 
 /**
@@ -63,7 +64,9 @@ public class Resume {
   @Column(name = "additionalInfo", columnDefinition = "TEXT")
   String additionalInfo;
 
-  @OneToOne(mappedBy = "resume")
+  @OneToOne
+  @JoinColumn(name = "auth_users_id")
+  @ToString.Exclude
   private AuthenticationUser authUser;
 
 }

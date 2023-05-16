@@ -3,21 +3,21 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 
 const initialState = {
-    username: '',
+    name: '',
     email: '',
-    phone: '',
+    stuffCount: 0,
     country: '',
-    position: ''
+    description: ''
 };
 
-function UserProfile() {
+function CompanyProfile() {
     const [profileData, setProfileData] = useState(initialState);
 
     useEffect(() => {
-        const resumeId = localStorage.getItem("resumeId")
-        axios.get("/api/profile", {
+        const companyId = localStorage.getItem("companyId")
+        axios.get("/api/company/profile", {
             params: {
-                resume: resumeId
+                resume: companyId
             }
         })
             .then(response => {
@@ -72,4 +72,4 @@ function UserProfile() {
     );
 }
 
-export {UserProfile};
+export {CompanyProfile};

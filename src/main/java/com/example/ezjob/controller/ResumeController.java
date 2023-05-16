@@ -1,10 +1,13 @@
 package com.example.ezjob.controller;
 
 import com.example.ezjob.common.mapper.ResumeMapper;
+import com.example.ezjob.configuration.security.jwt.JwtTokenUtil;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.model.dto.ResumeResponseDto;
+import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.ResumeService;
 import jakarta.annotation.Nonnull;
+import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.HttpStatus;
@@ -28,11 +31,21 @@ import javax.validation.constraints.Min;
 public class ResumeController {
   private final ResumeService resumeService;
   private final ResumeMapper resumeMapper;
+  private final JwtTokenUtil jwtTokenUtil;
+  private final AuthenticationUserService userService;
 
   @PostMapping
   @ResponseStatus(HttpStatus.CREATED)
-  public ResumeResponseDto createResume(ResumeRequestDto resumeRequest) {
-    final var response = resumeService.saveResume(resumeRequest);
+  public ResumeResponseDto createResume(final HttpServletRequest request,
+                                        @RequestBody @Nonnull @Valid final ResumeRequestDto resumeRequest) {
+    final var token = jwtTokenUtil.parseJwt(request);
+    final var username = jwtTokenUtil.getUsername(token);
+    final var authUser = userService.getUserByUsername(username);
+
+    final var resume = resumeMapper.toResume(resumeRequest);
+    resume.setAuthUser(authUser);
+
+    final var response = resumeService.saveResume(resume);
     return resumeMapper.toResumeResponseDto(response);
   }
 

@@ -4,24 +4,34 @@ import com.example.ezjob.common.mapper.VacancyMapper;
 import com.example.ezjob.exception.CompanyNotFoundException;
 import com.example.ezjob.exception.VacancyNotFoundException;
 import com.example.ezjob.model.dto.VacancyRequestDto;
+import com.example.ezjob.persistense.entity.Company;
 import com.example.ezjob.persistense.entity.Vacancy;
 import com.example.ezjob.persistense.repository.jpa.VacancyRepository;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
+import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
+
+import java.util.List;
 
 import static java.lang.String.format;
 
 @Service
+@RequiredArgsConstructor
 public class VacancyServiceImpl implements VacancyService {
-    private VacancyRepository vacancyRepository;
-    private VacancyMapper vacancyMapper;
+    private final VacancyRepository vacancyRepository;
+    private final VacancyMapper vacancyMapper;
+
+    @Nullable
+    public List<Vacancy> getAllCompanyVacancies(@Nonnull Company company) {
+        final var vacancies = company.getVacancies();
+        return vacancies;
+    }
 
     @Nullable
     @Override
-    public Vacancy saveVacancy(@Nonnull VacancyRequestDto requestDto) {
-        final var vacancy = vacancyMapper.toVacancy(requestDto);
+    public Vacancy saveVacancy(@Nonnull Vacancy vacancy) {
         return vacancyRepository.save(vacancy);
     }
 

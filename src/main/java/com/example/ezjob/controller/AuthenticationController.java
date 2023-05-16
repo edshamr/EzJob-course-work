@@ -18,7 +18,11 @@ import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.AuthenticationException;
 import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
@@ -29,52 +33,53 @@ import javax.validation.constraints.NotNull;
 @Slf4j
 @Validated
 public class AuthenticationController {
-  private final AuthenticationManager authenticationManager;
-  private final RegistrationService userRegistrationService;
-  private final AuthUserValidator userValidator;
-  private final AuthenticationUserMapper userMapper;
-  private final AuthenticationUserService userService;
-  private final TokenProviderService tokenProviderService;
-  @PostMapping("/login")
-  @ResponseStatus(HttpStatus.OK)
-  public AuthenticationResponseDto login(
-          @NotNull @Valid @RequestBody final AuthenticationRequestDto requestDto) {
-    final var username = requestDto.getUsername();
-    final var password = requestDto.getPassword();
+    private final AuthenticationManager authenticationManager;
+    private final RegistrationService userRegistrationService;
+    private final AuthUserValidator userValidator;
+    private final AuthenticationUserMapper userMapper;
+    private final AuthenticationUserService userService;
+    private final TokenProviderService tokenProviderService;
 
-    try {
-      authenticationManager.authenticate(
-              new UsernamePasswordAuthenticationToken(username, password));
+    @PostMapping("/login")
+    @ResponseStatus(HttpStatus.OK)
+    public AuthenticationResponseDto login(
+            @NotNull @Valid @RequestBody final AuthenticationRequestDto requestDto) {
+        final var username = requestDto.getUsername();
+        final var password = requestDto.getPassword();
 
-      final var user = userService.getUserByUsername(username);
+        try {
+            authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(username, password));
 
-      if (user == null) {
-        throw new UserNotFoundException("User was not found");
-      }
+            final var user = userService.getUserByUsername(username);
 
-      final var token = tokenProviderService.createToken(user.getUsername(), user.getRole());
+            if (user == null) {
+                throw new UserNotFoundException("User was not found");
+            }
 
-      final var response = userMapper.toAuthenticationResponseDto(user, token);
-      return response;
+            final var token = tokenProviderService.createToken(user.getUsername(), user.getRole());
 
-    } catch (AuthenticationException e) {
-      throw new BadCredentialsException("Invalid username or password");
-    }
-  }
+            final var response = userMapper.toAuthenticationResponseDto(user, token);
+            return response;
 
-  @PostMapping(value = "/registration")
-  @ResponseStatus(HttpStatus.CREATED)
-  public AuthenticationResponseDto register(
-          @Valid @NotNull @RequestBody final RegistrationRequestDto registrationRequest) {
-    final var username = registrationRequest.getUsername();
-    final var email = registrationRequest.getEmail();
-
-    if (userValidator.isEmailExistInDb(email) || userValidator.isUsernameExistInDb(username)) {
-      throw new UserAlreadyExistException("User already exist.");
+        } catch (AuthenticationException e) {
+            throw new BadCredentialsException("Invalid username or password");
+        }
     }
 
-    final var response = userRegistrationService.registerUser(registrationRequest);
+    @PostMapping(value = "/registration")
+    @ResponseStatus(HttpStatus.CREATED)
+    public AuthenticationResponseDto register(
+            @Valid @NotNull @RequestBody final RegistrationRequestDto registrationRequest) {
+        final var username = registrationRequest.getUsername();
+        final var email = registrationRequest.getEmail();
 
-    return response;
-  }
+        if (userValidator.isEmailExistInDb(email) || userValidator.isUsernameExistInDb(username)) {
+            throw new UserAlreadyExistException("User already exist.");
+        }
+
+        final var response = userRegistrationService.registerUser(registrationRequest);
+
+        return response;
+    }
 }
