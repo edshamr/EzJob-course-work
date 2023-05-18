@@ -4,9 +4,9 @@ import com.example.ezjob.common.mapper.VacancyMapper;
 import com.example.ezjob.exception.CompanyNotFoundException;
 import com.example.ezjob.exception.VacancyNotFoundException;
 import com.example.ezjob.model.dto.VacancyRequestDto;
-import com.example.ezjob.persistense.entity.Company;
 import com.example.ezjob.persistense.entity.Vacancy;
 import com.example.ezjob.persistense.repository.jpa.VacancyRepository;
+import com.example.ezjob.service.CompanyService;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
@@ -22,16 +22,25 @@ import static java.lang.String.format;
 public class VacancyServiceImpl implements VacancyService {
     private final VacancyRepository vacancyRepository;
     private final VacancyMapper vacancyMapper;
+    private final CompanyService companyService;
 
     @Nullable
-    public List<Vacancy> getAllCompanyVacancies(@Nonnull Company company) {
+    @Override
+    public List<Vacancy> getAllCompanyVacancies(@Nonnull Long id) {
+        final var company = companyService.getCompanyById(id);
+
         final var vacancies = company.getVacancies();
         return vacancies;
     }
 
     @Nullable
     @Override
-    public Vacancy saveVacancy(@Nonnull Vacancy vacancy) {
+    public Vacancy saveVacancy(@Nonnull VacancyRequestDto requestDto) {
+        final var vacancy = vacancyMapper.toVacancy(requestDto);
+
+        final var company = companyService.getCompanyById(requestDto.getCompanyId());
+        vacancy.setCompany(company);
+
         return vacancyRepository.save(vacancy);
     }
 
@@ -44,14 +53,18 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Nonnull
     @Override
-    public Vacancy updateVacancy(@Nonnull Long id, @Nonnull VacancyRequestDto requestDto) {
-        final var companyToUpdate = vacancyRepository.findById(id).orElseThrow(() -> new CompanyNotFoundException(
-                format("Message with id = %d not found.", id)));
-        final var company = vacancyMapper.toVacancy(requestDto);
+    public Vacancy updateVacancy(@Nonnull Long vacancyId, @Nonnull VacancyRequestDto requestDto) {
+        final var vacancyToUpdate = vacancyRepository.findById(vacancyId).orElseThrow(() -> new CompanyNotFoundException(
+                format("Message with id = %d not found.", vacancyId)));
+        final var company = companyService.getCompanyById(requestDto.getCompanyId());
 
-        vacancyMapper.updateVacancy(companyToUpdate, company);
+        final var vacancy = vacancyMapper.toVacancy(requestDto);
+        vacancy.setId(vacancyId);
+        vacancy.setCompany(company);
 
-        return vacancyRepository.save(companyToUpdate);
+        vacancyMapper.updateVacancy(vacancyToUpdate, vacancy);
+
+        return vacancyRepository.save(vacancyToUpdate);
     }
 
     @Override

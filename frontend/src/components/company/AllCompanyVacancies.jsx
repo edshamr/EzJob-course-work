@@ -1,8 +1,8 @@
 import {useEffect, useState} from "react";
 import axios from "axios";
-import VacancyList from "./VacancyList";
+import CompanyVacancyList from "./CompanyVacancyList";
 
-function CompanyVacancies() {
+function AllCompanyVacancies() {
     const [vacancies, setVacancies] = useState([]);
 
     useEffect(() => {
@@ -10,7 +10,7 @@ function CompanyVacancies() {
         if (companyId) {
             axios.get("/api/vacancy", {
                 params: {
-                    id: companyId
+                    companyId: companyId
                 }
             })
                 .then(response => {
@@ -23,10 +23,10 @@ function CompanyVacancies() {
     return (
         <div>
             <div>
-                <VacancyList vacancies={vacancies}/>
+                <CompanyVacancyList vacancies={vacancies}/>
             </div>
         </div>
     );
 }
 
-export {CompanyVacancies};
+export {AllCompanyVacancies};

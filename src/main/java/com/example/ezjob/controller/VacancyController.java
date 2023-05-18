@@ -3,12 +3,12 @@ package com.example.ezjob.controller;
 import com.example.ezjob.common.mapper.VacancyMapper;
 import com.example.ezjob.model.dto.VacancyRequestDto;
 import com.example.ezjob.model.dto.VacancyResponseDto;
-import com.example.ezjob.persistense.entity.Company;
 import com.example.ezjob.service.CompanyService;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
@@ -30,14 +30,12 @@ import java.util.List;
 public class VacancyController {
     private final VacancyService vacancyService;
     private final VacancyMapper vacancyMapper;
-    private final CompanyService companyService;
 
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
-    public List<VacancyResponseDto> getAllCompanyVacancies(@RequestParam @Nonnull @Min(1) final Long id) {
-        final var company = companyService.getCompanyById(id);
+    public List<VacancyResponseDto> getAllCompanyVacancies(@RequestParam @Nonnull @Min(1) final Long companyId) {
+        final var vacancies = vacancyService.getAllCompanyVacancies(companyId);
 
-        final var vacancies = vacancyService.getAllCompanyVacancies(company);
         final var response = vacancies.stream()
                 .map(vacancyMapper::toVacancyResponseDto)
                 .toList();
@@ -47,15 +45,8 @@ public class VacancyController {
 
     @PostMapping
     @ResponseStatus(HttpStatus.CREATED)
-    public VacancyResponseDto createVacancy(@RequestBody @Nonnull VacancyRequestDto requestDto,
-                                            @RequestParam @Nonnull Long companyId) {
-        final var vacancy = vacancyMapper.toVacancy(requestDto);
-
-        final var company = companyService.getCompanyById(companyId);
-        vacancy.setCompany(company);
-
-        final var response = vacancyService.saveVacancy(vacancy);
-
+    public VacancyResponseDto createVacancy(@RequestBody @Nonnull VacancyRequestDto requestDto) {
+        final var response = vacancyService.saveVacancy(requestDto);
         return vacancyMapper.toVacancyResponseDto(response);
     }
 
@@ -72,7 +63,6 @@ public class VacancyController {
     public VacancyResponseDto updateVacancy(@PathVariable @Nonnull @Min(1) final Long id,
                                             @RequestBody @Nonnull @Valid final VacancyRequestDto vacancyRequest) {
         final var response = vacancyService.updateVacancy(id, vacancyRequest);
-
         return vacancyMapper.toVacancyResponseDto(response);
     }
 

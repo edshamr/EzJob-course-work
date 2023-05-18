@@ -10,6 +10,6 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface VacancyMapper {
     Vacancy toVacancy(@Nonnull VacancyRequestDto requestDto);
-    VacancyResponseDto toVacancyResponseDto( @Nonnull Vacancy requestDto);
+    VacancyResponseDto toVacancyResponseDto( @Nonnull Vacancy vacancy);
     void updateVacancy(@MappingTarget @Nonnull Vacancy destination, @Nonnull Vacancy source);
 }

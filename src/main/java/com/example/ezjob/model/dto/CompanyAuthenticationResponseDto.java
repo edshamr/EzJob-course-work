@@ -1,6 +1,5 @@
 package com.example.ezjob.model.dto;
 
-import lombok.Builder;
 import lombok.EqualsAndHashCode;
 import lombok.Value;
 import lombok.experimental.SuperBuilder;

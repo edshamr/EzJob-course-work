@@ -1,5 +1,6 @@
 package com.example.ezjob.configuration.security.jwt;
 
+import com.example.ezjob.common.validation.AllowedPathValidator;
 import io.jsonwebtoken.JwtException;
 import jakarta.annotation.Nonnull;
 import jakarta.servlet.FilterChain;
@@ -16,26 +17,30 @@ import java.io.IOException;
 @RequiredArgsConstructor
 public class JwtRequestFilter extends OncePerRequestFilter {
     private final JwtTokenUtil jwtTokenUtil;
+    private final AllowedPathValidator pathValidator;
 
     @Override
     protected void doFilterInternal(@Nonnull final HttpServletRequest request,
                                     @Nonnull final HttpServletResponse response,
                                     @Nonnull final FilterChain filterChain) throws ServletException, IOException {
-        try {
-            final var token = jwtTokenUtil.parseJwt(request);
+        final var token = jwtTokenUtil.parseJwt(request);
 
-            if (token != null && jwtTokenUtil.isTokenValid(token)) {
-                final var authentication = jwtTokenUtil.getAuthentication(token);
+        if (token != null && jwtTokenUtil.isTokenValid(token)) {
+            final var authentication = jwtTokenUtil.getAuthentication(token);
+            final var userRole = jwtTokenUtil.getRoles(token);
 
-                if (authentication != null) {
-                    SecurityContextHolder.getContext().setAuthentication(authentication);
-                }
+            if (authentication != null) {
+                SecurityContextHolder.getContext().setAuthentication(authentication);
             }
-            filterChain.doFilter(request, response);
-        } catch (RuntimeException e) {
-            handleException(response, e);
+
+            final var isAllowed = pathValidator.isPathAllowed(request.getRequestURI(), userRole);
+            if (!isAllowed) {
+                throw new RuntimeException("Something");
+            }
         }
+        filterChain.doFilter(request, response);
     }
+
 
     private void handleException(HttpServletResponse response, RuntimeException e) throws IOException {
         if (e instanceof JwtException) {

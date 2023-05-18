@@ -21,7 +21,6 @@ function CompanyForm() {
         if (companyId) {
             axios.get('api/company/' + companyId, {})
                 .then((response) => {
-                    console.log(response.data);
                     setFormData((prevFormData) => ({
                         ...prevFormData,
                         ...response.data

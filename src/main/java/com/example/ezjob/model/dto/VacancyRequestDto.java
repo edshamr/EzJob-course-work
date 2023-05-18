@@ -3,10 +3,11 @@ package com.example.ezjob.model.dto;
 import lombok.Builder;
 import lombok.Value;
 
-@Value
-@Builder
-public class VacancyRequestDto {
-    String title;
-    String description;
-    String additionalInfo;
-}
+    @Value
+    @Builder
+    public class VacancyRequestDto {
+        Long companyId;
+        String title;
+        String description;
+        String additionalInfo;
+    }

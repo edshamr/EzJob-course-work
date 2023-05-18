@@ -55,11 +55,11 @@ const LoginForm = () => {
             const companyId = response.data.companyId;
             // Store the token in local storage
             localStorage.setItem('token', token);
-            if (response.data.resumeId) {
+            if (resumeId) {
               localStorage.setItem('resumeId', resumeId)
             }
-            if (response.data.companyId) {
-              localStorage.setItem('resumeId', companyId)
+            if (companyId) {
+              localStorage.setItem('companyId', companyId)
             }
           })
           .catch(error => {

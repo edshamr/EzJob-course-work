@@ -1,13 +1,15 @@
 import styles from '../../styles/UserProfile.module.css'
 import {useEffect, useState} from "react";
 import axios from "axios";
+import {Link} from "react-router-dom";
 
 const initialState = {
     name: '',
     email: '',
     stuffCount: 0,
     country: '',
-    description: ''
+    description: '',
+    additionalInfo: ''
 };
 
 function CompanyProfile() {
@@ -17,7 +19,7 @@ function CompanyProfile() {
         const companyId = localStorage.getItem("companyId")
         axios.get("/api/company/profile", {
             params: {
-                resume: companyId
+                company: companyId
             }
         })
             .then(response => {
@@ -25,7 +27,6 @@ function CompanyProfile() {
                     ...prevProfileData,
                     ...response.data
                 }));
-                console.log(response.data)
             })
             .catch(error => {
                 console.log(error.data.description)
@@ -34,6 +35,9 @@ function CompanyProfile() {
 
     return (
         <>
+            <div className={styles.layout_a}>
+                <Link to="/company" className={styles.apply_button}>Редагувати</Link>
+            </div>
             <div className={styles.container}>
                 <div className={styles.card}>
                     <div className={styles.card_header}>
@@ -43,26 +47,30 @@ function CompanyProfile() {
                                  alt="User Avatar"/>
                         </div>
                         <div className={styles.card_title}>
-                            <h1 className={styles.user_name}>{profileData.username}</h1>
+                            <h1 className={styles.user_name}>{profileData.name}</h1>
                         </div>
                     </div>
                     <div className={styles.card_body}>
                         <ul className={styles.ul_body}>
                             <li className={styles.user_info}>
-                                <span className={styles.user_span}>Email:</span>
-                                {profileData.email}
-                            </li>
-                            <li className={styles.user_info}>
-                                <span className={styles.user_span}>Phone:</span>
-                                {profileData.phone}
-                            </li>
-                            <li className={styles.user_info}>
-                                <span className={styles.user_span}>Address:</span>
+                                <span className={styles.user_span}>Country:</span>
                                 {profileData.country}
                             </li>
                             <li className={styles.user_info}>
-                                <span className={styles.user_span}>Education:</span>
-                                {profileData.position}
+                                <span className={styles.user_span}>Stuff count:</span>
+                                {profileData.stuffCount}
+                            </li>
+                            <li className={styles.user_info}>
+                                <div>
+                                    <span className={styles.user_span}>Description:</span>
+                                </div>
+                                {profileData.description}
+                            </li>
+                            <li className={styles.user_info}>
+                                <div>
+                                    <span className={styles.user_span}>Additional information:</span>
+                                </div>
+                                {profileData.additionalInfo}
                             </li>
                         </ul>
                     </div>

@@ -1,12 +1,7 @@
 import styles from '../../styles/vacancy_list.module.css'
 import {Link} from "react-router-dom";
 
-const VacancyList = ({ vacancies }) => {
-    const handleVacancyClick = (vacancyId) => {
-        // Redirect to the detail page for the selected vacancy
-        console.log("IN handler");
-    };
-
+const CompanyVacancyList = ({ vacancies }) => {
     return (
         <>
         <div className={styles.layout_a}>
@@ -17,9 +12,8 @@ const VacancyList = ({ vacancies }) => {
                 <div className={styles.vacancy_item} key={vacancy.id}>
                     <div className={styles.vacancy_info}>
                         <div className={styles.vacancy_title}>{vacancy.title}</div>
-                        <div className={styles.vacancy_description}>{vacancy.description}</div>
                     </div>
-                    <button className={styles.apply_button} onClick={() => handleVacancyClick(vacancy.id)}>View Details</button>
+                    <Link to={`/company/vacancy/${vacancy.id}`} className={styles.apply_button}>View Details</Link>
                 </div>
                 ))}
         </div>
@@ -27,4 +21,4 @@ const VacancyList = ({ vacancies }) => {
     );
 };
 
-export default VacancyList;
+export default CompanyVacancyList;

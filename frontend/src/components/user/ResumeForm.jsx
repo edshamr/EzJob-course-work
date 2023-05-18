@@ -25,12 +25,9 @@ function ResumeForm() {
 
     useEffect(() => {
         const resumeId = localStorage.getItem("resumeId");
-        console.log(resumeId)
         if (resumeId) {
-            console.log(resumeId)
             axios.get('api/resume/' + resumeId, {})
                 .then((response) => {
-                    console.log(response.data);
                     setFormData((prevFormData) => ({
                         ...prevFormData,
                         ...response.data

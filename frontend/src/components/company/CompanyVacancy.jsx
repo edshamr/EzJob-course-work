@@ -1,33 +1,55 @@
-import React, {useState} from "react";
-import styles from "../../styles/ResumeForm.module.css";
+import React, {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
+import styles from "../../styles/ResumeForm.module.css";
+import useRoles from "../../hooks/useRoles";
 
 
 const initialState = {
-    id: 0,
+    companyId: 0,
     title: "",
     description: "",
     additionalInfo: ""
 };
-function VacancyForm() {
-    const [formData, setFormData] = useState(initialState);
+
+function CompanyVacancy() {
+    const role = useRoles();
     const navigate = useNavigate();
+
+    const path = window.location.pathname;
+    const pathSegments = path.split('/');
+    const vacancyId = pathSegments[pathSegments.length - 1];
+
+    const [vacancyData, setVacancyData] = useState(initialState);
+
+    useEffect(() => {
+        axios.get("/api/vacancy/" + vacancyId)
+            .then(response => {
+                setVacancyData((prevVacancyData) => ({
+                    ...prevVacancyData,
+                    ...response.data
+                }));
+            })
+            .catch((error) => {
+                if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
+                    localStorage.removeItem('token');
+                    navigate('/login')
+                }
+                console.log(error.response.data.description);
+            });
+    }, [])
 
     const handleSubmit = (event) => {
         event.preventDefault();
         const companyId = localStorage.getItem("companyId");
         const requestDto = {
-            title: formData.title,
-            description: formData.description,
-            additionalInfo: formData.additionalInfo
+            companyId: companyId,
+            title: vacancyData.title,
+            description: vacancyData.description,
+            additionalInfo: vacancyData.additionalInfo
         };
         if (companyId) {
-            axios.post('/api/vacancy', requestDto, {
-                params: {
-                    companyId: companyId
-                }
-            })
+            axios.put('/api/vacancy/' + vacancyId, requestDto)
                 .then((response) => {
                     navigate('/vacancy')
                 })
@@ -40,8 +62,8 @@ function VacancyForm() {
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        const {name, value} = event.target;
+        setVacancyData({...vacancyData, [name]: value});
     };
 
     return (
@@ -53,7 +75,7 @@ function VacancyForm() {
                        type="text"
                        id="title"
                        name="title"
-                       defaultValue={formData.title}
+                       defaultValue={vacancyData.title}
                        onChange={handleChange}
                 />
             </div>
@@ -62,7 +84,7 @@ function VacancyForm() {
                 <textarea className={styles.input_form}
                           id="description"
                           name="description"
-                          defaultValue={formData.description}
+                          defaultValue={vacancyData.description}
                           onChange={handleChange}
                 >
                 </textarea>
@@ -72,7 +94,7 @@ function VacancyForm() {
                 <textarea className={styles.input_form}
                           id="additionalInfo"
                           name="additionalInfo"
-                          defaultValue={formData.additionalInfo}
+                          defaultValue={vacancyData.additionalInfo}
                           onChange={handleChange}
                 >
                 </textarea>
@@ -84,4 +106,4 @@ function VacancyForm() {
     );
 }
 
-export {VacancyForm};
+export {CompanyVacancy};
