@@ -26,6 +26,13 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Nullable
     @Override
+    public List<Vacancy> getAllVacancies(@Nullable String title) {
+        final var vacancies = vacancyRepository.findVacancyByTitle(title);
+        return vacancies;
+    }
+
+    @Nullable
+    @Override
     public List<Vacancy> getAllCompanyVacancies(@Nonnull Long id) {
         final var company = companyService.getCompanyById(id);
 

@@ -6,6 +6,7 @@ import com.example.ezjob.model.dto.VacancyResponseDto;
 import com.example.ezjob.service.CompanyService;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.security.access.prepost.PreAuthorize;
@@ -31,10 +32,22 @@ public class VacancyController {
     private final VacancyService vacancyService;
     private final VacancyMapper vacancyMapper;
 
-    @GetMapping
+    @GetMapping("/company")
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyResponseDto> getAllCompanyVacancies(@RequestParam @Nonnull @Min(1) final Long companyId) {
         final var vacancies = vacancyService.getAllCompanyVacancies(companyId);
+
+        final var response = vacancies.stream()
+                .map(vacancyMapper::toVacancyResponseDto)
+                .toList();
+
+        return response;
+    }
+
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<VacancyResponseDto> getAllVacancies(@RequestParam @Nullable String title) {
+        final var vacancies = vacancyService.getAllVacancies(title);
 
         final var response = vacancies.stream()
                 .map(vacancyMapper::toVacancyResponseDto)

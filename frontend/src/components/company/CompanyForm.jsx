@@ -2,6 +2,8 @@ import styles from '../../styles/ResumeForm.module.css'
 import React, {useState, useEffect} from 'react';
 import axios from 'axios';
 import {useNavigate} from "react-router-dom";
+import useRoles from "../../hooks/useRoles";
+import {NotFound} from "../error/NotFound";
 
 
 const initialState = {
@@ -14,10 +16,17 @@ const initialState = {
 
 function CompanyForm() {
     const [formData, setFormData] = useState(initialState);
+    const [error, setError] = useState(false);
     const navigate = useNavigate();
+    const role = useRoles();
 
     useEffect(() => {
         const companyId = localStorage.getItem("companyId");
+        if (role !== "COMPANY") {
+            setError(true);
+        } else {
+            setError(false)
+        }
         if (companyId) {
             axios.get('api/company/' + companyId, {})
                 .then((response) => {
@@ -34,7 +43,7 @@ function CompanyForm() {
                     console.log(error.response.data.description);
                 });
         }
-    }, []);
+    }, [role]);
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -66,58 +75,62 @@ function CompanyForm() {
     }
 
     const handleChange = (event) => {
-        const { name, value } = event.target;
-        setFormData({ ...formData, [name]: value });
+        const {name, value} = event.target;
+        setFormData({...formData, [name]: value});
     };
 
-    return (
-        <form onSubmit={handleSubmit} className={styles.form_resume}>
-            <h2 className={styles.title_resume}>Створення компанії</h2>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="name">Ім'я</label>
-                <input className={styles.input_form}
-                       type="text"
-                       id="name"
-                       name="name"
-                       defaultValue={formData.name}
-                       onChange={handleChange}
-                />
-            </div>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="country">Країна</label>
-                <input className={styles.input_form}
-                       type="text"
-                       id="country"
-                       name="country"
-                       defaultValue={formData.country}
-                       onChange={handleChange}
-                />
-            </div>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
-                <textarea className={styles.input_form}
-                          id="description"
-                          name="description"
-                          defaultValue={formData.description}
-                          onChange={handleChange}
-                >
+    if (error) {
+        return <NotFound />
+    } else {
+        return (
+            <form onSubmit={handleSubmit} className={styles.form_resume}>
+                <h2 className={styles.title_resume}>Створення компанії</h2>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="name">Ім'я</label>
+                    <input className={styles.input_form}
+                           type="text"
+                           id="name"
+                           name="name"
+                           defaultValue={formData.name}
+                           onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="country">Країна</label>
+                    <input className={styles.input_form}
+                           type="text"
+                           id="country"
+                           name="country"
+                           defaultValue={formData.country}
+                           onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
+                    <textarea className={styles.input_form}
+                              id="description"
+                              name="description"
+                              defaultValue={formData.description}
+                              onChange={handleChange}
+                    >
                 </textarea>
-            </div>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
-                <textarea className={styles.input_form}
-                          id="additionalInfo"
-                          name="additionalInfo"
-                          defaultValue={formData.additionalInfo}
-                          onChange={handleChange}
-                >
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
+                    <textarea className={styles.input_form}
+                              id="additionalInfo"
+                              name="additionalInfo"
+                              defaultValue={formData.additionalInfo}
+                              onChange={handleChange}
+                    >
                 </textarea>
-            </div>
-            <div className={styles.form_group}>
-                <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
-            </div>
-        </form>
-    );
+                </div>
+                <div className={styles.form_group}>
+                    <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
+                </div>
+            </form>
+        );
+    }
 }
 
 export {CompanyForm};

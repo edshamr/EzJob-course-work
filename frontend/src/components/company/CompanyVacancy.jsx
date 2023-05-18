@@ -3,6 +3,7 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import styles from "../../styles/ResumeForm.module.css";
 import useRoles from "../../hooks/useRoles";
+import {NotFound} from "../error/NotFound";
 
 
 const initialState = {
@@ -21,23 +22,31 @@ function CompanyVacancy() {
     const vacancyId = pathSegments[pathSegments.length - 1];
 
     const [vacancyData, setVacancyData] = useState(initialState);
+    const [error, setError] = useState(false);
 
     useEffect(() => {
-        axios.get("/api/vacancy/" + vacancyId)
-            .then(response => {
-                setVacancyData((prevVacancyData) => ({
-                    ...prevVacancyData,
-                    ...response.data
-                }));
-            })
-            .catch((error) => {
-                if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
-                    localStorage.removeItem('token');
-                    navigate('/login')
-                }
-                console.log(error.response.data.description);
-            });
-    }, [])
+        if (role !== "COMPANY") {
+            setError(true);
+        } else {
+            setError(false);
+        }
+        if (vacancyId) {
+            axios.get("/api/vacancy/" + vacancyId)
+                .then(response => {
+                    setVacancyData((prevVacancyData) => ({
+                        ...prevVacancyData,
+                        ...response.data
+                    }));
+                })
+                .catch((error) => {
+                    if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
+                        localStorage.removeItem('token');
+                        navigate('/login')
+                    }
+                    console.log(error.response.data.description);
+                });
+        }
+    }, [role])
 
     const handleSubmit = (event) => {
         event.preventDefault();
@@ -51,7 +60,7 @@ function CompanyVacancy() {
         if (companyId) {
             axios.put('/api/vacancy/' + vacancyId, requestDto)
                 .then((response) => {
-                    navigate('/vacancy')
+                    navigate('/company/vacancy')
                 })
                 .catch(error => {
                     console.log("Error");
@@ -66,44 +75,48 @@ function CompanyVacancy() {
         setVacancyData({...vacancyData, [name]: value});
     };
 
-    return (
-        <form onSubmit={handleSubmit} className={styles.form_resume}>
-            <h2 className={styles.title_resume}>Створення вакансії</h2>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="title">Заголовок</label>
-                <input className={styles.input_form}
-                       type="text"
-                       id="title"
-                       name="title"
-                       defaultValue={vacancyData.title}
-                       onChange={handleChange}
-                />
-            </div>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
-                <textarea className={styles.input_form}
-                          id="description"
-                          name="description"
-                          defaultValue={vacancyData.description}
-                          onChange={handleChange}
-                >
+    if (error) {
+        return <NotFound/>
+    } else {
+        return (
+            <form onSubmit={handleSubmit} className={styles.form_resume}>
+                <h2 className={styles.title_resume}>Створення вакансії</h2>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="title">Заголовок</label>
+                    <input className={styles.input_form}
+                           type="text"
+                           id="title"
+                           name="title"
+                           defaultValue={vacancyData.title}
+                           onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
+                    <textarea className={styles.input_form}
+                              id="description"
+                              name="description"
+                              defaultValue={vacancyData.description}
+                              onChange={handleChange}
+                    >
                 </textarea>
-            </div>
-            <div className={styles.form_group}>
-                <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
-                <textarea className={styles.input_form}
-                          id="additionalInfo"
-                          name="additionalInfo"
-                          defaultValue={vacancyData.additionalInfo}
-                          onChange={handleChange}
-                >
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
+                    <textarea className={styles.input_form}
+                              id="additionalInfo"
+                              name="additionalInfo"
+                              defaultValue={vacancyData.additionalInfo}
+                              onChange={handleChange}
+                    >
                 </textarea>
-            </div>
-            <div className={styles.form_group}>
-                <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
-            </div>
-        </form>
-    );
+                </div>
+                <div className={styles.form_group}>
+                    <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
+                </div>
+            </form>
+        );
+    }
 }
 
 export {CompanyVacancy};

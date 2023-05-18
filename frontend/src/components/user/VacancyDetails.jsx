@@ -10,7 +10,7 @@ const initialState = {
     additionalInfo: ""
 };
 
-function VacancyDetails() {
+function VacancyDetails(vacancies) {
     const navigate = useNavigate();
 
     const path = window.location.pathname;
@@ -20,7 +20,6 @@ function VacancyDetails() {
     const [vacancyData, setVacancyData] = useState(initialState);
 
     useEffect(() => {
-        console.log(vacancyId)
         axios.get("/api/vacancy/" + vacancyId)
             .then(response => {
                 setVacancyData((prevVacancyData) => ({

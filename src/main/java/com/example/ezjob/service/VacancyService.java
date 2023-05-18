@@ -9,6 +9,9 @@ import javax.validation.Valid;
 import java.util.List;
 
 public interface VacancyService {
+
+  @Nullable
+  List<Vacancy> getAllVacancies(@Nullable String title);
   @Nullable
   List<Vacancy> getAllCompanyVacancies(@Nonnull Long companyId);
   @Nullable

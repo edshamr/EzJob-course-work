@@ -3,7 +3,7 @@ import {Routes, Route} from "react-router-dom";
 import {LoginForm} from './components/LoginForm';
 import {RegistrationForm} from './components/RegistrationForm';
 import {HomePage} from './components/HomePage';
-import {NotFound} from "./components/NotFound";
+import {NotFound} from "./components/error/NotFound";
 import {UserProfile} from "./components/user/UserProfile";
 import {ResumeForm} from "./components/user/ResumeForm";
 import {AllCompanyVacancies} from "./components/company/AllCompanyVacancies";
@@ -14,6 +14,7 @@ import {VacancyForm} from "./components/company/VacancyForm";
 import {CompanyProfile} from "./components/company/CompanyProfile";
 import {VacancyDetails} from "./components/user/VacancyDetails";
 import {CompanyVacancy} from "./components/company/CompanyVacancy";
+import {UserVacancyList} from "./components/user/UserVacancyList";
 
 export default function App() {
     return (
@@ -27,9 +28,10 @@ export default function App() {
                         <Route path="user/profile" element={<UserProfile/>}/>
                         <Route path="company/profile" element={<CompanyProfile/>}/>
                         <Route path="resume" element={<ResumeForm/>}/>
-                        <Route path="vacancy" element={<AllCompanyVacancies/>}/>
-                        <Route path="vacancy/form" element={<VacancyForm/>}/>
-                        <Route path="vacancy/:id" element={<VacancyDetails/>}/>
+                        <Route path="company/vacancy" element={<AllCompanyVacancies/>}/>
+                        <Route path="company/vacancy/form" element={<VacancyForm/>}/>
+                        <Route path="user/vacancy/:id" element={<VacancyDetails/>}/>
+                        <Route path="user/vacancy" element={<UserVacancyList/>}/>
                         <Route path="company/vacancy/:id" element={<CompanyVacancy/>}/>
                         <Route path="company" element={<CompanyForm/>}/>
                         <Route path="*" element={<NotFound/>}/>

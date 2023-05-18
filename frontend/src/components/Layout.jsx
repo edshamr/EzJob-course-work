@@ -22,11 +22,12 @@ function Layout() {
                                     <>
                                         <li><CustomLink to="/resume">Резюме</CustomLink></li>
                                         <li><CustomLink to="user/profile">Профиль</CustomLink></li>
+                                        <li><CustomLink to="user/vacancy">Вакансії</CustomLink></li>
                                     </>
                                 )}
                                 {role === "COMPANY" && (
                                     <>
-                                        <li><CustomLink to="/vacancy">Вакансії</CustomLink></li>
+                                        <li><CustomLink to="/company/vacancy">Вакансії</CustomLink></li>
                                         <li><CustomLink to="/company">Компанія</CustomLink></li>
                                         <li><CustomLink to="company/profile">Профиль</CustomLink></li>
                                     </>
