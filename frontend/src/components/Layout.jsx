@@ -22,7 +22,6 @@ function Layout() {
                                     <>
                                         <li><CustomLink to="/resume">Резюме</CustomLink></li>
                                         <li><CustomLink to="user/profile">Профиль</CustomLink></li>
-                                        <li><CustomLink to="user/vacancy">Вакансії</CustomLink></li>
                                     </>
                                 )}
                                 {role === "COMPANY" && (

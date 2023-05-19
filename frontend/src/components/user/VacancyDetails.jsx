@@ -37,6 +37,25 @@ function VacancyDetails(vacancies) {
             });
     }, [])
 
+    const responseVacancy = (event) => {
+        event.preventDefault();
+        const resumeId = localStorage.getItem("resumeId");
+        if (resumeId) {
+            axios.post('api/resume/' + resumeId, {
+                path: {
+                    vacancyId: vacancyId
+                }
+            })
+                .then((response) => {
+                    console.log(response.data)
+                    console.log("OK")
+                })
+                .catch(error => {
+                    console.log("Error")
+                })
+        }
+    }
+
     return (
         <div>
             <div>
@@ -47,6 +66,9 @@ function VacancyDetails(vacancies) {
             </div>
             <div>
                 {vacancyData.additionalInfo}
+            </div>
+            <div>
+                <button onSubmit={responseVacancy}>Send resume</button>
             </div>
         </div>
     );

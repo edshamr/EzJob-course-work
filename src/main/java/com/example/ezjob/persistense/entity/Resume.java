@@ -69,4 +69,6 @@ public class Resume {
   @ToString.Exclude
   private AuthenticationUser authUser;
 
+  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
+  List<Vacancy> vacancies;
 }

@@ -56,6 +56,7 @@ function CompanyForm() {
             additionalInfo: formData.additionalInfo
         };
         if (companyId) {
+            console.log(companyId)
             axios.put('/api/company/' + companyId, requestDto)
                 .then((response) => {
                     console.log("OK")

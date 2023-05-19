@@ -30,4 +30,7 @@ public class Vacancy {
   @ManyToOne(fetch = FetchType.LAZY)
   @ToString.Exclude
   Company company;
+  @ManyToOne(fetch = FetchType.LAZY)
+  @ToString.Exclude
+  Resume resume;
 }
