@@ -30,12 +30,13 @@ function VacancyForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const companyId = localStorage.getItem("companyId");
-        const requestDto = {
-            title: formData.title,
-            description: formData.description,
-            additionalInfo: formData.additionalInfo
-        };
         if (companyId) {
+            const requestDto = {
+                companyId: companyId,
+                title: formData.title,
+                description: formData.description,
+                additionalInfo: formData.additionalInfo
+            };
             axios.post('/api/vacancy', requestDto, {
                 params: {
                     companyId: companyId

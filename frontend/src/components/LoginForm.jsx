@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styles from '../styles/Login.module.css';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 // Add an Axios interceptor to include the "Authorization" header
 axios.interceptors.request.use((config) => {
@@ -20,6 +21,7 @@ const LoginForm = () => {
   const [formData, setFormData] = useState(initialState);
   const [errors, setErrors] = useState("");
   const [error, setError] = useState('');
+  const navigate = useNavigate();
 
   const validateForm = () => {
     let valid = true;
@@ -61,6 +63,8 @@ const LoginForm = () => {
             if (companyId) {
               localStorage.setItem('companyId', companyId)
             }
+            navigate("/");
+            window.location.reload();
           })
           .catch(error => {
             // Handle login error

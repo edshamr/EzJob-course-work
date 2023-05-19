@@ -29,6 +29,8 @@ function HomePage() {
         axios.post('/api/logout/expire', {})
             .then(() => {
                 localStorage.removeItem('token');
+                localStorage.removeItem('companyId')
+                localStorage.removeItem('resumeId')
             })
             .catch(error => {
                 if (error.status === 403) {

@@ -5,7 +5,7 @@ const CompanyVacancyList = ({ vacancies }) => {
     return (
         <>
         <div className={styles.layout_a}>
-            <Link to="/vacancy/form" className={styles.apply_button}>Add vacancy</Link>
+            <Link to="/company/vacancy/form" className={styles.apply_button}>Add vacancy</Link>
         </div>
         <div className={styles.vacancy_list}>
                 {vacancies.map((vacancy) => (

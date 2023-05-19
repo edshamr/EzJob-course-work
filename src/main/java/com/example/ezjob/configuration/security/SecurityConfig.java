@@ -43,8 +43,6 @@ public class SecurityConfig {
                 .csrf().disable()
                 .authorizeRequests()
                 .requestMatchers("/auth/**", "/roles/allRoles", "/logout/expire").permitAll()
-                .requestMatchers("/company").hasRole("COMPANY")
-                .requestMatchers("/user").hasRole("USER")
                 .anyRequest().authenticated()
                 .and()
                 .apply(new JwtConfigurer(jwtTokenUtil, pathValidator))
