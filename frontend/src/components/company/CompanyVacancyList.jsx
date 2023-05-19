@@ -1,14 +1,26 @@
 import styles from '../../styles/vacancy_list.module.css'
 import {Link} from "react-router-dom";
+import {useState} from "react";
 
 const CompanyVacancyList = ({ vacancies }) => {
+    const [currentPage, setCurrentPage] = useState(1);
+    const vacanciesPerPage = 5;
+
+    const indexOfLastVacancy = currentPage * vacanciesPerPage;
+    const indexOfFirstVacancy = indexOfLastVacancy - vacanciesPerPage;
+    const currentVacancies = vacancies.slice(indexOfFirstVacancy, indexOfLastVacancy);
+
+    const handlePageChange = (pageNumber) => {
+        setCurrentPage(pageNumber);
+    }
+
     return (
         <>
         <div className={styles.layout_a}>
             <Link to="/company/vacancy/form" className={styles.apply_button}>Add vacancy</Link>
         </div>
         <div className={styles.vacancy_list}>
-                {vacancies.map((vacancy) => (
+                {currentVacancies.map((vacancy) => (
                 <div className={styles.vacancy_item} key={vacancy.id}>
                     <div className={styles.vacancy_info}>
                         <div className={styles.vacancy_title}>{vacancy.title}</div>
@@ -17,6 +29,21 @@ const CompanyVacancyList = ({ vacancies }) => {
                 </div>
                 ))}
         </div>
+            <div className={styles.pageButtons}>
+                {Array.from({ length: Math.ceil(vacancies.length / vacanciesPerPage) }, (_, index) => {
+                    const pageNumber = index + 1;
+
+                    return (
+                        <button
+                            key={index}
+                            className={styles.pageButton}
+                            onClick={() => handlePageChange(pageNumber)}
+                        >
+                            {pageNumber}
+                        </button>
+                    );
+                })}
+            </div>
         </>
     );
 };

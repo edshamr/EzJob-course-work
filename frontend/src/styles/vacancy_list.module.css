@@ -76,3 +76,28 @@
     align-items: center;
     margin-top: 10px;
   }
+
+.page-buttons {
+  display: flex;
+  justify-content: center;
+  margin-top: 20px;
+}
+
+.page-button {
+  border: none;
+  background-color: #eaeaea;
+  color: #333;
+  padding: 10px 15px;
+  margin: 0 5px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.page-button:hover {
+  background-color: #ccc;
+}
+
+.page-button.active {
+  background-color: #333;
+  color: #fff;
+}

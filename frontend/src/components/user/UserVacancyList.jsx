@@ -28,13 +28,19 @@ const UserVacancyList = ({vacancies}) => {
                     </div>
                 ))}
             </div>
-            <div>
-                {Array.from({length: Math.ceil(vacancies.length / vacanciesPerPage)}, (_, index) => {
+            <div className={styles.pageButtons}>
+                {Array.from({ length: Math.ceil(vacancies.length / vacanciesPerPage) }, (_, index) => {
+                    const pageNumber = index + 1;
+
                     return (
-                        <button key={index} onClick={() => handlePageChange(index + 1)}>
-                            {index + 1}
+                        <button
+                            key={index}
+                            className={styles.pageButton}
+                            onClick={() => handlePageChange(pageNumber)}
+                        >
+                            {pageNumber}
                         </button>
-                    )
+                    );
                 })}
             </div>
         </>
