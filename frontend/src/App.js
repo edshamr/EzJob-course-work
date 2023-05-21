@@ -12,9 +12,10 @@ import {Layout} from "./components/Layout";
 import {CompanyForm} from "./components/company/CompanyForm";
 import {VacancyForm} from "./components/company/VacancyForm";
 import {CompanyProfile} from "./components/company/CompanyProfile";
-import {VacancyDetails} from "./components/user/VacancyDetails";
+import {VacancyDetails} from "./components/company/VacancyDetails";
 import {CompanyVacancy} from "./components/company/CompanyVacancy";
 import {UserVacancyList} from "./components/user/UserVacancyList";
+import {ResumeDetails} from "./components/user/ResumeDetails";
 
 export default function App() {
     return (
@@ -30,9 +31,10 @@ export default function App() {
                         <Route path="resume" element={<ResumeForm/>}/>
                         <Route path="company/vacancy" element={<AllCompanyVacancies/>}/>
                         <Route path="company/vacancy/form" element={<VacancyForm/>}/>
+                        <Route path="company/vacancy/:id" element={<CompanyVacancy/>}/>
+                        <Route path="company/resume/:id" element={<ResumeDetails/>}/>
                         <Route path="user/vacancy/:id" element={<VacancyDetails/>}/>
                         <Route path="user/vacancy" element={<UserVacancyList/>}/>
-                        <Route path="company/vacancy/:id" element={<CompanyVacancy/>}/>
                         <Route path="company" element={<CompanyForm/>}/>
                         <Route path="*" element={<NotFound/>}/>
                     </Route>

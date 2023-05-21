@@ -4,6 +4,7 @@ import com.example.ezjob.common.mapper.VacancyMapper;
 import com.example.ezjob.exception.CompanyNotFoundException;
 import com.example.ezjob.exception.VacancyNotFoundException;
 import com.example.ezjob.model.dto.VacancyRequestDto;
+import com.example.ezjob.persistense.entity.Resume;
 import com.example.ezjob.persistense.entity.Vacancy;
 import com.example.ezjob.persistense.repository.jpa.VacancyRepository;
 import com.example.ezjob.service.CompanyService;
@@ -56,6 +57,12 @@ public class VacancyServiceImpl implements VacancyService {
     public Vacancy getVacancyById(@Nonnull Long id) {
         return vacancyRepository.findById(id).orElseThrow(() -> new VacancyNotFoundException(
                 format("Message with id = %d not found.", id)));
+    }
+
+    public List<Resume> getResponsesOnVacancy(@Nonnull Long id) {
+         final var vacancy = vacancyRepository.findById(id).orElseThrow(() -> new VacancyNotFoundException(
+                format("Message with id = %d not found.", id)));
+        return vacancy.getResumes();
     }
 
     @Nonnull

@@ -6,6 +6,18 @@ spring:
     password: Mymein2003
     driver-class-name: org.postgresql.Driver
 
+  mail:
+    host: smtp.gmail.com
+    port: 587
+    username: jugler228@gmail.com
+    password: fmbeholhkhmqvukr
+    properties:
+      mail:
+        smtp:
+          auth: true
+          starttls:
+            enable: true
+
   cache:
     type: redis
   data:
@@ -17,7 +29,7 @@ spring:
     database-platform: org.hibernate.dialect.PostgreSQLDialect
     defer-datasource-initialization: false
 #    hibernate:
-#      ddl-auto: create
+#        ddl-auto: create
 
   security:
     #Secret used for signing JWT token.
@@ -27,5 +39,5 @@ spring:
 
 server:
   servlet:
-      context-path: /api
+    context-path: /api
   port: 8080

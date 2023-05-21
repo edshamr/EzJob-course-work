@@ -2,11 +2,16 @@ package com.example.ezjob.controller;
 
 import com.example.ezjob.common.mapper.ResumeMapper;
 import com.example.ezjob.configuration.security.jwt.JwtTokenUtil;
+import com.example.ezjob.model.dto.ResponseToVacancyDto;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.model.dto.ResumeResponseDto;
+import com.example.ezjob.model.dto.VacancyResponseDto;
 import com.example.ezjob.service.AuthenticationUserService;
+import com.example.ezjob.service.ResponseToVacancyService;
 import com.example.ezjob.service.ResumeService;
+import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -24,6 +29,8 @@ import org.springframework.web.bind.annotation.RestController;
 
 import javax.validation.Valid;
 import javax.validation.constraints.Min;
+import javax.validation.constraints.NotNull;
+import java.util.List;
 
 @RequestMapping("/resume")
 @RestController
@@ -32,6 +39,8 @@ import javax.validation.constraints.Min;
 public class ResumeController {
   private final ResumeService resumeService;
   private final ResumeMapper resumeMapper;
+  private final ResponseToVacancyService responseService;
+  private final VacancyService vacancyService;
   private final JwtTokenUtil jwtTokenUtil;
   private final AuthenticationUserService userService;
 
@@ -44,18 +53,33 @@ public class ResumeController {
     final var authUser = userService.getUserByUsername(username);
 
     final var resume = resumeMapper.toResume(resumeRequest);
+    authUser.setResume(resume);
     resume.setAuthUser(authUser);
 
     final var response = resumeService.saveResume(resume);
     return resumeMapper.toResumeResponseDto(response);
   }
 
+  @GetMapping
+  @ResponseStatus(HttpStatus.OK)
+  public List<ResumeResponseDto> getResumes(@RequestParam @Nullable String title) {
+    final var resumes = resumeService.getResumes(title);
+
+    final var response = resumes.stream()
+            .map(resumeMapper::toResumeResponseDto)
+            .toList();
+
+    return response;
+  }
+
   @PostMapping("/{id}")
   @ResponseStatus(HttpStatus.OK)
-  public ResumeResponseDto responseToVacancy(@PathVariable @Nonnull @Min(1) final Long id,
-                                             @RequestParam @Nonnull @Valid final Long vacancyId) {
-    final var response = resumeService.addVacancy(id, vacancyId);
-    return resumeMapper.toResumeResponseDto(response);
+  public void responseToVacancy(@PathVariable @Nonnull @Min(1) final Long id,
+                                             @NotNull @Valid @RequestBody final ResponseToVacancyDto requestDto) {
+
+    final var resume = resumeService.getResumeById(id);
+    final var vacancy = vacancyService.getVacancyById(requestDto.getVacancyId());
+    responseService.responseToVacancy(resume, vacancy);
   }
 
   @GetMapping("/{id}")

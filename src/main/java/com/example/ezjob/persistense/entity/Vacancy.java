@@ -1,14 +1,10 @@
 package com.example.ezjob.persistense.entity;
 
-import jakarta.persistence.Column;
-import jakarta.persistence.Entity;
-import jakarta.persistence.FetchType;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.GenerationType;
-import jakarta.persistence.Id;
-import jakarta.persistence.ManyToOne;
+import jakarta.persistence.*;
 import lombok.*;
 import lombok.experimental.FieldDefaults;
+
+import java.util.List;
 
 @Entity
 @Data
@@ -16,21 +12,27 @@ import lombok.experimental.FieldDefaults;
 @NoArgsConstructor
 @Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
+@Table(name = "vacancy")
 public class Vacancy {
   @Id
   @GeneratedValue(strategy = GenerationType.IDENTITY)
   @Column(name = "id", nullable = false)
   Long id;
+
   @Column(name = "title")
   String title;
+
   @Column(name = "description")
   String description;
+
   @Column(name = "additional_info")
   String additionalInfo;
+
   @ManyToOne(fetch = FetchType.LAZY)
+  @JoinColumn(name = "company_id")
   @ToString.Exclude
   Company company;
-  @ManyToOne(fetch = FetchType.LAZY)
-  @ToString.Exclude
-  Resume resume;
+
+  @ManyToMany(mappedBy = "vacancies")
+  List<Resume> resumes;
 }

@@ -13,7 +13,7 @@
     background-color: #fff;
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
-  
+
   .menu ul {
     list-style: none;
     margin: 0;
@@ -22,19 +22,19 @@
     justify-content: space-between;
     align-items: center;
   }
-  
+
   .menu li {
     margin: 0 20px;
   }
-  
+
   .menu li:first-child {
     margin-left: 0;
   }
-  
+
   .menu li:last-child {
     margin-right: 0;
   }
-  
+
   .menu a {
     text-decoration: none;
     color: #333;
@@ -43,7 +43,11 @@
     display: inline-block;
     transition: all 0.2s ease-in-out;
   }
-  
+
   .menu a:hover {
     background-color: #f1f1f1;
+  }
+
+  .logout-form {
+    margin: 0;
   }
