@@ -4,6 +4,7 @@ import CompanyVacancyList from "./CompanyVacancyList";
 import useRoles from "../../hooks/useRoles";
 import {NotFound} from "../error/NotFound";
 
+
 function AllCompanyVacancies() {
     const [vacancies, setVacancies] = useState([]);
     const [error, setError] = useState(false);
@@ -33,7 +34,7 @@ function AllCompanyVacancies() {
     }
     return (
         <div>
-            <div>
+            <div >
                 <CompanyVacancyList vacancies={vacancies}/>
             </div>
         </div>

@@ -16,6 +16,7 @@ const CompanyVacancyList = ({ vacancies }) => {
 
     return (
         <>
+
         <div className={styles.layout_a}>
             <Link to="/company/vacancy/form" className={styles.apply_button}>Add vacancy</Link>
         </div>
@@ -30,20 +31,24 @@ const CompanyVacancyList = ({ vacancies }) => {
                 ))}
         </div>
             <div className={styles.pageButtons}>
+                <ul className={styles.div_center}>
                 {Array.from({ length: Math.ceil(vacancies.length / vacanciesPerPage) }, (_, index) => {
                     const pageNumber = index + 1;
 
                     return (
+                        <li className={styles.active_li}>
                         <button
                             key={index}
-                            className={styles.pageButton}
+                            className={styles.page_button}
                             onClick={() => handlePageChange(pageNumber)}
                         >
                             {pageNumber}
                         </button>
+                        </li>
                     );
                 })}
-            </div>
+                </ul>
+                </div>
         </>
     );
 };

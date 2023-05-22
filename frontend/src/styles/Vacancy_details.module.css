@@ -30,25 +30,58 @@
 }
 
 .h1_resum{
-    color: #FFFFFF;
+    color: #61a7a1;
     margin-bottom: 20px;
+  }
+
+  .tittle_resume{
+    display: flex;
+    justify-content: center;
   }
   
   .resume_container {
-    background-color: rgba(255, 255, 255, 0.9);
+    max-width: 800px;
+    margin: 50px auto;
+    background: linear-gradient(45deg, #8e2de2, #4a00e0, #00c6fb);
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+    z-index: -1;
+    background-size: 200% auto;
+    animation: gradientAnimation 5s linear infinite;
+  }
+
+  .container{
+    display: flex;
+    justify-content: space-between;
+  }
+
+  
+  @keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
   }
   
   .field {
-    margin-bottom: 10px;
+    display: flex;
+    flex-direction: column;
   }
   
   .field_label {
+    font-size: 24px;
     font-weight: bold;
+    color: rgb(104, 191, 231)
   }
   
   .field_span {
+    font-size: 24px;
     margin-left: 10px;
+    color: #c5ce76;
   }
