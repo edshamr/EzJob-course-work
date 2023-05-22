@@ -10,6 +10,8 @@ import {ResumeList} from "../user/ResumeList";
 const initialState = {
     companyId: 0,
     title: "",
+    country: "",
+    city: "",
     description: "",
     additionalInfo: ""
 };
@@ -58,6 +60,8 @@ function CompanyVacancy() {
         const requestDto = {
             companyId: companyId,
             title: vacancyData.title,
+            city: vacancyData.city,
+            country: vacancyData.country,
             description: vacancyData.description,
             additionalInfo: vacancyData.additionalInfo
         };
@@ -111,6 +115,26 @@ function CompanyVacancy() {
                                id="title"
                                name="title"
                                defaultValue={vacancyData.title}
+                               onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="country">Заголовок</label>
+                        <input className={styles.input_form}
+                               type="text"
+                               id="country"
+                               name="country"
+                               defaultValue={vacancyData.country}
+                               onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="city">Заголовок</label>
+                        <input className={styles.input_form}
+                               type="text"
+                               id="city"
+                               name="city"
+                               defaultValue={vacancyData.city}
                                onChange={handleChange}
                         />
                     </div>

@@ -8,6 +8,8 @@ import styles from '../../styles/Vacancy_details.module.css'
 const initialState = {
     id: 0,
     title: "",
+    country: "",
+    city: "",
     description: "",
     additionalInfo: ""
 };
@@ -57,6 +59,14 @@ function VacancyDetails() {
         <div className={styles.vacancy_details}>
             <div>
                 <h1> {vacancyData.title}</h1>
+            </div>
+            <div>
+                <p className={styles.vacancy_description}>Країна</p>
+                {vacancyData.country}
+            </div>
+            <div>
+                <p className={styles.vacancy_description}>Місто</p>
+                {vacancyData.city}
             </div>
             <div>
                 <p className={styles.vacancy_description}>Опис</p>

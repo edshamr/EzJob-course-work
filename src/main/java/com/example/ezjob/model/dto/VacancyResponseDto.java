@@ -11,7 +11,6 @@ public class VacancyResponseDto {
         String title;
         String country;
         String city;
-        WorkType workType;
         String description;
         String additionalInfo;
 }
