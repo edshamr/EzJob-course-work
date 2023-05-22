@@ -107,7 +107,7 @@ function CompanyForm() {
                     />
                 </div>
                 <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
+                    <label className={styles.label_form} htmlFor="description">Опис компанії</label>
                     <textarea className={styles.input_form}
                               id="description"
                               name="description"

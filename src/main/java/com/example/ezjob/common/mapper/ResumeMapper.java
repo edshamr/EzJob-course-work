@@ -16,5 +16,6 @@ public interface ResumeMapper {
   @Mapping(source = "id", target = "resumeId")
   ResumeResponseDto toResumeResponseDto(@Nonnull Resume resume);
   ResumeRequestDto toResumeRequestDto(@Nonnull RegistrationRequestDto registrationRequest);
+  @Mapping(target = "authUser", ignore = true)
   void updateResume(@MappingTarget @Nonnull Resume destination, @Nonnull Resume source);
 }
