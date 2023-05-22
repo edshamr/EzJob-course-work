@@ -58,7 +58,7 @@ public class AuthenticationController {
                 throw new UserNotFoundException("User was not found");
             }
 
-            final var token = tokenProviderService.createToken(user.getUsername(), user.getRole());
+            final var token = tokenProviderService.createToken(user.getUsername(), user.getEmail(),user.getRole());
 
             AuthenticationResponseDto response = AuthenticationResponseDto.builder().build();
 

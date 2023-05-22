@@ -4,6 +4,7 @@ import {useNavigate} from "react-router-dom";
 import styles from "../../styles/ResumeForm.module.css";
 import useRoles from "../../hooks/useRoles";
 import {NotFound} from "../error/NotFound";
+import {ResumeList} from "../user/ResumeList";
 
 
 const initialState = {
@@ -23,6 +24,9 @@ function CompanyVacancy() {
 
     const [vacancyData, setVacancyData] = useState(initialState);
     const [error, setError] = useState(false);
+    const [resumes, setResumes] = useState([]);
+
+    const [isShowReplies, setIsShowReplies] = useState(false);
 
     useEffect(() => {
         if (role !== "COMPANY") {
@@ -74,47 +78,71 @@ function CompanyVacancy() {
         const {name, value} = event.target;
         setVacancyData({...vacancyData, [name]: value});
     };
+    const showReplies = async (event) => {
+        event.preventDefault();
+        axios.get(`/api/vacancy/${vacancyId}/responses`, {})
+            .then(response => {
+                console.log(response.data);
+                setResumes(response.data);
+                setIsShowReplies(true);
+            })
+            .catch(error => {
+                console.log(error);
+            })
+
+    }
+
 
     if (error) {
         return <NotFound/>
     } else {
         return (
-            <form onSubmit={handleSubmit} className={styles.form_resume}>
-                <h2 className={styles.title_resume}>Створення вакансії</h2>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="title">Заголовок</label>
-                    <input className={styles.input_form}
-                           type="text"
-                           id="title"
-                           name="title"
-                           defaultValue={vacancyData.title}
-                           onChange={handleChange}
-                    />
-                </div>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
-                    <textarea className={styles.input_form}
-                              id="description"
-                              name="description"
-                              defaultValue={vacancyData.description}
-                              onChange={handleChange}
-                    >
+            <div>
+                <form onSubmit={handleSubmit} className={styles.form_resume}>
+                    <h2 className={styles.title_resume}>Створення вакансії</h2>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="title">Заголовок</label>
+                        <input className={styles.input_form}
+                               type="text"
+                               id="title"
+                               name="title"
+                               defaultValue={vacancyData.title}
+                               onChange={handleChange}
+                        />
+                    </div>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
+                        <textarea className={styles.input_form}
+                                  id="description"
+                                  name="description"
+                                  defaultValue={vacancyData.description}
+                                  onChange={handleChange}
+                        >
                 </textarea>
-                </div>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
-                    <textarea className={styles.input_form}
-                              id="additionalInfo"
-                              name="additionalInfo"
-                              defaultValue={vacancyData.additionalInfo}
-                              onChange={handleChange}
-                    >
+                    </div>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="additionalInfo">Додаткова інформація</label>
+                        <textarea className={styles.input_form}
+                                  id="additionalInfo"
+                                  name="additionalInfo"
+                                  defaultValue={vacancyData.additionalInfo}
+                                  onChange={handleChange}
+                        >
                 </textarea>
-                </div>
+                    </div>
+                    <div className={styles.form_group}>
+                        <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
+                    </div>
+                </form>
                 <div className={styles.form_group}>
-                    <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
+                    <button className={styles.inpt_submit} onClick={showReplies} type="submit">Відгуки</button>
                 </div>
-            </form>
+                <div>
+                    {isShowReplies &&
+                        <ResumeList resumes={resumes}/>
+                    }
+                </div>
+            </div>
         );
     }
 }

@@ -22,6 +22,7 @@
         <jsonwebtoken-version>0.9.1</jsonwebtoken-version>
         <javax.bind.version>2.3.1</javax.bind.version>
         <spring.starter.data.redis.version>3.0.6</spring.starter.data.redis.version>
+        <spring.starter.mail>3.1.0</spring.starter.mail>
     </properties>
     <dependencies>
         <dependency>
@@ -90,20 +91,15 @@
             <artifactId>jaxb-api</artifactId>
             <version>${javax.bind.version}</version>
         </dependency>
-<!--        <dependency>-->
-<!--            <groupId>javax.validation</groupId>-->
-<!--            <artifactId>validation-api</artifactId>-->
-<!--            <version>2.0.1.Final</version>-->
-<!--        </dependency>-->
-<!--        <dependency>-->
-<!--            <groupId>org.hibernate.validator</groupId>-->
-<!--            <artifactId>hibernate-validator</artifactId>-->
-<!--            <version>8.0.0.Final</version>-->
-<!--        </dependency>-->
         <dependency>
             <groupId>org.springframework.boot</groupId>
             <artifactId>spring-boot-starter-data-redis</artifactId>
             <version>${spring.starter.data.redis.version}</version>
+        </dependency>
+        <dependency>
+            <groupId>org.springframework.boot</groupId>
+            <artifactId>spring-boot-starter-mail</artifactId>
+            <version>${spring.starter.mail}</version>
         </dependency>
     </dependencies>
 

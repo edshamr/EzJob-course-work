@@ -3,41 +3,42 @@ import axios from 'axios';
 import {useEffect, useState} from "react";
 import {UserVacancyList} from "./user/UserVacancyList";
 import useRoles from "../hooks/useRoles";
+import {ResumeList} from "./user/ResumeList";
 
 function HomePage() {
     const [title, setTitle] = useState('');
     const [city, setCity] = useState('');
     const [vacancies, setVacancies] = useState([]);
+    const [resumes, setResumes] = useState([]);
     const role = useRoles();
 
     useEffect(() => {
-        axios.get('/api/vacancy', {
-            params: {
-                title: title
-            }
-        })
-            .then(response => {
-                console.log(response.data);
-                setVacancies(response.data)
-            })
-            .catch(error => {
-                console.log(error);
-            })
-    }, [])
-
-    function logout() {
-        axios.post('/api/logout/expire', {})
-            .then(() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('companyId')
-                localStorage.removeItem('resumeId')
-            })
-            .catch(error => {
-                if (error.status === 403) {
-                    localStorage.removeItem('token');
+        if (role === "USER") {
+            axios.get('/api/vacancy', {
+                params: {
+                    title: title
                 }
-            });
-    }
+            })
+                .then(response => {
+                    setVacancies(response.data)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        } else {
+            axios.get('/api/resume', {
+                params: {
+                    title: title
+                }
+            })
+                .then(response => {
+                    setResumes(response.data)
+                })
+                .catch(error => {
+                    console.log(error);
+                })
+        }
+    }, [role])
 
     const handleTitleChange = (event) => {
         setTitle(event.target.value);
@@ -78,13 +79,11 @@ function HomePage() {
                 <input className={styles.input_home} type="text" placeholder="Місто"/>
                 <button className={styles.button_home} type="submit">Знайти</button>
             </form>
-            {localStorage.getItem('token') && (
-                <form onSubmit={logout} className={styles.form_home}>
-                    <button className={styles.button_home} type="submit">Вийти</button>
-                </form>
-            )}
             {role === "USER" &&
                 <UserVacancyList vacancies={vacancies}/>
+            }
+            {role === "COMPANY" &&
+                <ResumeList resumes={resumes}/>
             }
         </main>
     );

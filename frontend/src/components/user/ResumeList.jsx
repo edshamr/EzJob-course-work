@@ -1,14 +1,14 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import styles from "../../styles/vacancy_list.module.css";
 import {Link} from "react-router-dom";
 
-const UserVacancyList = ({vacancies}) => {
+const ResumeList = ({resumes}) => {
     const [currentPage, setCurrentPage] = useState(1);
-    const vacanciesPerPage = 5;
 
-    const indexOfLastVacancy = currentPage * vacanciesPerPage;
-    const indexOfFirstVacancy = indexOfLastVacancy - vacanciesPerPage;
-    const currentVacancies = vacancies.slice(indexOfFirstVacancy, indexOfLastVacancy);
+    const resumesPerPage = 5;
+    const indexOfLastResume = currentPage * resumesPerPage;
+    const indexOfFirstResume = indexOfLastResume - resumesPerPage;
+    const currentResumes = resumes.slice(indexOfFirstResume, indexOfLastResume);
 
     const handlePageChange = (pageNumber) => {
         setCurrentPage(pageNumber);
@@ -17,19 +17,19 @@ const UserVacancyList = ({vacancies}) => {
     return (
         <>
             <div className={styles.vacancy_list}>
-                {currentVacancies.map((vacancy) => (
-                    <div className={styles.vacancy_item} key={vacancy.id}>
+                {currentResumes.map((resume) => (
+                    <div className={styles.vacancy_item} key={resume.resumeId}>
                         <div className={styles.vacancy_info}>
-                            <div className={styles.vacancy_title}>{vacancy.title}</div>
+                            <div className={styles.vacancy_title}>{resume.position}</div>
                         </div>
-                        <Link to={`/user/vacancy/${vacancy.id}`} className={styles.apply_button}>
+                        <Link to={`/company/resume/${resume.resumeId}`} className={styles.apply_button}>
                             View Details
                         </Link>
                     </div>
                 ))}
             </div>
             <div className={styles.pageButtons}>
-                {Array.from({ length: Math.ceil(vacancies.length / vacanciesPerPage) }, (_, index) => {
+                {Array.from({ length: Math.ceil(resumes.length / resumesPerPage) }, (_, index) => {
                     const pageNumber = index + 1;
 
                     return (
@@ -46,4 +46,4 @@ const UserVacancyList = ({vacancies}) => {
         </>
     );
 };
-export {UserVacancyList};
+export {ResumeList};

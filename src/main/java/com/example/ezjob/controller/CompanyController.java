@@ -35,7 +35,9 @@ public class CompanyController {
     final var authUser = userService.getUserByUsername(username);
 
     final var company = companyMapper.toCompany(companyRequest);
+    authUser.setCompany(company);
     company.setAuthUser(authUser);
+
 
     final var response = companyService.saveCompany(company);
     return companyMapper.toCompanyResponseDto(response);

@@ -6,9 +6,7 @@ import com.example.ezjob.persistense.entity.RoleName;
 import com.example.ezjob.service.TokenProviderService;
 import jakarta.annotation.Nonnull;
 import jakarta.annotation.Nullable;
-import java.util.Set;
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
 
 @Service
@@ -26,8 +24,9 @@ public class TokenProviderServiceImpl implements TokenProviderService {
   @Override
   @Nullable
   public String createToken(@Nonnull final String username,
+                            @Nonnull final String email,
                             @Nonnull final RoleName role) {
     return ApplicationConstants.Web.Security.TOKEN_PREFIX
-            + jwtTokenUtil.createToken(username, role);
+            + jwtTokenUtil.createToken(username, email,role);
   }
 }

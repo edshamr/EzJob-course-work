@@ -2,6 +2,8 @@ import {useEffect, useState} from "react";
 import axios from "axios";
 import {useNavigate} from "react-router-dom";
 
+import styles from '../../styles/Vacancy_details.module.css'
+
 
 const initialState = {
     id: 0,
@@ -10,7 +12,7 @@ const initialState = {
     additionalInfo: ""
 };
 
-function VacancyDetails(vacancies) {
+function VacancyDetails() {
     const navigate = useNavigate();
 
     const path = window.location.pathname;
@@ -41,13 +43,8 @@ function VacancyDetails(vacancies) {
         event.preventDefault();
         const resumeId = localStorage.getItem("resumeId");
         if (resumeId) {
-            axios.post('api/resume/' + resumeId, {
-                path: {
-                    vacancyId: vacancyId
-                }
-            })
+            axios.post('/api/resume/' + resumeId, {vacancyId: vacancyId})
                 .then((response) => {
-                    console.log(response.data)
                     console.log("OK")
                 })
                 .catch(error => {
@@ -57,18 +54,20 @@ function VacancyDetails(vacancies) {
     }
 
     return (
-        <div>
+        <div className={styles.vacancy_details}>
             <div>
-                {vacancyData.title}
+                <h1> {vacancyData.title}</h1>
             </div>
             <div>
+                <p className={styles.vacancy_description}>Опис</p>
                 {vacancyData.description}
             </div>
             <div>
+                <p className={styles.vacancy_description}>Додаткова інформація</p>
                 {vacancyData.additionalInfo}
             </div>
-            <div>
-                <button onSubmit={responseVacancy}>Send resume</button>
+            <div >
+                <button className={styles.send_button} type="submit" onClick={responseVacancy}>Відгукнутися</button>
             </div>
         </div>
     );

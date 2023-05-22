@@ -4,15 +4,19 @@ import com.example.ezjob.common.mapper.ResumeMapper;
 import com.example.ezjob.exception.ResumeNotFoundException;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.persistense.entity.Resume;
+import com.example.ezjob.persistense.entity.Vacancy;
 import com.example.ezjob.persistense.repository.jpa.ResumeRepository;
 import com.example.ezjob.service.ResumeService;
 import com.example.ezjob.service.VacancyService;
 import jakarta.annotation.Nonnull;
+import jakarta.annotation.Nullable;
 import lombok.RequiredArgsConstructor;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.validation.Valid;
+
+import java.util.List;
 
 import static java.lang.String.format;
 
@@ -27,6 +31,13 @@ public class ResumeServiceImpl implements ResumeService {
   @Transactional
   public Resume saveResume(@Nonnull @Valid Resume resume) {
     return repository.save(resume);
+  }
+
+  @Nullable
+  @Override
+  public List<Resume> getResumes(@Nullable String position) {
+    final var resumes = repository.findResumeByPosition(position);
+    return resumes;
   }
 
   @Override

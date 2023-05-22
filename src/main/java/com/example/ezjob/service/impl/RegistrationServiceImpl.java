@@ -31,7 +31,7 @@ public class RegistrationServiceImpl
         authUser.setPassword(passwordEncoder.encode(authUser.getPassword()));
         final var savedUser = userService.saveUser(authUser);
 
-        final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getRole());
+        final var token = tokenProviderService.createToken(savedUser.getUsername(), savedUser.getEmail(), savedUser.getRole());
 
         return userMapper.toAuthenticationResponseDto(savedUser, token);
     }

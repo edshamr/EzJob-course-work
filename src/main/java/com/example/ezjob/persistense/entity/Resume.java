@@ -1,25 +1,19 @@
 package com.example.ezjob.persistense.entity;
 
-import com.example.ezjob.common.mapper.AuthenticationUserMapper;
 import jakarta.persistence.*;
+import lombok.*;
+import lombok.experimental.FieldDefaults;
 
 import java.util.List;
-import lombok.AccessLevel;
-import lombok.AllArgsConstructor;
-import lombok.Builder;
-import lombok.Data;
-import lombok.NoArgsConstructor;
-import lombok.ToString;
-import lombok.experimental.FieldDefaults;
 
 /**
  * Representation of employee resume
  */
 @Entity
-@Builder
+@Data
 @AllArgsConstructor
 @NoArgsConstructor
-@Data
+@Builder
 @FieldDefaults(level = AccessLevel.PRIVATE)
 @Table(name = "resume")
 public class Resume {
@@ -61,14 +55,20 @@ public class Resume {
   @Column(name = "experience")
   int experience;
 
-  @Column(name = "additionalInfo", columnDefinition = "TEXT")
+  @Column(name = "additional_info", columnDefinition = "TEXT")
   String additionalInfo;
 
   @OneToOne
-  @JoinColumn(name = "auth_users_id")
+  @JoinColumn(name = "auth_user_id")
   @ToString.Exclude
   private AuthenticationUser authUser;
 
-  @OneToMany(mappedBy = "resume", cascade = CascadeType.ALL)
+  @ManyToMany
+  @ToString.Exclude
+  @JoinTable(
+          name = "resume_vacancy",
+          joinColumns = @JoinColumn(name = "resume_id"),
+          inverseJoinColumns = @JoinColumn(name = "vacancy_id")
+  )
   List<Vacancy> vacancies;
 }

@@ -40,6 +40,22 @@ public class ApplicationConstants {
     @UtilityClass
     public class JwtClaims {
         public static final String ROLE = "role";
+        public static final String EMAIL = "email";
         public static final String TIME_ZONE_ID = "timeZoneId";
+    }
+
+    @UtilityClass
+    public class EmailConfirmReplyAttributes {
+        @UtilityClass
+        public class UserEmailAttributes {
+            public static final String SUBJECT = "Response to Vacancy";
+            public static final String MESSAGE_BODY = "Your response to the vacancy has been submitted.";
+        }
+        @UtilityClass
+        public class CompanyEmailAttributes {
+            public static final String SUBJECT = "Response on the vacancy.";
+            public static final String MESSAGE_BODY = "You get new reply on the vacancy.";
+        }
+
     }
 }

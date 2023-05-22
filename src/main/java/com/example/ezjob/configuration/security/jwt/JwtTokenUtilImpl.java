@@ -48,11 +48,20 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
             .getBody().getSubject();
   }
 
+  @Override
   @Nonnull
   public String getRoles(@Nonnull final String token) {
     final var role = Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token)
             .getBody().get(JwtClaims.ROLE).toString();
     return role;
+  }
+
+  @Override
+  @Nonnull
+  public String getEmail(@Nonnull final String token) {
+    final var email = Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token)
+            .getBody().get(JwtClaims.EMAIL).toString();
+    return email;
   }
 
   @Override
@@ -85,9 +94,12 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
 
   @Override
   @Nonnull
-  public String createToken(@Nonnull final String username, @Nonnull final RoleName role) {
+  public String createToken(@Nonnull final String username,
+                            @Nonnull final String email,
+                            @Nonnull final RoleName role) {
     final var claims = Jwts.claims();
     claims.put(JwtClaims.ROLE, role);
+    claims.put(JwtClaims.EMAIL, email);
 
     claims.put(JwtClaims.TIME_ZONE_ID,
             Security.SERVER_TIMEZONE_ID);
