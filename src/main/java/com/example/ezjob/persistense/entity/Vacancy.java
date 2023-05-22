@@ -22,6 +22,15 @@ public class Vacancy {
   @Column(name = "title")
   String title;
 
+  @Column(name = "country")
+  String country;
+
+  @Column(name = "city")
+  String city;
+
+  @Enumerated(EnumType.STRING)
+  WorkType workType;
+
   @Column(name = "description")
   String description;
 

@@ -6,6 +6,9 @@ import useRoles from "../hooks/useRoles";
 import {ResumeList} from "./user/ResumeList";
 
 function HomePage() {
+    const [position, setPosition] = useState('');
+    const [country, setCountry] = useState('');
+    const [experience, setExperience] = useState(0);
     const [title, setTitle] = useState('');
     const [city, setCity] = useState('');
     const [vacancies, setVacancies] = useState([]);
@@ -28,7 +31,9 @@ function HomePage() {
         } else {
             axios.get('/api/resume', {
                 params: {
-                    title: title
+                    position: position,
+                    country:  country,
+                    experience: experience
                 }
             })
                 .then(response => {
@@ -41,7 +46,7 @@ function HomePage() {
     }, [role])
 
     const handleTitleChange = (event) => {
-        setTitle(event.target.value);
+        setPosition(event.target.value);
     };
 
     const handleCityChange = (event) => {

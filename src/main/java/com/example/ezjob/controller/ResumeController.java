@@ -36,69 +36,72 @@ import java.util.List;
 @RequiredArgsConstructor
 @Slf4j
 public class ResumeController {
-  private final ResumeService resumeService;
-  private final ResumeMapper resumeMapper;
-  private final ResponseToVacancyService responseService;
-  private final VacancyService vacancyService;
-  private final JwtTokenUtil jwtTokenUtil;
-  private final AuthenticationUserService userService;
+    private final ResumeService resumeService;
+    private final ResumeMapper resumeMapper;
+    private final ResponseToVacancyService responseService;
+    private final VacancyService vacancyService;
+    private final JwtTokenUtil jwtTokenUtil;
+    private final AuthenticationUserService userService;
 
-  @PostMapping
-  @ResponseStatus(HttpStatus.CREATED)
-  public ResumeResponseDto createResume(final HttpServletRequest request,
-                                        @RequestBody @Nonnull @Valid final ResumeRequestDto resumeRequest) {
-    final var token = jwtTokenUtil.parseJwt(request);
-    final var username = jwtTokenUtil.getUsername(token);
-    final var authUser = userService.getUserByUsername(username);
+    @PostMapping
+    @ResponseStatus(HttpStatus.CREATED)
+    public ResumeResponseDto createResume(final HttpServletRequest request,
+                                          @RequestBody @Nonnull @Valid final ResumeRequestDto resumeRequest) {
+        final var token = jwtTokenUtil.parseJwt(request);
+        final var username = jwtTokenUtil.getUsername(token);
+        final var authUser = userService.getUserByUsername(username);
 
-    final var resume = resumeMapper.toResume(resumeRequest);
-    authUser.setResume(resume);
-    resume.setAuthUser(authUser);
+        final var resume = resumeMapper.toResume(resumeRequest);
+        authUser.setResume(resume);
+        resume.setAuthUser(authUser);
 
-    final var response = resumeService.saveResume(resume);
-    return resumeMapper.toResumeResponseDto(response);
-  }
+        final var response = resumeService.saveResume(resume);
+        return resumeMapper.toResumeResponseDto(response);
+    }
 
-  @GetMapping
-  @ResponseStatus(HttpStatus.OK)
-  public List<ResumeResponseDto> getResumes(@RequestParam @Nullable String title) {
-    final var resumes = resumeService.getResumes(title);
+    @GetMapping
+    @ResponseStatus(HttpStatus.OK)
+    public List<ResumeResponseDto> getResumes(@RequestParam @Nullable String position,
+                                              @RequestParam @Nullable String country,
+                                              @RequestParam int experience
+    ) {
+        final var resumes = resumeService.getResumes(position, country, experience);
 
-    final var response = resumes.stream()
-            .map(resumeMapper::toResumeResponseDto)
-            .toList();
+        final var response = resumes.stream()
+                .map(resumeMapper::toResumeResponseDto)
+                .toList();
 
-    return response;
-  }
+        return response;
+    }
 
-  @PostMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public void responseToVacancy(@PathVariable @Nonnull @Min(1) final Long id,
-                                             @NotNull @Valid @RequestBody final ResponseToVacancyDto requestDto) {
+    @PostMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void responseToVacancy(@PathVariable @Nonnull @Min(1) final Long id,
+                                  @NotNull @Valid @RequestBody final ResponseToVacancyDto requestDto) {
 
-    final var resume = resumeService.getResumeById(id);
-    final var vacancy = vacancyService.getVacancyById(requestDto.getVacancyId());
-    responseService.responseToVacancy(resume, vacancy);
-  }
+        final var resume = resumeService.getResumeById(id);
+        final var vacancy = vacancyService.getVacancyById(requestDto.getVacancyId());
+        responseService.responseToVacancy(resume, vacancy);
+    }
 
-  @GetMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public ResumeResponseDto getResumeById(@PathVariable @Nonnull @Min(1) final Long id) {
-    final var response = resumeService.getResumeById(id);
-    return resumeMapper.toResumeResponseDto(response);
-  }
+    @GetMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResumeResponseDto getResumeById(@PathVariable @Nonnull @Min(1) final Long id) {
+        final var response = resumeService.getResumeById(id);
+        return resumeMapper.toResumeResponseDto(response);
+    }
 
-  @PutMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public ResumeResponseDto updateResume(@PathVariable @Nonnull @Min(1) final Long id,
-                                        @RequestBody @Nonnull @Valid final ResumeRequestDto resumeRequest) {
-    final var response = resumeService.updateResume(id, resumeRequest);
-    return resumeMapper.toResumeResponseDto(response);
-  }
+    @PutMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public ResumeResponseDto updateResume(@PathVariable @Nonnull @Min(1) final Long id,
+                                          @RequestBody @Nonnull @Valid final ResumeRequestDto resumeRequest) {
+        final var response = resumeService.updateResume(id, resumeRequest);
+        return resumeMapper.toResumeResponseDto(response);
+    }
 
-  @DeleteMapping("/{id}")
-  @ResponseStatus(HttpStatus.OK)
-  public void deleteResume(@PathVariable @Nonnull @Min(1) final Long id) {
-    resumeService.deleteResumeById(id);
-  }
+    @DeleteMapping("/{id}")
+    @ResponseStatus(HttpStatus.OK)
+    public void deleteResume(@PathVariable @Nonnull @Min(1) final Long id) {
+        resumeService.deleteResumeById(id);
+    }
 }
