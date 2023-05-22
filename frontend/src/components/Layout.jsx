@@ -24,6 +24,8 @@ function Layout() {
             });
     }
 
+    
+
     return (
         <>
             <header className='header-menu'>
@@ -47,12 +49,10 @@ function Layout() {
                                                 <li><CustomLink to="company/profile">Профиль</CustomLink></li>
                                             </>
                                         )}
-                                        <li>
-                                            <div className='logout-form'>
-                                                <form onSubmit={logout}>
-                                                    <button type="submit">Вийти</button>
-                                                </form>
-                                            </div>
+                                         <li>
+                                            <form onSubmit={logout}>
+                                                <button className='button_sub' type="submit">Вийти</button> 
+                                            </form>
                                         </li>
                                     </>
                                 ) : (

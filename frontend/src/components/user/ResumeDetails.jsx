@@ -48,17 +48,56 @@ function ResumeDetails() {
     }, [])
 
     return (
-        <div className={styles.vacancy_details}>
-            <div>
-                <h1> {resumeData.firstname}</h1>
+        <div className={styles.resume_container}>
+            <h1 className={styles.h1_resum}>Resume</h1>
+
+            <div className={styles.field}>
+                <label className={styles.field_label}>Email:</label>
+                <span id="email" className={styles.field_span}>{resumeData.email}</span>
             </div>
-            <div>
-                <p className={styles.vacancy_description}>Опис</p>
-                {resumeData.lastname}
+            <div className={styles.field}>
+                <label className={styles.field_label}>First Name:</label>
+                <span id="firstname" className={styles.field_span}>{resumeData.firstname}</span>
             </div>
-            <div>
-                <p className={styles.vacancy_description}>Додаткова інформація</p>
-                {resumeData.additionalInfo}
+            <div className={styles.field}>
+                <label className={styles.field_label}>Last Name:</label>
+                <span id="lastname" className={styles.field_span}>{resumeData.lastname}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Patronymic:</label>
+                <span id="patronymic" className={styles.field_span}>{resumeData.patronymic}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>City:</label>
+                <span id="city" className={styles.field_span}>{resumeData.city}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Country:</label>
+                <span id="country" className={styles.field_span}>{resumeData.country}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Position:</label>
+                <span id="position" className={styles.field_span}>{resumeData.position}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Phone:</label>
+                <span id="phone" className={styles.field_span}>{resumeData.phone}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>University:</label>
+                <span id="university" className={styles.field_span}>{resumeData.university}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Skills:</label>
+                <span id="skills" className={styles.field_span}>{resumeData.skills}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Experience:</label>
+                <span id="experience" className={styles.field_span}>{resumeData.experience}</span>
+            </div>
+            <div className={styles.field}>
+                <label className={styles.field_label}>Additional Information:</label>
+                <span id="additionalInfo" className={styles.field_span}>{resumeData.additionalInfo}</span>
             </div>
         </div>
     );

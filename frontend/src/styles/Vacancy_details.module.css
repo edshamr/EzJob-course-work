@@ -28,3 +28,27 @@
 .send_button:hover {
     background-color: #4a00e0;
 }
+
+.h1_resum{
+    color: #FFFFFF;
+    margin-bottom: 20px;
+  }
+  
+  .resume_container {
+    background-color: rgba(255, 255, 255, 0.9);
+    padding: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  }
+  
+  .field {
+    margin-bottom: 10px;
+  }
+  
+  .field_label {
+    font-weight: bold;
+  }
+  
+  .field_span {
+    margin-left: 10px;
+  }
