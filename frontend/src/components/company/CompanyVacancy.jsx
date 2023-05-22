@@ -92,6 +92,10 @@ function CompanyVacancy() {
 
     }
 
+    const hideReplies = async () => {
+        setIsShowReplies(false);
+    }
+
 
     if (error) {
         return <NotFound/>
@@ -134,8 +138,8 @@ function CompanyVacancy() {
                         <input className={styles.inpt_submit} type="submit" value="Надіслати"/>
                     </div>
                 </form>
-                <div className={styles.form_group}>
-                    <button className={styles.inpt_submit} onClick={showReplies} type="submit">Відгуки</button>
+                <div className={styles.form_vidguk}>
+                    {!isShowReplies ? (<button className={styles.inpt_submit} onClick={showReplies} type="submit">Відгуки</button>) : (<button className={styles.inpt_submit} onClick={hideReplies} type="submit">Сховати відгуки</button>)}
                 </div>
                 <div>
                     {isShowReplies &&

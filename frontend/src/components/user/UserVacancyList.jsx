@@ -28,20 +28,24 @@ const UserVacancyList = ({vacancies}) => {
                     </div>
                 ))}
             </div>
-            <div className={styles.pageButtons}>
+            <div>
+            <ul className={styles.div_center}>
                 {Array.from({ length: Math.ceil(vacancies.length / vacanciesPerPage) }, (_, index) => {
                     const pageNumber = index + 1;
 
                     return (
+                        <li className={styles.active_li}>
                         <button
                             key={index}
-                            className={styles.pageButton}
+                            className={styles.page_button}
                             onClick={() => handlePageChange(pageNumber)}
                         >
                             {pageNumber}
                         </button>
+                        </li>
                     );
                 })}
+                </ul>
             </div>
         </>
     );

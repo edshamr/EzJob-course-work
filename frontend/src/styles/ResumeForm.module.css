@@ -19,6 +19,12 @@
   .form_group {
     margin-bottom: 20px;
   }
+
+  .form_vidguk{
+    margin-top: 10px;
+    display: flex;
+    justify-content: center;
+  }
   
   .label_form{
     display: block;

@@ -77,13 +77,13 @@
     margin-top: 10px;
   }
 
-.page-buttons {
+.page_buttons {
   display: flex;
   justify-content: center;
   margin-top: 20px;
 }
 
-.page-button {
+.page_button {
   border: none;
   background-color: #eaeaea;
   color: #333;
@@ -93,11 +93,22 @@
   transition: background-color 0.3s;
 }
 
-.page-button:hover {
+.page_button:hover {
   background-color: #ccc;
 }
 
-.page-button.active {
+.page_button:checked {
   background-color: #333;
-  color: #fff;
+  color: #1790d6;
+}
+
+
+.div_center{
+  display: flex;
+  justify-content: center;
+}
+
+.active_li{
+  text-decoration: none;
+  list-style-type: none;
 }
