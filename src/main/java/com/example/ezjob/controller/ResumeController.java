@@ -5,7 +5,6 @@ import com.example.ezjob.configuration.security.jwt.JwtTokenUtil;
 import com.example.ezjob.model.dto.ResponseToVacancyDto;
 import com.example.ezjob.model.dto.ResumeRequestDto;
 import com.example.ezjob.model.dto.ResumeResponseDto;
-import com.example.ezjob.model.dto.VacancyResponseDto;
 import com.example.ezjob.service.AuthenticationUserService;
 import com.example.ezjob.service.ResponseToVacancyService;
 import com.example.ezjob.service.ResumeService;

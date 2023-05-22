@@ -12,5 +12,6 @@ public interface CompanyMapper {
     Company toCompany(CompanyRequestDto requestDto);
     @Mapping(source = "id", target = "companyId")
     CompanyResponseDto toCompanyResponseDto(Company requestDto);
+    @Mapping(target = "authUser", ignore = true)
     void updateCompany(@MappingTarget Company destination, Company source);
 }

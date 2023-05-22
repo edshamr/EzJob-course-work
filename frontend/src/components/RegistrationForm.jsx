@@ -1,6 +1,7 @@
 import React, {useEffect, useState} from 'react';
 import styles from '../styles/Login.module.css';
 import axios from 'axios';
+import {useNavigate} from "react-router-dom";
 
 
 const initialState = {
@@ -15,6 +16,7 @@ const RegistrationForm = () => {
     const [error, setError] = useState("");
     const [roles, setRoles] = useState([]);
     const [selectedRole, setSelectedRole] = useState("");
+    const navigate = useNavigate();
 
     useEffect(() => {
         axios.get("/api/roles/allRoles",{})
@@ -72,10 +74,10 @@ const RegistrationForm = () => {
                 role: selectedRole
             })
                 .then(response => {
-                    // Handle successful login
                     const token = response.data.token;
-                    // Store the token in local storage
                     localStorage.setItem('token', token);
+                    navigate("/");
+                    window.location.reload();
                 })
                 .catch(error => {
                     // Handle login error
