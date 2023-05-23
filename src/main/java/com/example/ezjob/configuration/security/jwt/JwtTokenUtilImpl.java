@@ -120,11 +120,11 @@ public class JwtTokenUtilImpl implements JwtTokenUtil {
   @Override
   @Nonnull
   public Boolean isTokenValid(@Nonnull final String token) {
-//    final var blackListedToken = blackListingService.getBlackListedJwt(token);
-//    if (blackListedToken != null) {
-//      throw new JwtTokenBlackListedException(
-//              "The JWT token is blacklisted");
-//    }
+    final var blackListedToken = blackListingService.getBlackListedJwt(token);
+    if (blackListedToken != null) {
+      throw new JwtTokenBlackListedException(
+              "The JWT token is blacklisted");
+    }
     try {
       Jwts.parser().setSigningKey(secretProvider.getEncodedSecret()).parseClaimsJws(token);
       return !isTokenExpired(token);
