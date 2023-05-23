@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {UserVacancyList} from "./user/UserVacancyList";
 import useRoles from "../hooks/useRoles";
 import {ResumeList} from "./user/ResumeList";
+import { Search } from './Search';
 
 function HomePage() {
     const [title, setTitle] = useState('');
@@ -76,7 +77,7 @@ function HomePage() {
                        placeholder="Пошук по професії"
                        onChange={handleTitleChange}
                 />
-                <input className={styles.input_home} type="text" placeholder="Місто"/>
+                <Search/>
                 <button className={styles.button_home} type="submit">Знайти</button>
             </form>
             {role === "USER" &&
