@@ -4,6 +4,7 @@ import {useEffect, useState} from "react";
 import {UserVacancyList} from "./user/UserVacancyList";
 import useRoles from "../hooks/useRoles";
 import {ResumeList} from "./user/ResumeList";
+import { Search } from './Search';
 
 function HomePage() {
     const [position, setPosition] = useState('');
@@ -89,7 +90,7 @@ function HomePage() {
 
     return (
         <main>
-            <h1 className={styles.title}>Найдите свою работу мечты</h1>
+            <h1 className={styles.title}>Знайдіть роботу своєї мрії</h1>
             {role === "USER" &&
                 <>
                     <form className={styles.form_home} onSubmit={findVacancies}>
@@ -100,7 +101,7 @@ function HomePage() {
                                placeholder="Пошук по професії"
                                onChange={handleTitleChange}
                         />
-                        <input className={styles.input_home} type="text" placeholder="Місто"/>
+                        <Search/>
                         <button className={styles.button_home} type="submit">Знайти</button>
                     </form>
                     <UserVacancyList vacancies={vacancies}/>
@@ -116,7 +117,7 @@ function HomePage() {
                                placeholder="Пошук працівника"
                                onChange={handlePositionChange}
                         />
-                        <input className={styles.input_home} type="text" placeholder="Місто"/>
+                        <Search/>
                         <button className={styles.button_home} type="submit">Знайти</button>
                     </form>
                     <ResumeList resumes={resumes}/>
