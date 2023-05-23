@@ -39,14 +39,14 @@ function Layout() {
                                         {role === "USER" && (
                                             <>
                                                 <li><CustomLink to="/resume">Резюме</CustomLink></li>
-                                                <li><CustomLink to="user/profile">Профиль</CustomLink></li>
+                                                <li><CustomLink to="user/profile">Профіль</CustomLink></li>
                                             </>
                                         )}
                                         {role === "COMPANY" && (
                                             <>
                                                 <li><CustomLink to="/company/vacancy">Вакансії</CustomLink></li>
                                                 <li><CustomLink to="/company">Компанія</CustomLink></li>
-                                                <li><CustomLink to="company/profile">Профиль</CustomLink></li>
+                                                <li><CustomLink to="company/profile">Профіль</CustomLink></li>
                                             </>
                                         )}
                                          <li>
