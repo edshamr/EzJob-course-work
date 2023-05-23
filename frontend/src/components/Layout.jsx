@@ -29,7 +29,7 @@ function Layout() {
                     <nav>
                         <div className='menu'>
                             <ul>
-                                <li><CustomLink to="/">Home</CustomLink></li>
+                                <li><CustomLink to="/">Головна</CustomLink></li>
                                 {localStorage.getItem('token') ? (
                                     <>
                                         {role === "USER" && (

@@ -13,6 +13,4 @@ public interface ResumeRepository extends JpaRepository<Resume, Long> {
             "AND (:city IS NULL OR r.city LIKE %:city%) ")
     List<Resume> findResumeByFilters(@Param("position") String position,
                                      @Param("city") String city);
-
-
 }

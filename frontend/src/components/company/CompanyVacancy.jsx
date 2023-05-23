@@ -98,6 +98,17 @@ function CompanyVacancy() {
 
     }
 
+    const deleteVacancy = async (event) => {
+        event.preventDefault()
+        axios.delete(`/api/vacancy/${vacancyId}`,{})
+            .then(response => {
+                navigate('/company/vacancy');
+            })
+            .catch(error => {
+                console.log(error.data.description);
+            })
+    }
+
     const hideReplies = async () => {
         setIsShowReplies(false);
     }
@@ -108,6 +119,9 @@ function CompanyVacancy() {
     } else {
         return (
             <div>
+                <div className={styles.form_group}>
+                    <button className={styles.delete_button} onClick={deleteVacancy}>Видалити</button>
+                </div>
                 <form onSubmit={handleSubmit} className={styles.form_resume}>
                     <h2 className={styles.title_resume}>Створення вакансії</h2>
                     <div className={styles.form_group}>

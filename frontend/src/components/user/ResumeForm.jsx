@@ -26,7 +26,7 @@ function ResumeForm() {
     const [error, setError] = useState(false)
     const navigate = useNavigate();
     const role = useRoles();
-    const [selectedCity, setSelectedCity] = useState(null);
+    const [selectedCity, setSelectedCity] = useState('');
 
     useEffect(() => {
         if (role !== "USER") {
@@ -56,6 +56,9 @@ function ResumeForm() {
     const handleSubmit = (event) => {
         event.preventDefault();
         const resumeId = localStorage.getItem("resumeId");
+        if (!selectedCity.label) {
+            setSelectedCity('');
+        }
         const requestDto = {
             email: formData.email,
             firstname: formData.firstname,

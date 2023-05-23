@@ -64,7 +64,7 @@ function UserProfile() {
                                     {profileData.phone}
                                 </li>
                                 <li className={styles.user_info}>
-                                    <span className={styles.user_span}>Education:</span>
+                                    <span className={styles.user_span}>Position:</span>
                                     {profileData.position}
                                 </li>
                             </ul>
