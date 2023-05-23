@@ -32,7 +32,7 @@ function HomePage() {
             axios.get('/api/resume', {
                 params: {
                     position: position,
-                    country:  country,
+                    country: country,
                     experience: experience
                 }
             })
@@ -46,49 +46,81 @@ function HomePage() {
     }, [role])
 
     const handleTitleChange = (event) => {
-        setPosition(event.target.value);
+        setTitle(event.target.value);
     };
 
-    const handleCityChange = (event) => {
-        setCity(event.target.value);
+    const handlePositionChange = (event) => {
+        setPosition(event.target.value);
     };
 
     const findVacancies = async (event) => {
         event.preventDefault();
         axios.get('/api/vacancy', {
             params: {
-                title: title
+                title: title,
+                country: country,
+                city: city
             }
         })
             .then(response => {
-                console.log(response.data);
                 setVacancies(response.data)
             })
             .catch(error => {
                 console.log(error);
             })
+    }
 
+    const findResumes = async (event) => {
+        event.preventDefault();
+        axios.get('/api/resume', {
+            params: {
+                position: position,
+                country: country,
+                experience: experience
+            }
+        })
+            .then(response => {
+                setResumes(response.data)
+            })
+            .catch(error => {
+                console.log(error);
+            })
     }
 
     return (
         <main>
             <h1 className={styles.title}>Найдите свою работу мечты</h1>
-            <form className={styles.form_home} onSubmit={findVacancies}>
-                <input className={styles.input_home}
-                       type="text"
-                       id="name"
-                       name="name"
-                       placeholder="Пошук по професії"
-                       onChange={handleTitleChange}
-                />
-                <input className={styles.input_home} type="text" placeholder="Місто"/>
-                <button className={styles.button_home} type="submit">Знайти</button>
-            </form>
             {role === "USER" &&
-                <UserVacancyList vacancies={vacancies}/>
+                <>
+                    <form className={styles.form_home} onSubmit={findVacancies}>
+                        <input className={styles.input_home}
+                               type="text"
+                               id="title"
+                               name="title"
+                               placeholder="Пошук по професії"
+                               onChange={handleTitleChange}
+                        />
+                        <input className={styles.input_home} type="text" placeholder="Місто"/>
+                        <button className={styles.button_home} type="submit">Знайти</button>
+                    </form>
+                    <UserVacancyList vacancies={vacancies}/>
+                </>
             }
             {role === "COMPANY" &&
-                <ResumeList resumes={resumes}/>
+                <>
+                    <form className={styles.form_home} onSubmit={findResumes}>
+                        <input className={styles.input_home}
+                               type="text"
+                               id="position"
+                               name="position"
+                               placeholder="Пошук працівника"
+                               onChange={handlePositionChange}
+                        />
+                        <input className={styles.input_home} type="text" placeholder="Місто"/>
+                        <button className={styles.button_home} type="submit">Знайти</button>
+                    </form>
+                    <ResumeList resumes={resumes}/>
+                </>
             }
         </main>
     );

@@ -12,7 +12,9 @@ import java.util.List;
 public interface VacancyService {
 
   @Nullable
-  List<Vacancy> getAllVacancies(@Nullable String title);
+  List<Vacancy> getAllVacancies(@Nullable String title,
+                                @Nullable String country,
+                                @Nullable String city);
   @Nullable
   List<Resume> getResponsesOnVacancy(@Nonnull Long id);
   @Nullable

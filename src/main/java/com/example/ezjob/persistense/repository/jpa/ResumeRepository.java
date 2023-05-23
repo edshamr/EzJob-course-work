@@ -13,8 +13,8 @@ public interface ResumeRepository extends JpaRepository<Resume, Long> {
             "AND (:country IS NULL OR r.country LIKE %:country%) " +
             "AND (:experience IS NULL OR r.experience >= :experience OR :experience = 0)")
     List<Resume> findResumeByFilters(@Param("position") String position,
-                                        @Param("country") String country,
-                                        @Param("experience") Integer experience);
+                                     @Param("country") String country,
+                                     @Param("experience") Integer experience);
 
 
 }
