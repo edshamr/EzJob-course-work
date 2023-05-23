@@ -11,7 +11,6 @@ const initialState = {
     lastname: "",
     patronymic: "",
     city: "",
-    country: "",
     phone: "",
     position: "",
     university: "",
@@ -36,7 +35,6 @@ function ResumeDetails() {
                     ...prevVacancyData,
                     ...response.data
                 }));
-                console.log(response.data);
             })
             .catch((error) => {
                 if ((error.response.status === 401 || error.response.status === 403) && localStorage.getItem('token')) {
@@ -59,7 +57,6 @@ function ResumeDetails() {
                     <label className={styles.field_label}>Last Name:</label>
                     <label className={styles.field_label}>Patronymic:</label>
                     <label className={styles.field_label}>City:</label>
-                    <label className={styles.field_label}>Country:</label>
                     <label className={styles.field_label}>Position:</label>
                     <label className={styles.field_label}>Phone:</label>
                     <label className={styles.field_label}>University:</label>
@@ -74,7 +71,6 @@ function ResumeDetails() {
                     <span id="lastname" className={styles.field_span}>{resumeData.lastname}</span>
                     <span id="patronymic" className={styles.field_span}>{resumeData.patronymic}</span>
                     <span id="city" className={styles.field_span}>{resumeData.city}</span>
-                    <span id="country" className={styles.field_span}>{resumeData.country}</span>
                     <span id="position" className={styles.field_span}>{resumeData.position}</span>
                     <span id="phone" className={styles.field_span}>{resumeData.phone}</span>
                     <span id="university" className={styles.field_span}>{resumeData.university}</span>

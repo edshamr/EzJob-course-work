@@ -8,13 +8,11 @@ import { Search } from './Search';
 
 function HomePage() {
     const [position, setPosition] = useState('');
-    const [country, setCountry] = useState('');
-    const [experience, setExperience] = useState(0);
     const [title, setTitle] = useState('');
-    const [city, setCity] = useState('');
     const [vacancies, setVacancies] = useState([]);
     const [resumes, setResumes] = useState([]);
     const role = useRoles();
+    const [selectedCity, setSelectedCity] = useState('');
 
     useEffect(() => {
         if (role === "USER") {
@@ -33,8 +31,7 @@ function HomePage() {
             axios.get('/api/resume', {
                 params: {
                     position: position,
-                    country: country,
-                    experience: experience
+                    city: selectedCity.label,
                 }
             })
                 .then(response => {
@@ -50,17 +47,23 @@ function HomePage() {
         setTitle(event.target.value);
     };
 
+    const handleCitySelect = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    };
+
     const handlePositionChange = (event) => {
         setPosition(event.target.value);
     };
 
     const findVacancies = async (event) => {
         event.preventDefault();
+        if (!selectedCity.label) {
+            selectedCity.label = '';
+        }
         axios.get('/api/vacancy', {
             params: {
                 title: title,
-                country: country,
-                city: city
+                city: selectedCity.label
             }
         })
             .then(response => {
@@ -73,11 +76,13 @@ function HomePage() {
 
     const findResumes = async (event) => {
         event.preventDefault();
+        if (!selectedCity.label) {
+            selectedCity.label = '';
+        }
         axios.get('/api/resume', {
             params: {
                 position: position,
-                country: country,
-                experience: experience
+                city: selectedCity.label,
             }
         })
             .then(response => {
@@ -101,7 +106,7 @@ function HomePage() {
                                placeholder="Пошук по професії"
                                onChange={handleTitleChange}
                         />
-                        <Search/>
+                        <Search onSelectCity={handleCitySelect} />
                         <button className={styles.button_home} type="submit">Знайти</button>
                     </form>
                     <UserVacancyList vacancies={vacancies}/>
@@ -117,7 +122,7 @@ function HomePage() {
                                placeholder="Пошук працівника"
                                onChange={handlePositionChange}
                         />
-                        <Search/>
+                        <Search onSelectCity={handleCitySelect} />
                         <button className={styles.button_home} type="submit">Знайти</button>
                     </form>
                     <ResumeList resumes={resumes}/>

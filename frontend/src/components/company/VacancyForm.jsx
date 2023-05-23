@@ -4,12 +4,12 @@ import axios from "axios";
 import {useNavigate} from "react-router-dom";
 import useRoles from "../../hooks/useRoles";
 import {NotFound} from "../error/NotFound";
+import {Search} from "../Search";
 
 
 const initialState = {
     id: 0,
     title: "",
-    country: "",
     city: "",
     description: "",
     additionalInfo: ""
@@ -20,6 +20,7 @@ function VacancyForm() {
     const [error, setError] = useState(false);
     const navigate = useNavigate();
     const role = useRoles();
+    const [selectedCity, setSelectedCity] = useState(null);
 
     useEffect(() => {
         if (role !== "COMPANY") {
@@ -33,12 +34,10 @@ function VacancyForm() {
         event.preventDefault();
         const companyId = localStorage.getItem("companyId");
         if (companyId) {
-            console.log(formData.city)
             const requestDto = {
                 companyId: companyId,
                 title: formData.title,
-                city: formData.city,
-                country: formData.country,
+                city: selectedCity.label,
                 description: formData.description,
                 additionalInfo: formData.additionalInfo
             };
@@ -57,6 +56,10 @@ function VacancyForm() {
             console.log("Company did not found.");
         }
     }
+
+    const handleCitySelect = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    };
 
     const handleChange = (event) => {
         const {name, value} = event.target;
@@ -80,26 +83,6 @@ function VacancyForm() {
                     />
                 </div>
                 <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="country">Країна</label>
-                    <input className={styles.input_form}
-                           type="text"
-                           id="country"
-                           name="country"
-                           defaultValue={formData.country}
-                           onChange={handleChange}
-                    />
-                </div>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="city">Місто</label>
-                    <input className={styles.input_form}
-                           type="text"
-                           id="city"
-                           name="city"
-                           defaultValue={formData.city}
-                           onChange={handleChange}
-                    />
-                </div>
-                <div className={styles.form_group}>
                     <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
                     <textarea className={styles.input_form}
                               id="description"
@@ -118,6 +101,9 @@ function VacancyForm() {
                               onChange={handleChange}
                     >
                 </textarea>
+                </div>
+                <div className={styles.form_group}>
+                    <Search onSelectCity={handleCitySelect}/>
                 </div>
                 <div className={styles.form_group}>
                     <input className={styles.inpt_submit} type="submit" value="Надіслати"/>

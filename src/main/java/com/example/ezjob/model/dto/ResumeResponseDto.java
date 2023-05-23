@@ -15,8 +15,6 @@ public class ResumeResponseDto {
 
   String city;
 
-  String country;
-
   String phone;
 
   String position;

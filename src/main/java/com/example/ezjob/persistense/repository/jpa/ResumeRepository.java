@@ -10,11 +10,9 @@ import java.util.List;
 public interface ResumeRepository extends JpaRepository<Resume, Long> {
     @Query("SELECT r FROM Resume r WHERE " +
             "(:position IS NULL OR r.position LIKE %:position%) " +
-            "AND (:country IS NULL OR r.country LIKE %:country%) " +
-            "AND (:experience IS NULL OR r.experience >= :experience OR :experience = 0)")
+            "AND (:city IS NULL OR r.city LIKE %:city%) ")
     List<Resume> findResumeByFilters(@Param("position") String position,
-                                     @Param("country") String country,
-                                     @Param("experience") Integer experience);
+                                     @Param("city") String city);
 
 
 }

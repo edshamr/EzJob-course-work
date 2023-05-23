@@ -11,7 +11,6 @@ public class ResumeRequestDto {
   String lastname;
   String patronymic;
   String city;
-  String country;
   String phone;
   String position;
   String university;

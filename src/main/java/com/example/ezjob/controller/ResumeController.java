@@ -62,10 +62,9 @@ public class ResumeController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<ResumeResponseDto> getResumes(@RequestParam @Nullable String position,
-                                              @RequestParam @Nullable String country,
-                                              @RequestParam int experience
+                                              @RequestParam @Nullable String city
     ) {
-        final var resumes = resumeService.getResumes(position, country, experience);
+        final var resumes = resumeService.getResumes(position, city);
 
         final var response = resumes.stream()
                 .map(resumeMapper::toResumeResponseDto)

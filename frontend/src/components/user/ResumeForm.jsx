@@ -4,6 +4,7 @@ import axios from 'axios';
 import {useNavigate} from "react-router-dom";
 import useRoles from "../../hooks/useRoles";
 import {NotFound} from "../error/NotFound";
+import {Search} from "../Search";
 
 
 const initialState = {
@@ -12,7 +13,6 @@ const initialState = {
     lastname: "",
     patronymic: "",
     city: "",
-    country: "",
     phone: "",
     position: "",
     university: "",
@@ -26,6 +26,7 @@ function ResumeForm() {
     const [error, setError] = useState(false)
     const navigate = useNavigate();
     const role = useRoles();
+    const [selectedCity, setSelectedCity] = useState(null);
 
     useEffect(() => {
         if (role !== "USER") {
@@ -60,8 +61,7 @@ function ResumeForm() {
             firstname: formData.firstname,
             lastname: formData.lastname,
             patronymic: formData.patronymic,
-            city: formData.city,
-            country: formData.country,
+            city: selectedCity.label,
             phone: formData.phone,
             position: formData.position,
             university: formData.university,
@@ -91,6 +91,10 @@ function ResumeForm() {
     const handleChange = (event) => {
         const { name, value } = event.target;
         setFormData({ ...formData, [name]: value });
+    };
+
+    const handleCitySelect = (selectedCity) => {
+        setSelectedCity(selectedCity);
     };
 
     if (error) {
@@ -133,25 +137,6 @@ function ResumeForm() {
                            type="text" id="email"
                            name="email"
                            defaultValue={formData.email}
-                           onChange={handleChange}
-                    />
-                </div>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="city">Місто</label>
-                    <input className={styles.input_form}
-                           type="text" id="city"
-                           name="city"
-                           defaultValue={formData.city}
-                           onChange={handleChange}
-                    />
-                </div>
-                <div className={styles.form_group}>
-                    <label className={styles.label_form} htmlFor="country">Країна</label>
-                    <input className={styles.input_form}
-                           type="text"
-                           id="country"
-                           name="country"
-                           defaultValue={formData.country}
                            onChange={handleChange}
                     />
                 </div>
@@ -215,6 +200,17 @@ function ResumeForm() {
                               onChange={handleChange}
                     >
                 </textarea>
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="city">Поточне місто</label>
+                    <input className={styles.input_form}
+                           type="text" id="city"
+                           name="city"
+                           readOnly={true}
+                           defaultValue={formData.city}
+                           onChange={handleChange}
+                    />
+                    <Search onSelectCity={handleCitySelect} />
                 </div>
                 <div className={styles.form_group}>
                     <input className={styles.inpt_submit} type="submit" value="Надіслати"/>

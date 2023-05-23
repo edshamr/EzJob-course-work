@@ -1,6 +1,6 @@
 import styles from '../../styles/vacancy_list.module.css'
 import {Link} from "react-router-dom";
-import {useState} from "react";
+import {useEffect, useState} from "react";
 
 const CompanyVacancyList = ({ vacancies }) => {
     const [currentPage, setCurrentPage] = useState(1);
@@ -14,9 +14,12 @@ const CompanyVacancyList = ({ vacancies }) => {
         setCurrentPage(pageNumber);
     }
 
+    useEffect(() => {
+        console.log(vacancies)
+    })
+
     return (
         <>
-
         <div className={styles.layout_a}>
             <Link to="/company/vacancy/form" className={styles.apply_button}>Add vacancy</Link>
         </div>

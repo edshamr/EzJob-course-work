@@ -36,9 +36,8 @@ public class ResumeServiceImpl implements ResumeService {
   @Nullable
   @Override
   public List<Resume> getResumes(@Nullable String position,
-                                 @Nullable String country,
-                                 int experience) {
-    final var resumes = repository.findResumeByFilters(position, country, experience);
+                                 @Nullable String city) {
+    final var resumes = repository.findResumeByFilters(position, city);
     return resumes;
   }
 

@@ -12,6 +12,6 @@ import org.mapstruct.MappingTarget;
 public interface VacancyMapper {
     Vacancy toVacancy(@Nonnull VacancyRequestDto requestDto);
     @Mapping(target = "companyId", source = "vacancy.company.id")
-    VacancyResponseDto toVacancyResponseDto( @Nonnull Vacancy vacancy);
+    VacancyResponseDto toVacancyResponseDto(@Nonnull Vacancy vacancy);
     void updateVacancy(@MappingTarget @Nonnull Vacancy destination, @Nonnull Vacancy source);
 }

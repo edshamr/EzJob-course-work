@@ -1,4 +1,4 @@
-import {useEffect, useState} from "react";
+import {useState} from "react";
 import styles from "../../styles/vacancy_list.module.css";
 import {Link} from "react-router-dom";
 

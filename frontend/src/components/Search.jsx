@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import Select from 'react-select';
 
 const cityOptions = [
+    { value: '0', label: '' },
     { value: '1', label: 'Вінниця' },
     { value: '2', label: 'Луцьк' },
     { value: '3', label: 'Дніпропетровськ' },
@@ -49,24 +50,25 @@ const cityOptions = [
   };
 
 
-const Search = () => {
-  const [selectedCity, setSelectedCity] = useState(null);
+const Search = ({ onSelectCity }) => {
+    const [selectedCity, setSelectedCity] = useState(null);
 
-  const handleCityChange = (selectedOption) => {
-    setSelectedCity(selectedOption);
-  };
+    const handleCityChange = (selectedOption) => {
+        setSelectedCity(selectedOption);
+        onSelectCity(selectedOption);
+    };
 
-  return (
-    <div>
-      <Select
-        value={selectedCity}
-        onChange={handleCityChange}
-        options={cityOptions}
-        placeholder="Оберіть місто..."
-        styles={customStyles}
-      />
-    </div>
-  );
+    return (
+        <div>
+            <Select
+                value={selectedCity}
+                onChange={handleCityChange}
+                options={cityOptions}
+                placeholder="Оберіть місто..."
+                styles={customStyles}
+            />
+        </div>
+    );
 };
 
 export {Search};

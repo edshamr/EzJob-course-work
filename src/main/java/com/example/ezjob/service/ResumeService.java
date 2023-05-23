@@ -12,8 +12,7 @@ public interface ResumeService {
   Resume addVacancy(@Nonnull final Long id, @Nonnull final Long vacancyId);
 
   List<Resume> getResumes(@Nullable String position,
-                          @Nullable String country,
-                          int experience);
+                          @Nullable String city);
 
   Resume saveResume(@Nonnull @Valid Resume resume);
 

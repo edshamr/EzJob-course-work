@@ -5,13 +5,12 @@ import styles from "../../styles/ResumeForm.module.css";
 import useRoles from "../../hooks/useRoles";
 import {NotFound} from "../error/NotFound";
 import {ResumeList} from "../user/ResumeList";
+import {Search} from "../Search";
 
 
 const initialState = {
     companyId: 0,
     title: "",
-    country: "",
-    city: "",
     description: "",
     additionalInfo: ""
 };
@@ -27,6 +26,7 @@ function CompanyVacancy() {
     const [vacancyData, setVacancyData] = useState(initialState);
     const [error, setError] = useState(false);
     const [resumes, setResumes] = useState([]);
+    const [selectedCity, setSelectedCity] = useState(null);
 
     const [isShowReplies, setIsShowReplies] = useState(false);
 
@@ -60,8 +60,7 @@ function CompanyVacancy() {
         const requestDto = {
             companyId: companyId,
             title: vacancyData.title,
-            city: vacancyData.city,
-            country: vacancyData.country,
+            city: selectedCity.label,
             description: vacancyData.description,
             additionalInfo: vacancyData.additionalInfo
         };
@@ -78,6 +77,10 @@ function CompanyVacancy() {
         }
     }
 
+    const handleCitySelect = (selectedCity) => {
+        setSelectedCity(selectedCity);
+    };
+
     const handleChange = (event) => {
         const {name, value} = event.target;
         setVacancyData({...vacancyData, [name]: value});
@@ -86,7 +89,6 @@ function CompanyVacancy() {
         event.preventDefault();
         axios.get(`/api/vacancy/${vacancyId}/responses`, {})
             .then(response => {
-                console.log(response.data);
                 setResumes(response.data);
                 setIsShowReplies(true);
             })
@@ -119,26 +121,6 @@ function CompanyVacancy() {
                         />
                     </div>
                     <div className={styles.form_group}>
-                        <label className={styles.label_form} htmlFor="country">Заголовок</label>
-                        <input className={styles.input_form}
-                               type="text"
-                               id="country"
-                               name="country"
-                               defaultValue={vacancyData.country}
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className={styles.form_group}>
-                        <label className={styles.label_form} htmlFor="city">Заголовок</label>
-                        <input className={styles.input_form}
-                               type="text"
-                               id="city"
-                               name="city"
-                               defaultValue={vacancyData.city}
-                               onChange={handleChange}
-                        />
-                    </div>
-                    <div className={styles.form_group}>
                         <label className={styles.label_form} htmlFor="description">Опис вакансії</label>
                         <textarea className={styles.input_form}
                                   id="description"
@@ -157,6 +139,18 @@ function CompanyVacancy() {
                                   onChange={handleChange}
                         >
                 </textarea>
+                    </div>
+                    <div className={styles.form_group}>
+                        <label className={styles.label_form} htmlFor="city">Поточне місто</label>
+                        <input className={styles.input_form}
+                               type="text"
+                               id="city"
+                               name="city"
+                               readOnly={true}
+                               defaultValue={vacancyData.city}
+                               onChange={handleChange}
+                        />
+                        <Search onSelectCity={handleCitySelect} />
                     </div>
                     <div className={styles.form_group}>
                         <input className={styles.inpt_submit} type="submit" value="Надіслати"/>

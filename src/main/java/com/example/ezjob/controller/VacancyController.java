@@ -49,9 +49,8 @@ public class VacancyController {
     @GetMapping
     @ResponseStatus(HttpStatus.OK)
     public List<VacancyResponseDto> getVacancies(@RequestParam @Nullable String title,
-                                                 @RequestParam @Nullable String country,
                                                  @RequestParam @Nullable String city) {
-        final var vacancies = vacancyService.getAllVacancies(title, country, city);
+        final var vacancies = vacancyService.getAllVacancies(title, city);
 
         final var response = vacancies.stream()
                 .map(vacancyMapper::toVacancyResponseDto)

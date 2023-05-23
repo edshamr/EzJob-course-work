@@ -37,9 +37,6 @@ public class Resume {
   @Column(name = "city")
   String city;
 
-  @Column(name = "country")
-  String country;
-
   @Column(name = "phone")
   String phone;
 

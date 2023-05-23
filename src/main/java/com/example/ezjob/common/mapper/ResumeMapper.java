@@ -12,10 +12,8 @@ import org.mapstruct.MappingTarget;
 @Mapper(componentModel = "spring")
 public interface ResumeMapper {
   Resume toResume(@Nonnull ResumeRequestDto resumeRequest);
-  Resume toResume(@Nonnull RegistrationRequestDto registrationRequest);
   @Mapping(source = "id", target = "resumeId")
   ResumeResponseDto toResumeResponseDto(@Nonnull Resume resume);
-  ResumeRequestDto toResumeRequestDto(@Nonnull RegistrationRequestDto registrationRequest);
   @Mapping(target = "authUser", ignore = true)
   void updateResume(@MappingTarget @Nonnull Resume destination, @Nonnull Resume source);
 }

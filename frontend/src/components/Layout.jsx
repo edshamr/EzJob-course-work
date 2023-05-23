@@ -13,18 +13,14 @@ function Layout() {
     function logout() {
         axios.post('/api/logout/expire', {})
             .then(() => {
-                localStorage.removeItem('token');
-                localStorage.removeItem('companyId')
-                localStorage.removeItem('resumeId')
+                localStorage.clear()
             })
             .catch(error => {
                 if (error.status === 403) {
-                    localStorage.removeItem('token');
+                    localStorage.clear()
                 }
             });
     }
-
-    
 
     return (
         <>
