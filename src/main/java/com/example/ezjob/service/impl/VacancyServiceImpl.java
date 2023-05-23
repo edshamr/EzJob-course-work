@@ -27,8 +27,10 @@ public class VacancyServiceImpl implements VacancyService {
 
     @Nullable
     @Override
-    public List<Vacancy> getAllVacancies(@Nullable String title) {
-        final var vacancies = vacancyRepository.findVacancyByTitle(title);
+    public List<Vacancy> getAllVacancies(@Nullable String title,
+                                         @Nullable String country,
+                                         @Nullable String city) {
+        final var vacancies = vacancyRepository.findVacancyByFilters(title, country, city);
         return vacancies;
     }
 

@@ -9,6 +9,8 @@ import {NotFound} from "../error/NotFound";
 const initialState = {
     id: 0,
     title: "",
+    country: "",
+    city: "",
     description: "",
     additionalInfo: ""
 };
@@ -31,9 +33,12 @@ function VacancyForm() {
         event.preventDefault();
         const companyId = localStorage.getItem("companyId");
         if (companyId) {
+            console.log(formData.city)
             const requestDto = {
                 companyId: companyId,
                 title: formData.title,
+                city: formData.city,
+                country: formData.country,
                 description: formData.description,
                 additionalInfo: formData.additionalInfo
             };
@@ -71,6 +76,26 @@ function VacancyForm() {
                            id="title"
                            name="title"
                            defaultValue={formData.title}
+                           onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="country">Країна</label>
+                    <input className={styles.input_form}
+                           type="text"
+                           id="country"
+                           name="country"
+                           defaultValue={formData.country}
+                           onChange={handleChange}
+                    />
+                </div>
+                <div className={styles.form_group}>
+                    <label className={styles.label_form} htmlFor="city">Місто</label>
+                    <input className={styles.input_form}
+                           type="text"
+                           id="city"
+                           name="city"
+                           defaultValue={formData.city}
                            onChange={handleChange}
                     />
                 </div>

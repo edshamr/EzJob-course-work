@@ -16,7 +16,7 @@ const initialState = {
     phone: "",
     position: "",
     university: "",
-    experience: 0,
+    experience: "",
     skills: "",
     additionalInfo: ""
 };
